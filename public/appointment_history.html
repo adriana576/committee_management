@@ -45,10 +45,11 @@
 </div>
 
 <script>
+const BASE_URL = "https://your-railway-app.up.railway.app";
 const userId = localStorage.getItem('userId');
 
 async function loadHistory() {
-  const res = await fetch(`/api/user/${userId}/appointments`);
+  const res = await fetch(`${BASE_URL}/api/user/${userId}/appointments`);
   const data = await res.json();
 
   if (data.length === 0) {

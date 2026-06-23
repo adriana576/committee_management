@@ -48,10 +48,12 @@
 </div>
 
 <script>
+const BASE_URL = "https://your-railway-app.up.railway.app";
+
 const userId = localStorage.getItem('userId');
 
 async function loadProfile() {
-  const res = await fetch(`/api/user/${userId}/profile`);
+  const res = await fetch(`${BASE_URL}/api/user/${userId}/profile`);
   const data = await res.json();
 
   if (!data) return;

@@ -69,6 +69,7 @@
 
 <!-- JS -->
 <script>
+const BASE_URL = "https://your-railway-app.up.railway.app";
 const role = localStorage.getItem('role');
 
 // header
@@ -90,14 +91,14 @@ function toggleNotif() {
 async function loadNotifications() {
   const userId = role === 'admin' ? 'admin' : localStorage.getItem('userId');
 
-  const res = await fetch(`/api/notifications/${userId}`);
+  const res = await fetch(`${BASE_URL}/api/notifications/${userId}`);
   const notifications = await res.json();
 
   const container = document.getElementById('notifications');
   const badge = document.getElementById('notifCount');
 
   const unread = notifications.filter(n => n.is_read == 0).length;
-  badge.innerText = unread;
+  if (badge) badge.innerText = unread;
 
   container.innerHTML = notifications.map(n => `
     <div class="notif-item" id="notif-${n.id}" onclick="markAsRead(${n.id})">
@@ -115,11 +116,11 @@ async function loadNotifications() {
 
 // mark as read
 function markAsRead(id) {
-  fetch(`/api/notifications/${id}/read`, {
+  fetch(`${BASE_URL}/api/notifications/${id}/read`, {
     method: 'PUT'
   }).then(() => {
     document.getElementById(`notif-${id}`)?.remove();
-    loadNotifications(); // refresh badge
+    loadNotifications();
   });
 }
 

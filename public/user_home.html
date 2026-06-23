@@ -63,6 +63,8 @@
 
 <!-- JS -->
 <script>
+const BASE_URL = "https://your-railway-app.up.railway.app";
+
 const role = localStorage.getItem('role');
 
 // header
@@ -84,7 +86,7 @@ function toggleNotif() {
 async function loadNotifications() {
   const userId = localStorage.getItem('userId');
 
-  const res = await fetch(`/api/notifications/${userId}`);
+  const res = await fetch(`${BASE_URL}/api/notifications/${userId}`);
   const notifications = await res.json();
 
   const container = document.getElementById('notifications');

@@ -42,18 +42,20 @@
 </div>
 
 <script>
+  const BASE_URL = "https://your-railway-app.up.railway.app";
+  
   async function addCommittee() {
-    const committee_name = document.getElementById('committee_name').value;
-    const faculty = document.getElementById('faculty').value;
+  const committee_name = document.getElementById('committee_name').value;
+  const faculty = document.getElementById('faculty').value;
 
-    const res = await fetch('/api/committees', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ committee_name, faculty })
-    });
+  const res = await fetch(`${BASE_URL}/api/committees`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ committee_name, faculty })
+  });
 
-    const data = await res.json();
-    document.getElementById('msg').innerText = data.message;
+  const data = await res.json();
+  console.log(data);
 
     if (data.success) {
       document.getElementById('committee_name').value = '';

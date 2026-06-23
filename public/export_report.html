@@ -42,8 +42,10 @@
 </div>
 
 <script>
+const BASE_URL = "https://your-railway-app.up.railway.app";
+
 async function loadReport() {
-  const res = await fetch('/api/report/appointments');
+  const res = await fetch('${BASE_URL}/api/report/appointments');
   const data = await res.json();
   renderCards(data);
 }

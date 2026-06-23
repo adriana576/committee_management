@@ -36,8 +36,10 @@
 
 
 <script>
+const BASE_URL = "https://your-railway-app.up.railway.app";
+
 async function loadUsers() {
-  const res = await fetch('/api/users');
+  const res = await fetch('${BASE_URL}/api/users');
   const data = await res.json();
   renderUserCards(data);
 }
