@@ -33,7 +33,7 @@ function sendAdminNotification(message) {
 
 // TEST
 app.get('/', (req, res) => {
-  res.send('Backend running');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 
@@ -613,6 +613,5 @@ app.get('/api/user/:id/certificate/pdf', (req, res) => {
 // START SERVER
 // =========================
 
-app.listen(5000, () => {
-  console.log('Server running on port 5000');
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
