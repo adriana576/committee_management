@@ -67,25 +67,18 @@ db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
 });
 
 // LOGIN
-app.post('/api/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
 
-    const [rows] = await db.query(
-      "SELECT * FROM users WHERE email=? AND password=?",
-      [email, password]
-    );
+  const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
 
-    if (rows.length > 0) {
-      res.json({ success: true, user: rows[0] });
+  db.query(sql, [email, password], (err, result) => {
+    if (result.length > 0) {
+      res.json({ success: true, user: result[0] });
     } else {
-      res.json({ success: false });
+      res.json({ success: false, message: 'Invalid login' });
     }
-
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ success: false, error: err.message });
-  }
+  });
 });
 
 
