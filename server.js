@@ -10,10 +10,14 @@ const { exec } = require('child_process');
 const app = express();
 
 app.use(cors({
-  origin: "https://committeemanagement.netlify.app"
+  origin: "https://committeemanagement.netlify.app",
+   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.options("*", cors());
 
 // Notification helpers
 // =========================
@@ -63,18 +67,25 @@ db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
 });
 
 // LOGIN
-app.post('/api/login', (req, res) => {
-  const { email, password } = req.body;
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-  const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
+    const [rows] = await db.query(
+      "SELECT * FROM users WHERE email=? AND password=?",
+      [email, password]
+    );
 
-  db.query(sql, [email, password], (err, result) => {
-    if (result.length > 0) {
-      res.json({ success: true, user: result[0] });
+    if (rows.length > 0) {
+      res.json({ success: true, user: rows[0] });
     } else {
-      res.json({ success: false, message: 'Invalid login' });
+      res.json({ success: false });
     }
-  });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 
