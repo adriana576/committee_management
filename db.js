@@ -1,8 +1,5 @@
 const mysql = require('mysql2');
 
-// Create connection to Railway MySQL
-const mysql = require('mysql2');
-
 const connection = mysql.createConnection({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
