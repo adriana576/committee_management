@@ -11,8 +11,6 @@ app.use(cors({
   origin: [
     "https://committeemanagement.netlify.app",
   ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.options("*", cors());
