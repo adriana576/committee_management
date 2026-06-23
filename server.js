@@ -9,8 +9,6 @@ const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
 
-const cors = require('cors');
-
 app.use(cors({
   origin: 'https://your-netlify-site.netlify.app'
 }));
