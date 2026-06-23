@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Staff</h3>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <h2>
+    <img src="img/LogoUiTM.png" alt="UiTM Logo" class="logo">
+    Committee Management System
+  </h2>
+    <a href="user_home.html">Home</a>
+    <a href="appointment_letter.html">Appointment Letter</a>
+    <a href="appointment_history.html">History</a>
+    <a class="active" href="user_profile.html">Profile</a>
+
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="content">
+    <h1>My Profile</h1>
+
+    <div class="card">
+      <label>Name</label>
+      <input type="text" id="name">
+
+      <label>Email</label>
+      <input type="text" id="email" disabled>
+
+      <label>Department</label>
+      <input type="text" id="department">
+
+      <label>Phone</label>
+      <input type="text" id="phone">
+
+      <button onclick="updateProfile()">Update Profile</button>
+
+      <p id="msg"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const userId = localStorage.getItem('userId');
+
+async function loadProfile() {
+  const res = await fetch(`/api/user/${userId}/profile`);
+  const data = await res.json();
+
+  if (!data) return;
+
+  document.getElementById('name').value = data.name || '';
+  document.getElementById('email').value = data.email || '';
+  document.getElementById('department').value = data.department || '';
+  document.getElementById('phone').value = data.phone || '';
+}
+
+async function updateProfile() {
+  const name = document.getElementById('name').value;
+  const department = document.getElementById('department').value;
+  const phone = document.getElementById('phone').value;
+
+  const res = await fetch(`/api/user/${userId}/profile`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, department, phone })
+  });
+
+  const data = await res.json();
+  document.getElementById('msg').innerText =
+    data.success ? 'Profile updated' : 'Update failed';
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = 'login.html';
+}
+
+loadProfile();
+</script>
+
+</body>
+</html>

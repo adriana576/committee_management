@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manage Committee</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Admin</h3>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <h2>
+      <img src="img/LogoUiTM.png" alt="UiTM Logo" class="logo">
+      Committee Management System
+    </h2>
+    <a href="admin_home.html">Home</a>
+    <a class="active" href="committees.html">Manage Committee</a>
+    <a href="assign_appointment.html">Finalize Appointment</a>
+    <a href="users.html">View Staff</a>
+    <a href="export_report.html">Search</a>
+    <a href="recommendation.html">Generate Recommendation</a>
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="content">
+    <h1>Manage Committee</h1>
+
+    <div class="card">
+      <button onclick="location.href='add_committee.html'">+ Add Committee</button>
+      <br><br>
+
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Committee Name</th>
+            <th>Faculty</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="committeeTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function loadCommittees() {
+    const res = await fetch('/api/committees');
+    const data = await res.json();
+
+    const tbody = document.getElementById('committeeTable');
+    tbody.innerHTML = '';
+
+    data.forEach((item, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${item.committee_name}</td>
+        <td>${item.faculty}</td>
+        <td>
+          <button onclick="editCommittee(${item.id}, '${item.committee_name}', '${item.faculty}')">Edit</button>
+          <button onclick="deleteCommittee(${item.id})">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function editCommittee(id, name, faculty) {
+    const newName = prompt('Edit Committee Name:', name);
+    const newFaculty = prompt('Edit Faculty:', faculty);
+    if (newName && newFaculty) {
+      fetch('/api/committees', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, committee_name: newName, faculty: newFaculty })
+      }).then(() => loadCommittees());
+    }
+  }
+
+  function deleteCommittee(id) {
+    if (confirm('Are you sure you want to delete this committee?')) {
+      fetch(`/api/committees/${id}`, { method: 'DELETE' })
+        .then(() => loadCommittees());
+    }
+  }
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = 'login.html';
+  }
+
+  loadCommittees();
+</script>
+
+</body>
+</html>

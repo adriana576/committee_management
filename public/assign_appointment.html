@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Finalize Appointment</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Admin</h3>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <h2>
+    <img src="img/LogoUiTM.png" alt="UiTM Logo" class="logo">
+    Committee Management System
+  </h2>
+    <a href="admin_home.html">Home</a>
+    <a href="committees.html">Manage Committee</a>
+    <a class="active" href="assign_appointment.html">Finalize Appointment</a>
+    <a href="users.html">View Staff</a>
+    <a href="export_report.html">Search</a>
+    <a href="recommendation.html">Generate Recommendation</a>
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="content">
+    <h1>Finalize Appointment</h1>
+
+    <div class="card">
+      <label>Select Staff</label>
+      <select id="user_id"></select>
+
+      <label>Select Committee</label>
+      <select id="committee_id"></select>
+
+      <label>Role</label>
+      <input type="text" id="role" placeholder="Example: Penyelaras">
+
+      <label>Start Date</label>
+      <input type="date" id="start_date">
+
+      <label>End Date</label>
+      <input type="date" id="end_date">
+
+      <button onclick="assignAppointment()">Assign Appointment</button>
+      <p id="msg"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function loadData() {
+    const userRes = await fetch('/api/users');
+    const committeeRes = await fetch('/api/committees');
+
+    const users = await userRes.json();
+    const committees = await committeeRes.json();
+
+    document.getElementById('user_id').innerHTML = users.map(user => `
+      <option value="${user.id}">${user.name} (${user.email})</option>
+    `).join('');
+
+    document.getElementById('committee_id').innerHTML = committees.map(c => `
+      <option value="${c.id}">${c.committee_name}</option>
+    `).join('');
+  }
+
+  async function assignAppointment() {
+    const user_id = document.getElementById('user_id').value;
+    const committee_id = document.getElementById('committee_id').value;
+    const role = document.getElementById('role').value;
+    const start_date = document.getElementById('start_date').value;
+    const end_date = document.getElementById('end_date').value;
+    const status = document.getElementById('status').value;
+
+    const res = await fetch('/api/appointments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id, committee_id, role, start_date, end_date, status })
+    });
+
+    const data = await res.json();
+    document.getElementById('msg').innerText = data.message;
+
+    if (data.success) {
+      document.getElementById('role').value = '';
+      document.getElementById('start_date').value = '';
+      document.getElementById('end_date').value = '';
+    }
+  }
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = 'login.html';
+  }
+
+  loadData();
+</script>
+
+</body>
+</html>

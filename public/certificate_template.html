@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    .logo { width: 120px; margin-bottom: 20px; }
+    .title { font-size: 28px; font-weight: bold; margin-top: 20px; }
+    .subtitle { margin-top: 10px; font-size: 18px; }
+    .name { margin-top: 40px; font-size: 24px; font-weight: bold; }
+    .committee { margin-top: 10px; font-size: 20px; }
+    .footer { margin-top: 50px; font-size: 16px; }
+  </style>
+</head>
+<body style="background-image: url('file:///C:/committee_system/backend/public/img/certificate.jpg'); 
+             background-size: cover; 
+             background-position: center; 
+             font-family: Arial, sans-serif;
+             text-align: center; 
+             padding: 50px;">
+  <img src="file://C:/committee_system/backend/public/img/LogoUiTM.png" class="logo" alt="UiTM Logo">
+  <div class="title">Certificate of Appointment</div>
+  <div class="subtitle">This certificate is proudly presented to</div>
+  <div class="name">{{USER_NAME}}</div>
+  <div class="committee">For serving as {{ROLE}} in {{COMMITTEE}}</div>
+  <div class="footer">Signed, Dean of Faculty</div>
+</body>
+</html>

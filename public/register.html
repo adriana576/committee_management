@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Committee Management System</h3>
+</div>
+
+<div class="content">
+  <div class="card" style="max-width: 450px; margin: 60px auto;">
+    <h2>Register</h2>
+
+    <label>Name</label>
+    <input type="text" id="name">
+
+    <label>Email</label>
+    <input type="email" id="email">
+
+    <label>Password</label>
+    <input type="password" id="password">
+
+    <label>Department</label>
+    <input type="text" id="department">
+
+    <label>Phone</label>
+    <input type="text" id="phone">
+
+    <button onclick="register()">Register</button>
+
+    <p id="msg"></p>
+
+    <p>
+      Already have account?
+      <a href="login.html">Login here</a>
+    </p>
+  </div>
+</div>
+
+<script>
+async function register() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const department = document.getElementById('department').value;
+  const phone = document.getElementById('phone').value;
+
+  const res = await fetch('/api/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+      department,
+      phone
+    })
+  });
+
+  const data = await res.json();
+
+  document.getElementById('msg').innerText = data.message;
+
+  if (data.success) {
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 1000);
+  }
+}
+</script>
+
+</body>
+</html>

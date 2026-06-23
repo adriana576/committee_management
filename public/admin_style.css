@@ -1,0 +1,361 @@
+/* ===== Reset ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100%;
+  background: #f5f0fa;
+}
+
+/* Sidebar - uniform for all pages */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background: #4B0082;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  color: white;
+  box-sizing: border-box;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  padding: 0 20px 20px 20px;
+  margin: 0;
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  margin: 0;
+  border-left: 5px solid transparent;
+  border-radius: 0 25px 25px 0;
+  transition: 0.3s;
+  text-align: left; /* left align text */
+}
+
+.sidebar a.active {
+  background: #8356d6;
+  border-left: 5px solid #fff; /* highlight active tab */
+}
+
+.sidebar a:hover {
+  background: #6f42c1;
+}
+
+.sidebar a i {
+  margin-right: 12px;
+}
+
+.sidebar .logout-btn {
+  margin-top: auto;
+  margin-bottom: 20px;
+  background: white;
+  color: #4B0082;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* Topbar */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 250px; /* match sidebar width */
+  right: 0;
+  height: 60px;
+  background: #4B0082;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 30px;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  flex: 1;
+  margin-left: 250px; /* sidebar width */
+  padding-top: 60px;  /* topbar height */
+  gap: 20px;
+}
+
+/* Main content */
+.content {
+  flex: 1;
+  padding: 20px 40px;
+}
+
+/* Cards */
+.card, .recommendation-card, .chart-card, .info-card {
+  background: white;
+  border-radius: 20px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+/* Cards grid */
+.cards {
+  display: flex;
+  gap: 20px;
+}
+
+
+
+/* Recommendation card layout */
+.recommendation-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.recommendation-card .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #8356d6;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 12px;
+}
+
+.recommendation-card .btn-select {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #6f42c1;
+  color: white;
+  cursor: pointer;
+}
+
+.recommendation-card .btn-select:hover {
+  background: #8356d6;
+}
+
+/* Right sidebar (charts + info) */
+.right-sidebar {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 80px; /* slightly below topbar */
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+table thead th {
+  background: #4B0082;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Buttons */
+button, .btn-select {
+  background: #6f42c1;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+button:hover, .btn-select:hover {
+  background: #8356d6;
+}
+
+/* Inputs & Forms */
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+/* Links */
+a {
+  color: #4B0082;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Sidebar logo */
+.sidebar-logo {
+  display: block;
+  width: 120px;       /* adjust width as needed */
+  height: auto;
+  margin: 20px auto 10px auto; /* center horizontally */
+  border-radius: 8px; /* optional */
+}
+.sidebar h2 {
+  font-size: 18px;
+  padding: 0 20px 20px 20px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px; /* add space between logo and text */
+}
+
+.sidebar h2 img {
+  height: 40px; /* reduce logo height */
+  width: auto;  /* keep aspect ratio */
+  display: block;
+}
+
+/* Search box styling */
+.search-container {
+      display: flex;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .search-container input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+    }
+
+    .search-container button {
+      background-color: #6f42c1;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+
+    .search-container button:hover {
+      background-color: #8356d6;
+    }
+
+  .user-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;          /* space between cards */
+  justify-content: flex-start; /* align cards to left */
+  margin-top: 20px;
+}
+
+.user-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  width: 220px;       /* uniform card width */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+    .user-card .user-logo {
+      width: 60px;
+      margin-bottom: 12px;
+    }
+
+    .user-card .status.active {
+      color: green;
+      font-weight: bold;
+    }
+
+    .user-card .status.inactive {
+      color: red;
+      font-weight: bold;
+    }
+
+    .user-card img.user-logo {
+      width: 80px;
+      margin-bottom: 12px;
+    }
+
+    .user-card h3 {
+      margin: 8px 0 4px 0;
+    }
+
+    .user-card p {
+      margin: 2px 0;
+      font-size: 14px;
+    }
+
+  .notifications-panel {
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #f3c7e2;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.notif-item {
+  display: flex;
+  align-items: center;
+  background: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.notif-icon {
+  width: 40px;
+  height: 40px;
+  background: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.notif-message {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.notif-time {
+  font-size: 11px;
+  color: gray;
+}
+
+.notif-item.unread {
+  border-left: 4px solid #4B0082;
+}
+

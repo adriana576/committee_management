@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="admin_style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="layout">
+  <div class="sidebar">
+    <h2>Committee Management System</h2>
+    <a class="active" href="user_home.html">Home</a>
+    <a href="appointment_letter.html">Appointment Letter</a>
+    <a href="appointment_history.html">History</a>
+    <a href="user_profile.html">Profile</a>
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="content">
+    <h1>User Dashboard</h1>
+
+    <div class="cards"> 
+      <div class="card card-icon"> 
+        <div class="card-content"> 
+          <h3>Total Appointments</h3> 
+          <h1 id="totalAppointments">0</h1> 
+        </div> 
+      </div> 
+      
+    <div class="card card-icon"> 
+      <div class="card-content"> 
+        <h3>Active Appointments</h3> 
+        <h1 id="activeAppointments">0</h1> 
+      </div> 
+    </div> 
+    
+  <div class="card card-icon"> 
+    <div class="card-content"> 
+      <h3>Completed / Inactive</h3> 
+      <h1 id="inactiveAppointments">0</h1> 
+    </div>
+  </div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+
+  <h3 id="userName"></h3>
+
+  <!-- NOTIFICATION BELL -->
+  <div class="bell" onclick="toggleNotif()">
+    🔔
+    <span id="notifCount" class="notif-badge"></span>
+  </div>
+
+</div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notifications-panel" id="notifications"></div>
+
+<!-- JS -->
+<script>
+const role = localStorage.getItem('role');
+
+// header
+const userNameElement = document.getElementById('userName');
+
+if (role === 'admin') {
+  userNameElement.innerText = 'Admin Dashboard';
+} else {
+  userNameElement.innerText = `Welcome, ${localStorage.getItem('userName')}`;
+}
+
+// toggle panel
+function toggleNotif() {
+  const panel = document.getElementById('notifications');
+  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+}
+
+// load notifications
+async function loadNotifications() {
+  const userId = localStorage.getItem('userId');
+
+  const res = await fetch(`/api/notifications/${userId}`);
+  const notifications = await res.json();
+
+  const container = document.getElementById('notifications');
+  const badge = document.getElementById('notifCount');
+
+  const unread = notifications.filter(n => n.is_read == 0).length;
+  badge.innerText = unread;
+
+  container.innerHTML = notifications.map(n => `
+    <div class="notif-item ${n.is_read ? 'read' : 'unread'}"
+         id="notif-${n.id}"
+         onclick="markAsRead(${n.id})">
+
+      <div class="notif-icon">🔔</div>
+
+      <div>
+        <div class="notif-message">${n.message}</div>
+        <div class="notif-time">
+          ${new Date(n.created_at).toLocaleString()}
+        </div>
+      </div>
+
+    </div>
+  `).join('');
+}
+
+// mark as read
+function markAsRead(id) {
+  fetch(`/api/notifications/${id}/read`, {
+    method: 'PUT'
+  }).then(() => {
+    document.getElementById(`notif-${id}`)?.remove();
+    loadNotifications(); // refresh badge
+  });
+}
+
+// auto refresh
+loadNotifications();
+setInterval(loadNotifications, 10000);
+
+// logout
+function logout() {
+  localStorage.clear();
+  window.location.href = 'login.html';
+}
+</script>
+
+</body>
+</html>

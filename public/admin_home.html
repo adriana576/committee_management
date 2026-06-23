@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Home</title>
+  <link rel="stylesheet" href="admin_style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>
+      <img src="img/LogoUiTM.png" class="logo">
+      Committee Management System
+    </h2>
+
+    <a class="active" href="admin_home.html">Home</a>
+    <a href="committees.html">Manage Committee</a>
+    <a href="assign_appointment.html">Finalize Appointment</a>
+    <a href="users.html">View Staff</a>
+    <a href="export_report.html">Search</a>
+    <a href="recommendation.html">Generate Recommendation</a>
+
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <h1>Admin Dashboard</h1>
+
+    <div class="grid"> 
+      <div class="card" onclick="location.href='committees.html'"> 
+        <h3>Manage Committee</h3> 
+        <p>View and manage committee information.</p> 
+      </div>
+    
+    <div class="card" onclick="location.href='add_committee.html'"> 
+      <h3>Add Committee</h3> 
+      <p>Create a new committee record.</p> 
+    </div> 
+    
+  <div class="card" onclick="location.href='assign_appointment.html'"> 
+    <h3>Finalize Appointment</h3> 
+    <p>Assign staff to committee roles.</p> 
+  </div>
+
+  </div>
+
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+
+  <h3 id="userName"></h3>
+
+  <!-- NOTIFICATION BUTTON -->
+  <div style="position:relative; cursor:pointer;" onclick="toggleNotif()">
+    🔔
+    <span id="notifCount" class="notif-badge">0</span>
+  </div>
+
+</div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notifications-panel" id="notifications"></div>
+
+<!-- JS -->
+<script>
+const role = localStorage.getItem('role');
+
+// header
+const userNameElement = document.getElementById('userName');
+
+if (role === 'admin') {
+  userNameElement.innerText = 'Admin Dashboard';
+} else {
+  userNameElement.innerText = `Welcome, ${localStorage.getItem('userName')}`;
+}
+
+// toggle panel
+function toggleNotif() {
+  const panel = document.getElementById('notifications');
+  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+}
+
+// load notifications
+async function loadNotifications() {
+  const userId = role === 'admin' ? 'admin' : localStorage.getItem('userId');
+
+  const res = await fetch(`/api/notifications/${userId}`);
+  const notifications = await res.json();
+
+  const container = document.getElementById('notifications');
+  const badge = document.getElementById('notifCount');
+
+  const unread = notifications.filter(n => n.is_read == 0).length;
+  badge.innerText = unread;
+
+  container.innerHTML = notifications.map(n => `
+    <div class="notif-item" id="notif-${n.id}" onclick="markAsRead(${n.id})">
+
+      <div class="notif-icon">🔔</div>
+
+      <div>
+        <div class="notif-message">${n.message}</div>
+        <div class="notif-time">${new Date(n.created_at).toLocaleString()}</div>
+      </div>
+
+    </div>
+  `).join('');
+}
+
+// mark as read
+function markAsRead(id) {
+  fetch(`/api/notifications/${id}/read`, {
+    method: 'PUT'
+  }).then(() => {
+    document.getElementById(`notif-${id}`)?.remove();
+    loadNotifications(); // refresh badge
+  });
+}
+
+// auto refresh every 10 sec
+loadNotifications();
+setInterval(loadNotifications, 10000);
+
+// logout
+function logout() {
+  localStorage.clear();
+  window.location.href = 'login.html';
+}
+</script>
+
+</body>
+</html>

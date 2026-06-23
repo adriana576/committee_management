@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Committee Management Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #4B0082, #8356D6);
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 400px;
+      max-width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .login-card img {
+      width: 90px;
+      margin-bottom: 20px;
+    }
+
+    .login-card h2 {
+      color: #4B0082;
+      margin-bottom: 30px;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .login-card button {
+      width: 100%;
+      padding: 14px 16px;
+      border: none;
+      border-radius: 12px;
+      background-color: #4B0082;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-card button:hover {
+      background-color: #8356D6;
+    }
+
+    .login-card p {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .login-card a {
+      color: #4B0082;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .login-card a:hover {
+      text-decoration: underline;
+    }
+
+    #msg {
+      color: red;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <img src="img/LogoUiTM.png" alt="UiTM Logo">
+    <h2>Committee Management Login</h2>
+
+    <div id="msg"></div>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p>
+      New user? <a href="register.html">Register here</a>
+    </p>
+  </div>
+
+  <script>
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+
+        if (data.success) {
+          localStorage.setItem('userId', data.user.id);
+          localStorage.setItem('userName', data.user.name);
+          localStorage.setItem('role', data.user.role);
+
+          if (data.user.role === 'admin') {
+            window.location.href = 'admin_home.html';
+          } else {
+            window.location.href = 'user_home.html';
+          }
+        } else {
+          document.getElementById('msg').innerText = 'Invalid email or password';
+        }
+      } catch (err) {
+        document.getElementById('msg').innerText = 'Error connecting to server';
+        console.error(err);
+      }
+    }
+  </script>
+
+  <div class="notifications-panel" id="notifications">
+  <!-- Notifications will appear here -->
+</div>
+
+</body>
+</html>

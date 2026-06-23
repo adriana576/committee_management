@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Users</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Admin</h3>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <h2>
+      <img src="img/LogoUiTM.png" class="logo" width="60" alt="UiTM Logo">
+      Committee Management System
+    </h2>
+    <a href="admin_home.html">Home</a>
+    <a href="committees.html">Manage Committee</a>
+    <a href="assign_appointment.html">Finalize Appointment</a>
+    <a class="active" href="users.html">View Staff</a>
+    <a href="export_report.html">Search</a>
+    <a href="recommendation.html">Generate Recommendation</a>
+    
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="content">
+    <h1>Staff</h1>
+
+    <div class="user-cards" id="userCards"></div>
+  </div>
+</div>
+
+
+
+<script>
+async function loadUsers() {
+  const res = await fetch('/api/users');
+  const data = await res.json();
+  renderUserCards(data);
+}
+
+function renderUserCards(data) {
+  const container = document.getElementById('userCards');
+  container.innerHTML = '';
+  // const today = new Date(); // No longer needed since we won't show status
+
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="user-card">
+        <img src="img/LogoUiTM.png" class="user-logo" alt="UiTM Logo">
+        <h3>${item.name}</h3>
+        <p>${item.department || '-'}</p>
+        <p>${item.phone || '-'}</p>
+        <!-- Removed the status line -->
+        <!--<p class="status ${status.toLowerCase()}">${status}</p>-->
+      </div>
+    `;
+  });
+}
+
+function searchUsers() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.user-card');
+
+  cards.forEach(card => {
+    const name = card.querySelector('h3').innerText.toLowerCase();
+    const dept = card.querySelectorAll('p')[0].innerText.toLowerCase();
+    if (name.includes(input) || dept.includes(input)) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+loadUsers();
+</script>
+
+</body>
+</html>

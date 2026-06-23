@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Export Report</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Admin</h3>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <h2>
+      <img src="img/LogoUiTM.png" class="logo" width="60" alt="UiTM Logo">
+      Committee Management System
+    </h2>
+    <a href="admin_home.html">Home</a>
+    <a href="committees.html">Manage Committee</a>
+    <a href="assign_appointment.html">Finalize Appointment</a>
+    <a href="users.html">View Staff</a>
+    <a class="active" href="export_report.html">Search</a>
+    <a href="recommendation.html">Generate Recommendation</a>
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="content">
+    <h1><Search></Search></h1>
+
+    <div class="card">
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by name or committee">
+        <button onclick="searchReport()">🔍</button>
+      </div>
+
+      <div class="user-cards" id="reportBody">
+        <!-- JS will populate cards -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function loadReport() {
+  const res = await fetch('/api/report/appointments');
+  const data = await res.json();
+  renderCards(data);
+}
+
+function renderCards(data) {
+  const container = document.getElementById('reportBody');
+  container.innerHTML = '';
+
+  data.forEach(item => {
+    const today = new Date();
+    const startDate = new Date(item.start_date);
+    const endDate = new Date(item.end_date);
+    const status = (endDate >= today && startDate <= today) ? 'Active' : 'Inactive';
+    const statusClass = status.toLowerCase();
+
+    const card = document.createElement('div');
+    card.className = 'user-card';
+    card.innerHTML = `
+      <img src="img/LogoUiTM.png" class="user-logo" alt="UiTM Logo">
+      <div class="user-info">
+        <h3>${item.name}</h3>
+        <p>${item.committee_name || '-'}</p>
+        <p>${item.role || '-'}</p>
+        <p>Start: ${startDate.toLocaleDateString('en-GB')}</p>
+        <p>End: ${endDate.toLocaleDateString('en-GB')}</p>
+        <p class="status ${statusClass}">${status}</p>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function searchReport() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.user-card');
+
+  cards.forEach(card => {
+    const name = card.querySelector('h3').innerText.toLowerCase();
+    const committee = card.querySelectorAll('p')[0].innerText.toLowerCase();
+
+    if (name.includes(input) || committee.includes(input)) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = 'login.html';
+}
+
+loadReport();
+</script>
+
+</body>
+</html>
