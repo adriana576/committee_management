@@ -12,7 +12,7 @@ const { exec } = require('child_process');
 const app = express();
 
 app.use(cors({
-  origin: 'https://your-netlify-site.netlify.app'
+  origin: "https://committeemanagement.netlify.app"
 }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
