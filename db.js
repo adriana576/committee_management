@@ -1,5 +1,8 @@
 const mysql = require('mysql2');
 
+console.log("MYSQL HOST:", process.env.MYSQL_HOST);
+console.log("MYSQL USER:", process.env.MYSQL_USER);
+
 const pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
