@@ -10,7 +10,6 @@ const app = express();
 app.use(cors({
   origin: [
     "https://committeemanagement.netlify.app",
-    "https://committeemanagement-production.netlify.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
