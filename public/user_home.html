@@ -115,7 +115,7 @@ async function loadNotifications() {
 
 // mark as read
 function markAsRead(id) {
-  fetch(`/api/notifications/${id}/read`, {
+  fetch(`${BASE_URL}//api/notifications/${id}/read`, {
     method: 'PUT'
   }).then(() => {
     document.getElementById(`notif-${id}`)?.remove();

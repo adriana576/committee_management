@@ -86,7 +86,7 @@
 
   function deleteCommittee(id) {
     if (confirm('Are you sure you want to delete this committee?')) {
-      fetch(`/api/committees/${id}`, { method: 'DELETE' })
+      fetch(`${BASE_URL}//api/committees/${id}`, { method: 'DELETE' })
         .then(() => loadCommittees());
     }
   }
