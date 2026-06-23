@@ -10,14 +10,10 @@ const { exec } = require('child_process');
 const app = express();
 
 app.use(cors({
-  origin: "https://committeemanagement.netlify.app",
-   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: "https://committeemanagement.netlify.app"
 }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.options("*", cors());
 
 // Notification helpers
 // =========================
