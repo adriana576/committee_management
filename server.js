@@ -2,19 +2,24 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
-const PDFDocument = require('pdfkit');
 const path = require('path');
-const fs = require('fs');
-const { exec } = require('child_process');
 
 const app = express();
 
+// ✅ FIXED CORS (ALLOW BOTH DEV + PROD SAFELY)
 app.use(cors({
-  origin: "https://committeemanagement.netlify.app"
+  origin: [
+    "https://committeemanagement.netlify.app",
+    "https://committeemanagement-production.netlify.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.options("*", cors());
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.options("*", cors());
 
 // Notification helpers
 // =========================
