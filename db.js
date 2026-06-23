@@ -1,22 +1,14 @@
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT
+  port: process.env.MYSQLPORT,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-module.exports = connection;
-
-// Connect
-connection.connect(err => {
-  if (err) {
-    console.error('Database connection failed:', err);
-    return;
-  }
-  console.log('Connected to Railway MySQL database');
-});
-
-module.exports = connection;
+module.exports = pool.promise();
