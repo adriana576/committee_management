@@ -69,7 +69,7 @@ async function updateProfile() {
   const department = document.getElementById('department').value;
   const phone = document.getElementById('phone').value;
 
-  const res = await fetch(`/api/user/${userId}/profile`, {
+  const res = await fetch(`${BASE_URL}/api/user/${userId}/profile`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, department, phone })

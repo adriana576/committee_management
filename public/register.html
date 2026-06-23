@@ -50,7 +50,7 @@ async function register() {
   const department = document.getElementById('department').value;
   const phone = document.getElementById('phone').value;
 
-  const res = await fetch('${BASE_URL}/api/register', {
+  const res = await fetch(`${BASE_URL}/api/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

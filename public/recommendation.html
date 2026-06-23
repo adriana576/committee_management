@@ -97,7 +97,7 @@
 const BASE_URL = "https://committeemanagement-production.up.railway.app";
 
 async function loadRecommendations() {
-  const res = await fetch('${BASE_URL}/api/recommendations');
+  const res = await fetch(`${BASE_URL}/api/recommendations`);
   const data = await res.json();
 
   // Map workload score based on total_committees

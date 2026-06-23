@@ -77,7 +77,7 @@ const BASE_URL = "https://committeemanagement-production.up.railway.app";
     const end_date = document.getElementById('end_date').value;
     const status = document.getElementById('status').value;
 
-    const res = await fetch('/api/appointments', {
+    const res = await fetch(`${BASE_URL}/api/appointments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id, committee_id, role, start_date, end_date, status })
