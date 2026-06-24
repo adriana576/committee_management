@@ -9,9 +9,12 @@ const { exec } = require('child_process');
 
 const app = express();
 
+const BASE_URL = "https://committeemanagement-production.up.railway.app";
+
 app.use(cors({
   origin: "https://committeemanagement.netlify.app"
 }));
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
