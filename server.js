@@ -2,6 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
+db.query("SELECT 1", (err, result) => {
+  if (err) {
+    console.log("DB ERROR:", err);
+  } else {
+    console.log("DB CONNECT OK");
+  }
+});
 const PDFDocument = require('pdfkit');
 const path = require('path');
 const fs = require('fs');
