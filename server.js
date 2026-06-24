@@ -15,6 +15,18 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const db = require('./db');
+
+(async () => {
+  try {
+    const connection = await db.getConnection();
+    console.log("✅ MySQL Connected");
+    connection.release();
+  } catch (err) {
+    console.error("❌ MySQL Error:", err);
+  }
+})();
+
 // Notification helpers
 // =========================
 function sendNotification(userId, message) {
