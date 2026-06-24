@@ -8,13 +8,10 @@ const fs = require('fs');
 const { exec } = require('child_process');
 
 const app = express();
-
 const BASE_URL = "https://committeemanagement-production.up.railway.app";
-
 app.use(cors({
   origin: "https://committeemanagement.netlify.app"
 }));
-
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -45,7 +42,7 @@ app.get('/', (req, res) => {
 // =========================
 
 // REGISTER
-app.post(`${BASE_URL}/api/register`, (req, res) => {
+app.post('/api/register', (req, res) => {
   const { name, email, password, department, phone } = req.body;
 
 db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
@@ -66,7 +63,7 @@ db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
 });
 
 // LOGIN
-app.post(`${BASE_URL}/api/login`, (req, res) => {
+app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
 
   const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
@@ -87,7 +84,7 @@ app.post(`${BASE_URL}/api/login`, (req, res) => {
 
 // GET USERS (for admin dropdown)
 // Fetch users for admin page
-app.get(`${BASE_URL}/api/users`, (req, res) => {
+app.get('/api/users', (req, res) => {
   const sql = `
     SELECT 
       (@row := @row + 1) AS id,
@@ -110,14 +107,14 @@ app.get(`${BASE_URL}/api/users`, (req, res) => {
 // PROFILE
 // =========================
 
-app.get(`${BASE_URL}/api/user/:id/profile`, (req, res) => {
+app.get('/api/user/:id/profile', (req, res) => {
   db.query('SELECT * FROM users WHERE id = ?', [req.params.id], (err, result) => {
     if (err || result.length === 0) return res.json(null);
     res.json(result[0]);
   });
 });
 
-app.put(`${BASE_URL}/api/user/:id/profile`, (req, res) => {
+app.put('/api/user/:id/profile', (req, res) => {
   const { name, department, phone } = req.body;
 
   const sql = `
@@ -137,7 +134,7 @@ app.put(`${BASE_URL}/api/user/:id/profile`, (req, res) => {
 // =========================
 
 // GET committees
-app.get(`${BASE_URL}/api/committees`, (req, res) => {
+app.get('/api/committees', (req, res) => {
   const sql = `
     SELECT DISTINCT committee_name, faculty, id
     FROM committees
@@ -154,7 +151,7 @@ app.get(`${BASE_URL}/api/committees`, (req, res) => {
 });
 
 // ADD committee
-app.post(`${BASE_URL}/api/committees`, (req, res) => {
+app.post('/api/committees', (req, res) => {
   const { committee_name, faculty } = req.body;
 
   // Check if the committee already exists
@@ -182,7 +179,7 @@ app.post(`${BASE_URL}/api/committees`, (req, res) => {
 });
 
 // Update committee
-app.put(`${BASE_URL}/api/committees`, (req, res) => {
+app.put('/api/committees', (req, res) => {
   const { id, committee_name, faculty } = req.body;
   const sql = `UPDATE committees SET committee_name = ?, faculty = ? WHERE id = ?`;
   db.query(sql, [committee_name, faculty, id], (err) => {
@@ -192,7 +189,7 @@ app.put(`${BASE_URL}/api/committees`, (req, res) => {
 });
 
 // Delete committee
-app.delete(`${BASE_URL}/api/committees/:id`, (req, res) => {
+app.delete('/api/committees/:id', (req, res) => {
   const id = req.params.id;
   const sql = `DELETE FROM committees WHERE id = ?`;
   db.query(sql, [id], (err) => {
@@ -207,7 +204,7 @@ app.delete(`${BASE_URL}/api/committees/:id`, (req, res) => {
 // =========================
 
 // GET user appointments (Flutter)
-app.get(`${BASE_URL}/api/user/:id/appointments`, (req, res) => {
+app.get('/api/user/:id/appointments', (req, res) => {
   const userId = req.params.id;
 
   const sql = `
@@ -225,7 +222,7 @@ app.get(`${BASE_URL}/api/user/:id/appointments`, (req, res) => {
 });
 
 // ASSIGN appointment (admin)
-app.post(`${BASE_URL}/api/appointments`, (req, res) => {
+app.post('/api/appointments', (req, res) => {
   const { user_id, committee_id, role, start_date, end_date, status } = req.body;
 
   const sql = `
@@ -251,7 +248,7 @@ app.post(`${BASE_URL}/api/appointments`, (req, res) => {
   });
 });
 
-app.put(`${BASE_URL}/api/notifications/:id/read`, (req, res) => {
+app.put('/api/notifications/:id/read', (req, res) => {
   const notificationId = req.params.id;
   const sql = 'UPDATE notifications SET is_read = 1 WHERE id = ?';
   db.query(sql, [notificationId], (err) => {
@@ -264,7 +261,7 @@ app.put(`${BASE_URL}/api/notifications/:id/read`, (req, res) => {
 // =========================
 // RECOMMENDATION (RANKING)
 // =========================
-app.get(`${BASE_URL}/api/recommendations`, (req, res) => {
+app.get('/api/recommendations', (req, res) => {
   const sql = `
     SELECT 
   u.id,
@@ -312,7 +309,7 @@ ORDER BY total_committees ASC;
 // EXPORT REPORT
 // =========================
 
-app.get(`${BASE_URL}/api/report/appointments`, (req, res) => {
+app.get('/api/report/appointments', (req, res) => {
   const { name, committee } = req.query;
 
   let sql = `
@@ -360,7 +357,7 @@ app.get(`${BASE_URL}/api/report/appointments`, (req, res) => {
 // =========================
 // PDF LETTER DOWNLOAD (PDFKit)
 // =========================
-app.get(`${BASE_URL}/api/user/:id/letter/pdf`, (req, res) => {
+app.get('/api/user/:id/letter/pdf', (req, res) => {
   const userId = req.params.id;
 
   // Fetch all active appointments for this user
@@ -494,7 +491,7 @@ function checkExpiringAppointments() {
 setInterval(checkExpiringAppointments, ONE_DAY);
 
 // Get notifications for user or admin
-app.get(`${BASE_URL}/api/notifications/:userId`, (req, res) => {
+app.get('/api/notifications/:userId', (req, res) => {
     const { userId } = req.params;
 
     let sql = "SELECT * FROM notifications WHERE ";
@@ -516,7 +513,7 @@ app.get(`${BASE_URL}/api/notifications/:userId`, (req, res) => {
 });
 
 // APPOINTMENT LETTER TEXT
-app.get(`${BASE_URL}/api/user/:id/letter`, (req, res) => {
+app.get('/api/user/:id/letter', (req, res) => {
   const userId = req.params.id;
 
   const sql = `
@@ -563,7 +560,7 @@ Dean of Faculty`
 
 //CERTIFICATE//
 // Certificate PDF endpoint
-app.get(`${BASE_URL}/api/user/:id/certificate/pdf`, (req, res) => {
+app.get('/api/user/:id/certificate/pdf', (req, res) => {
   const userId = req.params.id;
 
   const sql = `
