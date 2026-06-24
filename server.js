@@ -472,10 +472,16 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
 
 function checkExpiringAppointments() {
     const sql = `
-        SELECT user_id, role, committee_name, end_date
-        FROM appointments
-        WHERE DATEDIFF(end_date, CURDATE()) <= 30
-          AND status='Active'
+        SELECT
+            a.user_id,
+            a.role,
+            c.committee_name,
+            a.end_date
+        FROM appointments a
+        JOIN committees c
+            ON a.committee_id = c.id
+        WHERE DATEDIFF(a.end_date, CURDATE()) BETWEEN 0 AND 30
+        AND a.status = 'Active'
     `;
     db.query(sql, (err, results) => {
         if (err) return console.error(err);
