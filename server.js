@@ -82,7 +82,7 @@ app.post('/api/login', (req, res) => {
     res.json({ success: false, message: 'Invalid login' });
   }
 });
-})
+});
 
 
 // =========================
