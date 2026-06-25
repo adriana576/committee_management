@@ -319,6 +319,7 @@ a:hover {
   background: #f3c7e2;
   border-radius: 12px;
   padding: 10px;
+  display: none;
 }
 
 .notif-item {
