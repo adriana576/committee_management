@@ -21,7 +21,8 @@ app.get('/env-check', (req, res) => {
     port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USER,
     database: process.env.MYSQL_DATABASE,
-    passwordExists: !!process.env.MYSQL_PASSWORD
+    mysqlPasswordLength: process.env.MYSQL_PASSWORD?.length,
+    rootPasswordLength: process.env.MYSQL_ROOT_PASSWORD?.length
   });
 });
 // Notification helpers
