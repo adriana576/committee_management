@@ -7,11 +7,21 @@ const pool = mysql.createPool({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   ssl: {
-    rejectUnauthorized: false
+  rejectUnauthorized: false
   },
+  enableKeepAlive: true,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
+});
+
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+  } else {
+    console.log('Connected to Aiven MySQL');
+    connection.release();
+  }
 });
 
 module.exports = pool;
