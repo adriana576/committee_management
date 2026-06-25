@@ -68,12 +68,19 @@ app.post('/api/login', (req, res) => {
   const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
 
   db.query(sql, [email, password], (err, result) => {
-    if (result.length > 0) {
-      res.json({ success: true, user: result[0] });
-    } else {
-      res.json({ success: false, message: 'Invalid login' });
-    }
-  });
+  if (err) {
+    console.error('Login query error:', err);
+    return res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+
+  if (result && result.length > 0) {
+    res.json({ success: true, user: result[0] });
+  } else {
+    res.json({ success: false, message: 'Invalid login' });
+  }
 });
 
 
