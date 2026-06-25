@@ -44,21 +44,54 @@ app.get('/', (req, res) => {
 app.post('/api/register', (req, res) => {
   const { name, email, password, department, phone } = req.body;
 
-db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
-    if (result.length > 0) {
-      return res.json({ success: false, message: 'Email already exists' });
+  db.query(
+    'SELECT * FROM users WHERE email = ?',
+    [email],
+    (err, result) => {
+
+      // Check database error dahulu
+      if (err) {
+        console.error('Check email error:', err);
+        return res.json({
+          success: false,
+          message: err.message
+        });
+      }
+
+      // Check email already exists
+      if (result && result.length > 0) {
+        return res.json({
+          success: false,
+          message: 'Email already exists'
+        });
+      }
+
+      const sql = `
+        INSERT INTO users
+        (name, email, password, role, department, phone)
+        VALUES (?, ?, ?, 'user', ?, ?)
+      `;
+
+      db.query(
+        sql,
+        [name, email, password, department, phone],
+        (err) => {
+          if (err) {
+            console.error('Register error:', err);
+            return res.json({
+              success: false,
+              message: err.message
+            });
+          }
+
+          res.json({
+            success: true,
+            message: 'Register successful'
+          });
+        }
+      );
     }
-
-  const sql = `
-    INSERT INTO users (name, email, password, role, department, phone)
-    VALUES (?, ?, ?, 'user', ?, ?)
-  `;
-
-  db.query(sql, [name, email, password, department, phone], (err) => {
-    if (err) return res.json({ success: false, message: 'Email already exists' });
-    res.json({ success: true, message: 'Register successful' });
-  });
-});
+  );
 });
 
 // LOGIN
