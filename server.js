@@ -93,18 +93,21 @@ app.post('/api/login', (req, res) => {
 // Fetch users for admin page
 app.get('/api/users', (req, res) => {
   const sql = `
-    SELECT 
-      (@row := @row + 1) AS id,
-      name,
-      email,
-      department,
-      phone
-    FROM users, (SELECT @row := 0) AS r
+    SELECT id, name, email, department, phone
+    FROM users
     WHERE role = 'user'
     ORDER BY name ASC
   `;
+
   db.query(sql, (err, results) => {
-    if (err) return res.status(500).json({ success: false, message: err.message });
+    if (err) {
+      console.error('Users error:', err);
+      return res.json({
+        success: false,
+        message: err.message
+      });
+    }
+
     res.json(results);
   });
 });
