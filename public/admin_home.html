@@ -81,10 +81,23 @@ if (role === 'admin') {
   userNameElement.innerText = `Welcome, ${localStorage.getItem('userName')}`;
 }
 
+let notificationsLoaded = false;
+
 // toggle panel
-function toggleNotif() {
+async function toggleNotif() {
   const panel = document.getElementById('notifications');
-  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+
+  if (panel.style.display === 'block') {
+    panel.style.display = 'none';
+    return;
+  }
+
+  panel.style.display = 'block';
+
+  if (!notificationsLoaded) {
+    await loadNotifications();
+    notificationsLoaded = true;
+  }
 }
 
 // load notifications
@@ -102,14 +115,11 @@ async function loadNotifications() {
 
   container.innerHTML = notifications.map(n => `
     <div class="notif-item" id="notif-${n.id}" onclick="markAsRead(${n.id})">
-
       <div class="notif-icon">🔔</div>
-
       <div>
         <div class="notif-message">${n.message}</div>
         <div class="notif-time">${new Date(n.created_at).toLocaleString()}</div>
       </div>
-
     </div>
   `).join('');
 }

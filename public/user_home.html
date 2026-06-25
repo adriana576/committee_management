@@ -123,8 +123,23 @@ function markAsRead(id) {
 }
 
 // auto refresh
-loadNotifications();
-setInterval(loadNotifications, 10000);
+let notificationsLoaded = false;
+
+async function toggleNotif() {
+  const panel = document.getElementById('notifications');
+
+  if (panel.style.display === 'block') {
+    panel.style.display = 'none';
+    return;
+  }
+
+  panel.style.display = 'block';
+
+  if (!notificationsLoaded) {
+    await loadNotifications();
+    notificationsLoaded = true;
+  }
+}
 
 // logout
 function logout() {
