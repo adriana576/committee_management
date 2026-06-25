@@ -14,17 +14,6 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/env-check', (req, res) => {
-  res.json({
-    host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT,
-    user: process.env.MYSQL_USER,
-    database: process.env.MYSQL_DATABASE,
-    mysqlPasswordLength: process.env.MYSQL_PASSWORD?.length,
-    rootPasswordLength: process.env.MYSQL_ROOT_PASSWORD?.length
-  });
-});
 // Notification helpers
 // =========================
 function sendNotification(userId, message) {
