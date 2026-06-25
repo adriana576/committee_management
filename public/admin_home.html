@@ -134,10 +134,6 @@ function markAsRead(id) {
   });
 }
 
-// auto refresh every 10 sec
-loadNotifications();
-setInterval(loadNotifications, 10000);
-
 // logout
 function logout() {
   localStorage.clear();
