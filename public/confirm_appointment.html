@@ -91,13 +91,18 @@
     const data = await res.json();
     document.getElementById('msg').innerText = data.message;
 
-    if(data.success){
-      alert("Appointment has been successfully finalized.");
-      window.location.href = "assign_appointment.html";
-    }
-    else{
-      alert("Failed to finalize appointment.");
-}
+    if (data.success) {
+    msg.style.color = "green";
+    msg.innerHTML = "Appointment have been successfully finalized.";
+
+    setTimeout(() => {
+        window.location.href = "recommendation.html";
+    }, 1500);
+
+  } else {
+    msg.style.color = "red";
+    msg.innerHTML = " Failed to finalize.";
+  }
   }
 
   function logout() {
