@@ -75,11 +75,6 @@ if (role === 'admin') {
   userNameElement.innerText = `Welcome, ${localStorage.getItem('userName')}`;
 }
 
-// toggle panel
-function toggleNotif() {
-  const panel = document.getElementById('notifications');
-  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-}
 
 // load notifications
 async function loadNotifications() {
@@ -114,7 +109,7 @@ async function loadNotifications() {
 
 // mark as read
 function markAsRead(id) {
-  fetch(`${BASE_URL}//api/notifications/${id}/read`, {
+  fetch(`${BASE_URL}/api/notifications/${id}/read`, {
     method: 'PUT'
   }).then(() => {
     document.getElementById(`notif-${id}`)?.remove();
@@ -140,6 +135,31 @@ async function toggleNotif() {
     notificationsLoaded = true;
   }
 }
+
+async function loadDashboardCounts() {
+  const userId = localStorage.getItem('userId');
+
+  const res = await fetch(`${BASE_URL}/api/user/${userId}/appointments`);
+  const appointments = await res.json();
+
+  const today = new Date();
+
+  const total = appointments.length;
+
+  const active = appointments.filter(a => {
+    const start = new Date(a.start_date);
+    const end = new Date(a.end_date);
+    return start <= today && end >= today;
+  }).length;
+
+  const inactive = total - active;
+
+  document.getElementById('totalAppointments').innerText = total;
+  document.getElementById('activeAppointments').innerText = active;
+  document.getElementById('inactiveAppointments').innerText = inactive;
+}
+
+loadDashboardCounts();
 
 // logout
 function logout() {
