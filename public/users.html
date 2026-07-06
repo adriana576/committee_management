@@ -36,8 +36,6 @@
 
 
 <script>
-const BASE_URL = "https://committee-management-1-9gav.onrender.com";
-
 async function loadUsers() {
   const res = await fetch(`${BASE_URL}/api/users`);
   const data = await res.json();
