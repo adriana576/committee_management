@@ -99,7 +99,7 @@ html, body {
 
 /* Cards */
 .card, .recommendation-card, .chart-card, .info-card {
-  background: white;
+  background: rgb(255, 179, 223);
   border-radius: 20px;
   padding: 16px 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
