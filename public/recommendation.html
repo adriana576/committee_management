@@ -94,6 +94,8 @@
 </div>
 
 <script>
+const BASE_URL = "https://zarinaproject.my";
+
 async function loadRecommendations() {
   const res = await fetch(`${BASE_URL}/api/recommendations`);
   const data = await res.json();
