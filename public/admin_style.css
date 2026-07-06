@@ -446,20 +446,6 @@ transition:.3s;
 transform:translateY(-8px);
 }
 
-.avatar{
-width:70px;
-height:70px;
-background:linear-gradient(135deg,#5b21b6,#8b5cf6);
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-color:white;
-font-size:32px;
-font-weight:bold;
-margin:10px auto;
-}
-
 .status-badge{
 position:absolute;
 top:20px;
