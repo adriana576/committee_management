@@ -1,23 +1,19 @@
 const mysql = require('mysql2');
 
-const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST,
-  port: Number(process.env.MYSQL_PORT),
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const db = mysql.createConnection({
+    host: 'srv2133.hstgr.io',
+    user: 'u125391022_committee',
+    password: 'xxxxxxxx',
+    database: 'u125391022_committee_db',
+    port: 3306
 });
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Database connection failed:', err.message);
-  } else {
-    console.log('Connected to FreeDB MySQL');
-    connection.release();
-  }
+db.connect(err => {
+    if(err){
+        console.log(err);
+    }else{
+        console.log("Connected to Hostinger MySQL");
+    }
 });
 
-module.exports = pool;
+module.exports = db;
