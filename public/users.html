@@ -103,69 +103,42 @@ async function loadUsers() {
 }
 
 function renderUserCards(data){
-
     const container=document.getElementById("userCards");
-
     container.innerHTML="";
-
     data.forEach(item=>{
-
         container.innerHTML +=`
 
 <div class="modern-user-card">
-
-<div class="status-badge">
-Active
-</div>
-
+<div class="status-badge">Active</div>
 <img src="img/LogoUiTM.png" class="user-logo">
 
 <div class="avatar">
 ${item.name.charAt(0).toUpperCase()}
 </div>
 <h2>${item.name}</h2>
-
 <h4>${item.department ?? "-"}</h4>
-
 <div class="info">
 <p>Phone ${item.phone ?? "-"}</p>
-
 <p>Email ${item.email}</p>
-
 </div>
 
 <div class="actions">
-
-<button class="view-btn">
-View
-</button>
-
-<button class="edit-btn">
-Edit
-</button>
-
+<button class="view-btn">View</button>
+<button class="edit-btn">Edit</button>
 </div>
-
 </div>
 
 `;
-
     });
-
 }
 
 function searchUsers(){
-
 const input=document.getElementById("searchInput").value.toLowerCase();
-
 const cards=document.querySelectorAll(".modern-user-card");
 
 cards.forEach(card=>{
-
 const txt=card.innerText.toLowerCase();
-
 card.style.display=txt.includes(input)?"":"none";
-
 });
 
 }

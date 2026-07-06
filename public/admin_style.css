@@ -446,6 +446,20 @@ transition:.3s;
 transform:translateY(-8px);
 }
 
+.avatar{
+width:70px;
+height:70px;
+background:linear-gradient(135deg,#5b21b6,#8b5cf6);
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+font-size:32px;
+font-weight:bold;
+margin:10px auto;
+}
+
 .status-badge{
 position:absolute;
 top:20px;
@@ -485,4 +499,26 @@ background:#8b5cf6;
 
 .edit-btn{
 background:#10b981;
+}
+
+/* Fix UiTM logo size inside modern staff card */
+.modern-user-card .user-logo {
+  width: 70px;
+  height: auto;
+  display: block;
+  margin: 0 auto 12px auto;
+  object-fit: contain;
+}
+
+/* Make staff cards align nicely */
+.user-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 24px;
+}
+
+/* Fix card width supaya tak overflow */
+.modern-user-card {
+  width: auto;
+  max-width: 100%;
 }
