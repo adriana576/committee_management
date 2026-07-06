@@ -19,7 +19,8 @@
     <a href="admin_home.html">Home</a>
     <a href="committees.html">Manage Committee</a>
     <a class="active" href="confirm_appointment.html">Finalize Appointment</a>
-    <a href="users.html">Notify User</a>
+    <a href="users.html">View Staff</a>
+    <a class="active" href="export_report.html">Search</a>
     <a href="recommendation.html">Generate Recommendation</a>
     <button class="logout-btn" onclick="logout()">LOG OUT</button>
   </div>
@@ -52,7 +53,7 @@
 
 <script>
   const BASE_URL = "https://zarinaproject.my";
-  
+
   const selectedUserId = localStorage.getItem('selectedUserId');
   const selectedUserName = localStorage.getItem('selectedUserName');
 
