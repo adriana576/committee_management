@@ -91,11 +91,13 @@
     const data = await res.json();
     document.getElementById('msg').innerText = data.message;
 
-    if (data.success) {
-      setTimeout(() => {
-        window.location.href = 'assign_appointment.html';
-      }, 1000);
+    if(data.success){
+      alert("Appointment has been successfully finalized.");
+      window.location.href = "assign_appointment.html";
     }
+    else{
+      alert("Failed to finalize appointment.");
+}
   }
 
   function logout() {

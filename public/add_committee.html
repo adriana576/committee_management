@@ -56,10 +56,20 @@
   const data = await res.json();
   console.log(data);
 
-    if (data.success) {
-      document.getElementById('committee_name').value = '';
-      document.getElementById('faculty').value = '';
-    }
+  const msg = document.getElementById("msg");
+
+  if (data.success) {
+    msg.style.color = "green";
+    msg.innerHTML = "✓ Committee added successfully.";
+
+    setTimeout(() => {
+        window.location.href = "committees.html";
+    }, 1500);
+
+  } else {
+    msg.style.color = "red";
+    msg.innerHTML = "✗ Failed to add committee.";
+  }
   }
 
   function logout() {
