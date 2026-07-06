@@ -4,7 +4,7 @@ html, body {
   padding: 0;
   font-family: Arial, sans-serif;
   height: 100%;
-  background: #f5f0fa;
+  background: linear-gradient(135deg, #f7f2ff 0%, #f4f6fb 100%);
 }
 
 /* Sidebar - uniform for all pages */
@@ -72,7 +72,7 @@ html, body {
   left: 250px; /* match sidebar width */
   right: 0;
   height: 60px;
-  background: #4B0082;
+  background: linear-gradient(90deg, #4b0082, #6d28d9);
   color: white;
   display: flex;
   align-items: center;
@@ -359,4 +359,3 @@ a:hover {
 .notif-item.unread {
   border-left: 4px solid #4B0082;
 }
-
