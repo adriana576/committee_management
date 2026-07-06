@@ -70,7 +70,7 @@ const role = localStorage.getItem('role');
 const userNameElement = document.getElementById('userName');
 
 if (role === 'admin') {
-  userNameElement.innerText = 'Admin Dashboard';
+  userNameElement.innerText = 'User';
 } else {
   userNameElement.innerText = `Welcome, ${localStorage.getItem('userName')}`;
 }
