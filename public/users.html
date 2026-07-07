@@ -22,90 +22,146 @@
     <a class="active" href="users.html">View Staff</a>
     <a href="view_user.html">Search</a>
     <a href="recommendation.html">Generate Recommendation</a>
-    
     <button class="logout-btn" onclick="logout()">LOG OUT</button>
   </div>
 
   <div class="content">
 
     <div class="page-header">
-        <div>
-            <h1>Staff Management</h1>
-            <p>View and manage all registered staff in the committee system.</p>
-        </div>
+      <div>
+        <h1>Staff Management</h1>
+        <p>View and manage all registered staff in the committee system.</p>
+      </div>
 
-        <button class="add-btn" onclick="window.location.href='add_staff.html'">
-          + Add New Staff
-        </button>
+      <button class="add-btn" onclick="window.location.href='add_staff.html'">
+        + Add New Staff
+      </button>
     </div>
 
     <div class="stats-grid">
-
-        <div class="stat-card purple">
-            <div class="icon">TS</div>
-            <div>
-                <h2 id="totalStaff">0</h2>
-                <span>Total Staff</span>
-            </div>
+      <div class="stat-card purple">
+        <div class="icon">TS</div>
+        <div>
+          <h2 id="totalStaff">0</h2>
+          <span>Total Staff</span>
         </div>
+      </div>
 
-        <div class="stat-card green">
-            <div class="icon">AU</div>
-            <div>
-                <h2 id="activeStaff">0</h2>
-                <span>Registered Users</span>
-            </div>
+      <div class="stat-card green">
+        <div class="icon">AU</div>
+        <div>
+          <h2 id="activeStaff">0</h2>
+          <span>Registered Users</span>
         </div>
+      </div>
 
-        <div class="stat-card blue">
-            <div class="icon">DR</div>
-            <div>
-                <h2 id="departmentCount">0</h2>
-                <span>Departments</span>
-            </div>
+      <div class="stat-card blue">
+        <div class="icon">DR</div>
+        <div>
+          <h2 id="departmentCount">0</h2>
+          <span>Departments</span>
         </div>
-
+      </div>
     </div>
 
     <div class="search-box">
-
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search staff by name or department..."
-            onkeyup="searchUsers()">
-
+      <input type="text" id="searchInput"
+        placeholder="Search staff by name or department..."
+        onkeyup="searchUsers()">
     </div>
 
     <div class="user-cards" id="userCards"></div>
 
-</div>
+  </div>
 </div>
 
+<div id="staffModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Staff Details</h2>
 
+    <div class="modal-avatar" id="modalAvatar"></div>
+
+    <p><b>Name:</b> <span id="modalName"></span></p>
+    <p><b>Email:</b> <span id="modalEmail"></span></p>
+    <p><b>Department:</b> <span id="modalDepartment"></span></p>
+    <p><b>Phone:</b> <span id="modalPhone"></span></p>
+  </div>
+</div>
 
 <script>
 const BASE_URL = "https://zarinaproject.my";
+let allUsers = [];
 
 async function loadUsers() {
+  const res = await fetch(`${BASE_URL}/api/users`);
+  const data = await res.json();
 
-    const res = await fetch(`${BASE_URL}/api/users`);
-    const data = await res.json();
+  allUsers = data;
 
-    document.getElementById("totalStaff").innerText = data.length;
-    document.getElementById("activeStaff").innerText = data.length;
+  document.getElementById("totalStaff").innerText = data.length;
+  document.getElementById("activeStaff").innerText = data.length;
 
-    const departments = [...new Set(data.map(x => x.department))];
-    document.getElementById("departmentCount").innerText = departments.length;
+  const departments = [...new Set(data.map(x => x.department).filter(Boolean))];
+  document.getElementById("departmentCount").innerText = departments.length;
 
-    renderUserCards(data);
+  renderUserCards(data);
+}
 
+function renderUserCards(data) {
+  const container = document.getElementById("userCards");
+  container.innerHTML = "";
+
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="modern-user-card">
+        <div class="status-badge">Active</div>
+        <img src="img/LogoUiTM.png" class="user-logo">
+
+        <div class="avatar">
+          ${item.name.charAt(0).toUpperCase()}
+        </div>
+
+        <h2>${item.name}</h2>
+        <h4>${item.department ?? "-"}</h4>
+
+        <div class="info">
+          <p>Phone ${item.phone ?? "-"}</p>
+          <p>Email ${item.email}</p>
+        </div>
+
+        <div class="actions">
+          <button class="view-btn" onclick="viewUser(${item.id})">View</button>
+          <button class="edit-btn" onclick="editUser(${item.id})">Edit</button>
+          <button class="delete-btn" onclick="deleteUser(${item.id})">Delete</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function viewUser(id) {
+  const user = allUsers.find(u => u.id == id);
+
+  document.getElementById("modalAvatar").innerText = user.name.charAt(0).toUpperCase();
+  document.getElementById("modalName").innerText = user.name;
+  document.getElementById("modalEmail").innerText = user.email;
+  document.getElementById("modalDepartment").innerText = user.department || "-";
+  document.getElementById("modalPhone").innerText = user.phone || "-";
+
+  document.getElementById("staffModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("staffModal").style.display = "none";
+}
+
+function editUser(id) {
+  window.location.href = `edit_staff.html?id=${id}`;
 }
 
 async function deleteUser(id) {
-  const confirmDelete = confirm("Are you sure you want to delete this staff?");
-
-  if (!confirmDelete) return;
+  if (!confirm("Are you sure you want to delete this staff?")) return;
 
   const res = await fetch(`${BASE_URL}/api/users/${id}`, {
     method: "DELETE"
@@ -121,53 +177,18 @@ async function deleteUser(id) {
   }
 }
 
-function renderUserCards(data){
-    const container=document.getElementById("userCards");
-    container.innerHTML="";
-    data.forEach(item=>{
-        container.innerHTML +=`
+function searchUsers() {
+  const input = document.getElementById("searchInput").value.toLowerCase().trim();
+  const cards = document.querySelectorAll(".modern-user-card");
 
-<div class="modern-user-card">
-<div class="status-badge">Active</div>
-<img src="img/LogoUiTM.png" class="user-logo">
-
-<div class="avatar">
-${item.name.charAt(0).toUpperCase()}
-</div>
-<h2>${item.name}</h2>
-<h4>${item.department ?? "-"}</h4>
-<div class="info">
-<p>Phone ${item.phone ?? "-"}</p>
-<p>Email ${item.email}</p>
-</div>
-
-<div class="actions">
-  <button class="view-btn" onclick="viewUser(${item.id})">View</button>
-  <button class="edit-btn" onclick="editUser(${item.id})">Edit</button>
-  <button class="delete-btn" onclick="deleteUser(${item.id})">Delete</button>
-</div>
-</div>
-
-`;
-    });
+  cards.forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(input) ? "" : "none";
+  });
 }
 
-function searchUsers(){
-const input=document.getElementById("searchInput").value.toLowerCase();
-const cards=document.querySelectorAll(".modern-user-card");
-
-cards.forEach(card=>{
-const txt=card.innerText.toLowerCase();
-card.style.display=txt.includes(input)?"":"none";
-});
-}
-
-function viewUser(id) {
-  window.location.href = `user_profile.html?id=${id}`;
-}
-
-function editUser(id){
-  window.location.href=`edit_staff.html?id=${id}`;
+function logout() {
+  localStorage.clear();
+  window.location.href = "index.html";
 }
 
 loadUsers();
