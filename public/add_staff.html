@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Staff</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Admin</h3>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <h2>
+      <img src="img/LogoUiTM.png" class="logo" alt="UiTM Logo">
+      Committee Management System
+    </h2>
+    <a href="admin_home.html">Home</a>
+    <a href="committees.html">Manage Committee</a>
+    <a href="assign_appointment.html">Finalize Appointment</a>
+    <a class="active" href="users.html">View Staff</a>
+    <a href="export_report.html">Search</a>
+    <a href="recommendation.html">Generate Recommendation</a>
+    <button class="logout-btn" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="content">
+    <div class="page-header">
+      <div>
+        <h1>Add New Staff</h1>
+        <p>Create a new staff account for the committee system.</p>
+      </div>
+    </div>
+
+    <div class="card staff-form-card">
+      <label>Name</label>
+      <input type="text" id="name" placeholder="Enter staff name">
+
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Enter staff email">
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter password">
+
+      <label>Department</label>
+      <input type="text" id="department" placeholder="Enter department">
+
+      <label>Phone</label>
+      <input type="text" id="phone" placeholder="Enter phone number">
+
+      <div class="form-actions">
+        <button onclick="addStaff()">Save Staff</button>
+        <button class="cancel-btn" onclick="window.location.href='users.html'">Cancel</button>
+      </div>
+
+      <p id="msg"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const BASE_URL = "https://zarinaproject.my";
+
+async function addStaff() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const department = document.getElementById("department").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const msg = document.getElementById("msg");
+
+  if (!name || !email || !password) {
+    msg.style.color = "red";
+    msg.innerText = "Please fill in name, email and password.";
+    return;
+  }
+
+  const res = await fetch(`${BASE_URL}/api/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password, department, phone })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    msg.style.color = "green";
+    msg.innerText = "Staff added successfully.";
+
+    setTimeout(() => {
+      window.location.href = "users.html";
+    }, 1200);
+  } else {
+    msg.style.color = "red";
+    msg.innerText = data.message || "Failed to add staff.";
+  }
+}
+
+function logout() {
+  localStorage.clear();
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

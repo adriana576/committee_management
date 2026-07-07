@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Staff</title>
+  <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <h3>Admin</h3>
+</div>
+
+<div class="layout">
+
+<div class="sidebar">
+<h2>
+<img src="img/LogoUiTM.png" class="logo">
+Committee Management System
+</h2>
+
+<a href="admin_home.html">Home</a>
+<a href="committees.html">Manage Committee</a>
+<a href="assign_appointment.html">Finalize Appointment</a>
+<a class="active" href="users.html">View Staff</a>
+<a href="export_report.html">Search</a>
+<a href="recommendation.html">Generate Recommendation</a>
+
+<button class="logout-btn" onclick="logout()">LOG OUT</button>
+
+</div>
+
+<div class="content">
+
+<div class="page-header">
+<div>
+<h1>Edit Staff</h1>
+<p>Update staff information.</p>
+</div>
+</div>
+
+<div class="card staff-form-card">
+
+<input type="hidden" id="userId">
+
+<label>Name</label>
+<input id="name">
+
+<label>Email</label>
+<input id="email">
+
+<label>Department</label>
+<input id="department">
+
+<label>Phone</label>
+<input id="phone">
+
+<label>Password</label>
+<input id="password" type="password" placeholder="Leave blank to keep existing password">
+
+<div class="form-actions">
+
+<button onclick="updateUser()">
+Update Staff
+</button>
+
+<button class="cancel-btn"
+onclick="window.location.href='users.html'">
+Cancel
+</button>
+
+</div>
+
+<p id="msg"></p>
+
+</div>
+</div>
+</div>
+
+<script>
+const BASE_URL="https://zarinaproject.my";
+const params=new URLSearchParams(window.location.search);
+const id=params.get("id");
+
+async function loadUser(){
+const res=await fetch(`${BASE_URL}/api/users/${id}`);
+const users=await res.json();
+const user=users.find(x=>x.id==id);
+
+document.getElementById("userId").value=user.id;
+document.getElementById("name").value=user.name;
+document.getElementById("email").value=user.email;
+document.getElementById("department").value=user.department;
+document.getElementById("phone").value=user.phone;
+}
+
+async function updateUser(){
+const body={
+id:document.getElementById("userId").value,
+name:document.getElementById("name").value,
+email:document.getElementById("email").value,
+department:document.getElementById("department").value,
+phone:document.getElementById("phone").value,
+password:document.getElementById("password").value
+};
+
+const res=await fetch(`${BASE_URL}/api/users`,{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify(body)
+
+});
+
+const data=await res.json();
+
+if(data.success){
+
+alert("Staff updated successfully.");
+
+window.location.href="users.html";
+
+}else{
+
+alert(data.message);
+
+}
+
+}
+
+function logout(){
+
+localStorage.clear();
+
+window.location.href="index.html";
+
+}
+
+loadUser();
+
+</script>
+
+</body>
+</html>

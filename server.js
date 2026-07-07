@@ -124,7 +124,14 @@ app.post('/api/login', (req, res) => {
 // Fetch users for admin page
 app.get('/api/users', (req, res) => {
   const sql = `
-    SELECT id, name, email, department, phone
+    SELECT
+      id,
+      name,
+      email,
+      role,
+      department,
+      phone,
+      created_at
     FROM users
     WHERE role = 'user'
     ORDER BY name ASC
@@ -133,7 +140,7 @@ app.get('/api/users', (req, res) => {
   db.query(sql, (err, results) => {
     if (err) {
       console.error('Users error:', err);
-      return res.json({
+      return res.status(500).json({
         success: false,
         message: err.message
       });
@@ -143,6 +150,23 @@ app.get('/api/users', (req, res) => {
   });
 });
 
+app.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+
+  db.query("DELETE FROM users WHERE id = ?", [id], (err) => {
+    if (err) {
+      return res.json({
+        success: false,
+        message: "Failed to delete staff."
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Staff deleted successfully."
+    });
+  });
+});
 
 // =========================
 // PROFILE

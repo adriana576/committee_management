@@ -514,11 +514,40 @@ background:#10b981;
 .user-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  gap: 24px;
+  gap: 20px;
+  justify-content: flex-start;
 }
 
 /* Fix card width supaya tak overflow */
 .modern-user-card {
   width: auto;
   max-width: 100%;
+}
+
+.staff-form-card {
+  max-width: 650px;
+  padding: 30px;
+}
+
+.staff-form-card label {
+  font-weight: 700;
+  color: #2b174d;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.cancel-btn {
+  background: #999;
+}
+
+.delete-btn {
+  background: #ef4444;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
 }
