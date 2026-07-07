@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Export Report</title>
+  <title>View User</title>
   <link rel="stylesheet" href="admin_style.css">
 </head>
 <body>
@@ -20,18 +20,22 @@
     <a href="committees.html">Manage Committee</a>
     <a href="assign_appointment.html">Finalize Appointment</a>
     <a href="users.html">View Staff</a>
-    <a class="active" href="export_report.html">Search</a>
+    <a class="active" href="view_user.html">Search</a>
     <a href="recommendation.html">Generate Recommendation</a>
     <button class="logout-btn" onclick="logout()">LOG OUT</button>
   </div>
 
   <div class="content">
-    <h1><Search></Search></h1>
+    <h1>Search</h1>
 
     <div class="card">
       <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by name or committee">
-        <button onclick="searchReport()"></Search></button>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by staff name or committee..."
+          onkeyup="searchReport()">
+        <button onclick="searchReport()">Search></button>
       </div>
 
       <div class="user-cards" id="reportBody">
@@ -83,19 +87,30 @@ function renderCards(data) {
 }
 
 function searchReport() {
-  const input = document.getElementById('searchInput').value.toLowerCase();
-  const cards = document.querySelectorAll('.user-card');
 
-  cards.forEach(card => {
-    const name = card.querySelector('h3').innerText.toLowerCase();
-    const committee = card.querySelectorAll('p')[0].innerText.toLowerCase();
+    const input = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
 
-    if (name.includes(input) || committee.includes(input)) {
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
-  });
+    const cards = document.querySelectorAll(".user-card");
+
+    cards.forEach(card => {
+
+        if (input === "") {
+            card.style.display = "";
+            return;
+        }
+
+        const text = card.innerText.toLowerCase();
+
+        card.style.display = text.includes(input)
+            ? ""
+            : "none";
+
+    });
+
 }
 
 function logout() {
