@@ -316,13 +316,12 @@ a:hover {
 }
 
 /* Sidebar logo */
-.sidebar-logo {
-  display: block;
-  width: 120px;       /* adjust width as needed */
-  height: auto;
-  margin: 20px auto 10px auto; /* center horizontally */
-  border-radius: 8px; /* optional */
+.sidebar .logo{
+    width:60px !important;
+    height:auto !important;
+    object-fit:contain;
 }
+
 .sidebar h2 {
   font-size: 18px;
   padding: 0 20px 20px 20px;
