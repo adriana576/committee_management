@@ -697,81 +697,60 @@ a:hover {
   }
 }
 
-/* ===============================
-   FINALIZE APPOINTMENT PAGE
-================================ */
-.appointment-card{
-  background:#f8d8eb;
-  width:700px;
-  max-width:90%;
-  border-radius:25px;
-  padding:30px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
+/* ===========================
+ FINALIZE APPOINTMENT
+=========================== */
+.content h1{
+  font-size:40px;
+  margin-bottom:35px;
 }
 
-.appointment-card h3{
-  margin-bottom:25px;
-  font-size:22px;
+.finalize-card{
+  width:430px;
+  background:#fff7fa;
+  padding:25px;
+  border-radius:0px;
+  box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
-.appointment-form{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-.form-group{
+.finalize-card .form-group{
   display:flex;
   flex-direction:column;
-  gap:8px;
+  margin-bottom:18px;
 }
 
-.form-group label{
-  font-size:16px;
-  font-weight:600;
+.finalize-card label{
+  font-size:15px;
+  margin-bottom:6px;
   color:#333;
 }
 
-.form-group select,
-.form-group input{
-  width:100%;
-  padding:12px 15px;
-  border-radius:12px;
-  border:1px solid #ccc;
-  font-size:15px;
-  background:white;
-  box-sizing:border-box;
+.finalize-card select,
+.finalize-card input{
+  height:38px;
+  background:#eeeeee;
+  border:none;
+  padding:0 12px;
+  font-size:14px;
 }
 
-.form-group select:focus,
-.form-group input:focus{
-  outline:none;
-  border-color:#7c3aed;
-  box-shadow:0 0 0 3px rgba(124,58,237,.15);}
-
-.full-width{
-  grid-column:1/-1;
+.finalize-card select:focus,
+.finalize-card input:focus{
+  outline:2px solid #7c3aed;
+  background:white;
 }
 
 .assign-btn{
-  margin-top:10px;
-  background:linear-gradient(135deg,#6d28d9,#8b5cf6);
-  color:white;
-  border:none;
-  padding:13px 25px;
-  border-radius:15px;
+  margin-top:25px;
+  background:#d9d9d9;
+  color:#333;
+  border:none; 
+  padding:10px 30px;
+  border-radius:20px;
   cursor:pointer;
-  font-size:16px;
 }
 
 .assign-btn:hover{
-  transform:translateY(-2px);
-}
-
-/* responsive */
-@media(max-width:800px){
-
-.appointment-form{
-  grid-template-columns:1fr;
-}
+  background:#7c3aed;
+  color:white;
 }
