@@ -80,8 +80,6 @@ html, body {
   box-shadow: 0 0 0 3px rgba(124,58,237,.15);
 }
 
-
-
 /* button */
 .auth-btn {
   width:100%;
@@ -202,13 +200,13 @@ html, body {
 /* Main content */
 .content {
   flex: 1;
-  width: calc(100vw - 260px);
-  padding: 20px 40px;
+  padding:20px 40px;
+  min-width:0;
 }
 
 /* Cards */
 .card, .recommendation-card, .chart-card, .info-card {
-  background: rgb(252, 212, 235);
+  background: rgb(250, 236, 244);
   border-radius: 20px;
   padding: 16px 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -221,7 +219,12 @@ html, body {
   gap: 20px;
 }
 
-
+@media(max-width:600px){
+  .auth-card{
+    width:85%;
+    padding:25px;
+  }
+}
 
 /* Recommendation card layout */
 .recommendation-card {
@@ -305,16 +308,6 @@ button:hover, .btn-select:hover {
   background: #8356d6;
 }
 
-/* Inputs & Forms */
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-sizing: border-box;
-}
-
 /* Links */
 a {
   color: #4B0082;
@@ -350,32 +343,32 @@ a:hover {
 
 /* Search box styling */
 .search-container {
-      display: flex;
-      margin-bottom: 20px;
-      gap: 10px;
-    }
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
 
-    .search-container input {
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-    }
+.search-container input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+}
 
-    .search-container button {
-      background-color: #6f42c1;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 10px 16px;
-      cursor: pointer;
-    }
+.search-container button {
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
 
-    .search-container button:hover {
-      background-color: #8356d6;
-    }
+.search-container button:hover {
+  background-color: #8356d6;
+}
 
-  .user-cards {
+.user-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;          /* space between cards */
@@ -392,36 +385,36 @@ a:hover {
   text-align: center;
 }
 
-    .user-card .user-logo {
-      width: 60px;
-      margin-bottom: 12px;
-    }
+.user-card .user-logo {
+  width: 60px;
+  margin-bottom: 12px;
+}
 
-    .user-card .status.active {
-      color: green;
-      font-weight: bold;
-    }
+.user-card .status.active {
+  color: green;
+  font-weight: bold;
+}
 
-    .user-card .status.inactive {
-      color: red;
-      font-weight: bold;
-    }
+.user-card .status.inactive {
+  color: red;
+  font-weight: bold;
+}
 
-    .user-card img.user-logo {
-      width: 80px;
-      margin-bottom: 12px;
-    }
+.user-card img.user-logo {
+  width: 80px;
+  margin-bottom: 12px;
+}
 
-    .user-card h3 {
-      margin: 8px 0 4px 0;
-    }
+.user-card h3 {
+  margin: 8px 0 4px 0;
+}
 
-    .user-card p {
-      margin: 2px 0;
-      font-size: 14px;
-    }
+.user-card p {
+  margin: 2px 0;
+  font-size: 14px;
+}
 
-  .notifications-panel {
+.notifications-panel {
   width: 320px;
   max-height: 400px;
   overflow-y: auto;
@@ -470,144 +463,144 @@ a:hover {
 }
 
 .page-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
 }
 
 .page-header h1{
-font-size:42px;
-margin-bottom:5px;
+  font-size:42px;
+  margin-bottom:5px;
 }
 
 .page-header p{
-color:#666;
+  color:#666;
 }
 
 .add-btn{
-background:linear-gradient(135deg,#6a11cb,#8b5cf6);
-padding:14px 25px;
-font-size:16px;
+  background:linear-gradient(135deg,#6a11cb,#8b5cf6);
+  padding:14px 25px;
+  font-size:16px;
 }
 
 .stats-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-margin-bottom:25px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-bottom:25px;
 }
 
 .stat-card{
-background:white;
-border-radius:20px;
-padding:25px;
-display:flex;
-align-items:center;
-gap:20px;
-box-shadow:0 8px 20px rgba(0,0,0,.08);
+  background:white;
+  border-radius:20px;
+  padding:25px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .icon{
-width:70px;
-height:70px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:32px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:32px;
 }
 
 .purple .icon{
-background:#efe4ff;
+  background:#efe4ff;
 }
 
 .green .icon{
-background:#dff8e8;
+  background:#dff8e8;
 }
 .blue .icon{
-background:#ddeeff;
+  background:#ddeeff;
 }
 
 .search-box{
-background:white;
-padding:20px;
-border-radius:20px;
-margin-bottom:30px;
-box-shadow:0 8px 20px rgba(0,0,0,.08);
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:30px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .search-box input{
-margin:0;
+  margin:0;
 }
 
 .modern-user-card{
-position:relative;
-background:white;
-border-radius:20px;
-padding:25px;
-width:350px;
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-transition:.3s;
+  position:relative;
+  background:white;
+  border-radius:20px;
+  padding:25px;
+  width:350px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  transition:.3s;
 }
 
 .modern-user-card:hover{
-transform:translateY(-8px);
+  transform:translateY(-8px);
 }
 
 .avatar{
-width:70px;
-height:70px;
-background:linear-gradient(135deg,#5b21b6,#8b5cf6);
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-color:white;
-font-size:32px;
-font-weight:bold;
-margin:10px auto;
+  width:70px;
+  height:70px;
+  background:linear-gradient(135deg,#5b21b6,#8b5cf6);
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:32px;
+  font-weight:bold;
+  margin:10px auto;
 }
 
 .status-badge{
-position:absolute;
-top:20px;
-right:20px;
-background:#dcfce7;
-color:#15803d;
-padding:6px 14px;
-border-radius:30px;
-font-size:13px;
-font-weight:bold;
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:#dcfce7;
+  color:#15803d;
+  padding:6px 14px;
+  border-radius:30px;
+  font-size:13px;
+  font-weight:bold;
 }
 
 .modern-user-card h2{
-text-align:center;
-margin-bottom:5px;
+  text-align:center;
+  margin-bottom:5px;
 }
 
 .modern-user-card h4{
-text-align:center;
-color:#7c3aed;
-margin-bottom:20px;
+  text-align:center;
+  color:#7c3aed;
+  margin-bottom:20px;
 }
 
 .info p{
-margin:8px 0;
+  margin:8px 0;
 }
 
 .actions{
-display:flex;
-justify-content:space-between;
-margin-top:20px;
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
 }
 
 .view-btn{
-background:#8b5cf6;
+  background:#8b5cf6;
 }
 
 .edit-btn{
-background:#10b981;
+  background:#10b981;
 }
 
 /* Fix UiTM logo size inside modern staff card */
