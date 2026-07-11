@@ -202,6 +202,7 @@ html, body {
   flex: 1;
   padding:20px 40px;
   min-width:0;
+  overflow-x:hidden;
 }
 
 /* Cards */
@@ -217,13 +218,6 @@ html, body {
 .cards {
   display: flex;
   gap: 20px;
-}
-
-@media(max-width:600px){
-  .auth-card{
-    width:85%;
-    padding:25px;
-  }
 }
 
 /* Recommendation card layout */
@@ -369,20 +363,10 @@ a:hover {
 }
 
 .user-cards {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
   gap: 20px;          /* space between cards */
-  justify-content: flex-start; /* align cards to left */
   margin-top: 20px;
-}
-
-.user-card {
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-  width: 220px;       /* uniform card width */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  text-align: center;
 }
 
 .user-card .user-logo {
@@ -540,12 +524,15 @@ a:hover {
   border-radius:20px;
   padding:25px;
   width:350px;
+  min-height: 330px;
   box-shadow:0 10px 25px rgba(0,0,0,.08);
   transition:.3s;
+  box-sizing: border-box;
 }
 
 .modern-user-card:hover{
   transform:translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
 }
 
 .avatar{
@@ -610,25 +597,6 @@ a:hover {
   display: block;
   margin: 0 auto 12px auto;
   object-fit: contain;
-}
-
-/* Make staff cards align nicely */
-.user-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  gap: 20px;
-  justify-content: flex-start;
-}
-
-/* Fix card width supaya tak overflow */
-.modern-user-card {
-  width: auto;
-  max-width: 100%;
-  background:white;
-  border-radius:25px;
-  padding:30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  position:relative;
 }
 
 .staff-form-card {
@@ -701,4 +669,27 @@ a:hover {
   align-items: center;
   justify-content: center;
   margin: 15px auto;
+}
+
+/* Tablet */
+@media(max-width:1200px){
+
+  .user-cards{
+    grid-template-columns:repeat(2, minmax(250px,1fr));
+  }
+
+}
+
+
+/* Mobile */
+@media(max-width:600px){
+
+  .auth-card{
+    width:85%;
+    padding:25px;
+  }
+
+  .user-cards{
+    grid-template-columns:1fr;
+  }
 }
