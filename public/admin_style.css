@@ -129,13 +129,17 @@ html, body {
 }
 
 button {
+    background:#6d28d9;
+    color:white;
     border:none;
-    padding:10px 22px;
+    padding:10px 20px;
     border-radius:12px;
-    font-size:15px;
     cursor:pointer;
-    transition:0.3s ease;
-    font-weight:500;
+    transition:.3s;
+}
+
+button:hover{
+  background:#5b21b6;
 }
 
 /* ===== Add Button ===== */
@@ -151,6 +155,70 @@ button {
 
 .add-btn:hover {
   background:#7c3aed;
+}
+
+.user-card img{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+}
+
+.user-card h3{
+
+    margin:15px 0 5px;
+
+}
+
+.status.active{
+
+    color:green;
+    font-weight:bold;
+
+}
+
+.status.inactive{
+
+    color:red;
+    font-weight:bold;
+
+}
+
+.form-group label{
+
+    display:block;
+    margin-top:15px;
+    margin-bottom:8px;
+    font-size:16px;
+    font-weight:500;
+
+}
+
+
+.form-group input,
+.form-group select{
+
+    width:100%;
+    height:40px;
+    border-radius:12px;
+    border:1px solid #ddd;
+    padding:0 15px;
+    box-sizing:border-box;
+    background:white;
+    font-size:14px;
+
+}
+
+.card,
+.form-group,
+.search-container,
+.committee-container,
+.report-container{
+
+    background:#fce7f3;
+    border-radius:25px;
+    padding:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
 }
 
 /* ===== Dashboard Statistic Cards ===== */
