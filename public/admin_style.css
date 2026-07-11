@@ -30,6 +30,8 @@ html, body {
   background: linear-gradient(90deg,#4b0082,#7c3aed);
   color:white;
   display:flex;
+  justify-content:center;
+  align-items:center;
   font-size:25px;
   font-weight:bold;
   box-shadow: 0 5px 20px rgba(0,0,0,.15);
@@ -189,11 +191,12 @@ html, body {
 /* Layout */
 .layout {
   display: flex;
+  flex: 1;
   margin-left: 250px; /* sidebar width */
   padding-top: 60px;  /* topbar height */
   width:calc(100% - 250px);
-  min-height:100vh;
   box-sizing:border-box;
+  gap: 20px;
 }
 
 /* Main content */
@@ -201,7 +204,7 @@ html, body {
   flex: 1;
   padding:20px 40px;
   min-width:0;
-  overflow:hidden;
+  overflow-x:hidden;
   box-sizing:border-box;
 }
 
@@ -684,15 +687,7 @@ a:hover {
 /* Mobile */
 @media(max-width:800px){
 
-  .sidebar{
-   width:200px;
-  }
-
-  .layout{
-   margin-left:200px;
-   width:calc(100% - 200px);
-  }
-
+  
   .auth-card{
     width:85%;
     padding:25px;
