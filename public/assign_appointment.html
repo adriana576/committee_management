@@ -25,28 +25,46 @@
   </div>
 
   <div class="content">
-    <h1>Finalize Appointment</h1>
 
-    <div class="form-group">
-      <label>Select Staff</label>
-      <select id="user_id"></select>
+<h1>Finalize Appointment</h1>
+<div class="finalize-card">
+<div class="form-field">
+<label>Select Staff</label>
+<select id="user_id"></select>
+</div>
 
-      <label>Select Committee</label>
-      <select id="committee_id"></select>
+<div class="form-field">
+<label>Select Committee</label>
+<select id="committee_id"></select>
+</div>
 
-      <label>Role</label>
-      <input type="text" id="role" placeholder="Example: Penyelaras">
+<div class="form-field">
+<label>Role</label>
+<input 
+type="text" 
+id="role"
+placeholder="Example: Penyelaras">
+</div>
 
-      <label>Start Date</label>
-      <input type="date" id="start_date">
+<div class="form-field">
+<label>Start Date</label>
 
-      <label>End Date</label>
-      <input type="date" id="end_date">
+<input 
+  type="date"
+  id="start_date">
+</div>
 
-      <button onclick="assignAppointment()">Assign Appointment</button>
-      <p id="msg"></p>
-    </div>
-  </div>
+<div class="form-field">
+<label>End Date</label>
+<input 
+  type="date"
+  id="end_date"></div>
+
+<button 
+  class="assign-btn"
+  onclick="assignAppointment()">Assign Appointment</button>
+<p id="msg"></p>
+</div>
 </div>
 
 <script>
