@@ -678,14 +678,23 @@ a:hover {
 @media(max-width:1200px){
 
   .user-cards{
-    grid-template-columns:repeat(2, minmax(250px,1fr));
+    grid-template-columns:repeat(2,1fr);
   }
 
 }
 
 
 /* Mobile */
-@media(max-width:600px){
+@media(max-width:800px){
+
+  .sidebar{
+   width:200px;
+  }
+
+  .layout{
+   margin-left:200px;
+   width:calc(100% - 200px);
+  }
 
   .auth-card{
     width:85%;
