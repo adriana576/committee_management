@@ -1,265 +1,204 @@
-/* ===== Reset ===== */
+/* ==============================
+   RESET
+============================== */
 html, body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  height: 100%;
-  overflow-x: hidden;
-  background: linear-gradient(135deg, #f7f2ff 0%, #f4f6fb 100%);
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  font-family:Arial, sans-serif;
+  background: linear-gradient(135deg,#f7f2ff,#f4f6fb);
+  overflow-x:hidden;
 }
 
-/* =================================
-   REGISTER / LOGIN PAGE DESIGN
-================================= */
-
-.auth-page {
+/* ==============================
+   AUTH PAGE (REGISTER / LOGIN)
+============================== */
+.auth-page{
   min-height:100vh;
-  width:100%;
   display:flex;
   justify-content:center;
   align-items:center;
   background:linear-gradient(135deg,#f7f2ff,#eee7ff);
 }
 
-/* top header register */
-.auth-page .auth-topbar {
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    width:100%;
-    height:60px;
-    background:linear-gradient(90deg,#4b0082,#7c3aed);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:25px;
-    font-weight:bold;
-    box-shadow:0 5px 20px rgba(0,0,0,.15);
-    z-index:9999;
+/* Header register */
+.auth-topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:70px;
+  background:linear-gradient(90deg,#4b0082,#7c3aed);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:25px;
+  font-weight:bold;
+  z-index:999;
+  box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
 /* Register card */
-.auth-card {
+.auth-card{
   margin-top:100px;
   width:450px;
-  background:white;
   padding:40px;
+  background:white;
   border-radius:30px;
-  box-shadow: 0 15px 40px rgba(0,0,0,.12);
+  box-shadow:0 15px 40px rgba(0,0,0,.12);
 }
 
-/* title */
-.auth-card h1 {
+.auth-card h1{
   text-align:center;
   color:#4b0082;
-  font-size:35px;
   margin-bottom:30px;
 }
 
-/* label */
-.auth-card label {
-  font-weight:600;
-  color:#333;
+.auth-card label{
+  font-weight:bold;
 }
 
-/* input */
-.auth-card input {
+.auth-card input{
   width:100%;
   padding:14px;
   margin-top:8px;
   margin-bottom:18px;
-  border:1px solid #ddd;
   border-radius:15px;
-  font-size:15px;
-  transition:.3s;
+  border:1px solid #ddd;
+  box-sizing:border-box;
 }
 
-.auth-card input:focus {
+.auth-card input:focus{
   outline:none;
   border-color:#7c3aed;
   box-shadow: 0 0 0 3px rgba(124,58,237,.15);
 }
 
-/* button */
-.auth-btn {
+.auth-btn{
   width:100%;
   padding:14px;
   border:none;
   border-radius:15px;
-  background: linear-gradient(135deg,#6a11cb,#8b5cf6);
+  background:linear-gradient(135deg,#6a11cb,#8b5cf6);
   color:white;
   font-size:17px;
   font-weight:bold;
   cursor:pointer;
-  transition:.3s;
 }
 
-
-.auth-btn:hover {
+.auth-btn:hover{
   transform:translateY(-3px);
-  box-shadow:0 10px 20px rgba(124,58,237,.3);
 }
 
-/* link */
-
-.auth-link {
+.auth-link{
   text-align:center;
   margin-top:20px;
 }
 
-
-.auth-link a {
+.auth-link a{
   color:#7c3aed;
   font-weight:bold;
 }
 
-/* Sidebar - uniform for all pages */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px;
-  height: 100vh;
-  background: #4B0082;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0;
-  color: white;
-  box-sizing: border-box;
+/* ==============================
+   SIDEBAR
+============================== */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:250px;
+  height:100vh;
+  background:#4B0082;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  padding:20px 0;
+  box-sizing:border-box;
   z-index:200;
 }
 
-.sidebar h2 {
+.sidebar h2{
   display:flex;
   align-items:center;
-  font-size: 18px;
-  padding: 0 20px 20px 20px;
-  margin: 0;
+  gap:12px;
+  font-size:18px;
+  padding:0 20px 25px;
+  margin:0;
 }
 
-.sidebar a {
-  display: block;
-  padding: 12px 20px;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  margin: 0;
-  border-left: 5px solid transparent;
-  border-radius: 0 25px 25px 0;
-  transition: 0.3s;
-  text-align: left; /* left align text */
+.sidebar h2 img{
+  width:60px;
 }
 
-.sidebar a.active {
-  background: #8356d6;
-  border-left: 5px solid #fff; /* highlight active tab */
+.sidebar a{
+  padding:14px 28px;
+  color:white;
+  text-decoration:none;
+  font-weight:500;
+  border-left:5px solid transparent;
+  transition:.3s;
 }
 
-.sidebar a:hover {
-  background: #6f42c1;
+.sidebar a:hover{
+  background:#6f42c1;
 }
 
-.sidebar a i {
-  margin-right: 12px;
+.sidebar a.active{
+  background:#8356d6;
+  border-left:5px solid white;
 }
 
-.sidebar .logout-btn {
-  margin-top: auto;
-  margin-bottom: 20px;
-  background: white;
-  color: #4B0082;
-  border: none;
-  padding: 12px;
-  border-radius: 12px;
-  cursor: pointer;
+.logout-btn{
+  margin-top:auto;
+  margin-bottom:20px;
+  margin-left:5px;
+  margin-right:5px;
+  padding:12px;
+  border-radius:15px;
+  background:white;
+  color:#4B0082;
 }
 
-/* Topbar */
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 250px; /* match sidebar width */
-  right: 0;
-  height: 60px;
-  background: linear-gradient(90deg, #4b0082, #6d28d9);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 30px;
+/* ==============================
+   TOPBAR ADMIN
+============================== */
+.topbar{
+  position:fixed;
+  top:0;
+  left:250px;
+  right:0;
+  height:70px;
+  background:linear-gradient(90deg,#4b0082,#7c3aed);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding:0 40px;
   box-sizing:border-box;
-  z-index: 10;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index:100;
+  box-shadow:0 5px 15px rgba(0,0,0,.15);
 }
 
-/* Layout */
-.layout {
-  display: flex;
-  margin-left: 250px; /* sidebar width */
-  padding-top: 60px;  /* topbar height */
+/* ==============================
+   MAIN LAYOUT
+============================== */
+.layout{
+  margin-left:250px;
+  padding-top:70px;
   width:calc(100% - 250px);
   min-height:100vh;
   box-sizing:border-box;
 }
 
-/* Main content */
-.content {
-  width: 100%;
-  padding:20px 40px;
+.content{
+  width:100%;
+  padding:40px 50px;
   box-sizing:border-box;
 }
 
-/* ==============================
-   GENERAL CARDS
-============================== */
-.card,
-.chart-card,
-.info-card,
-.recommendation-card{
-  background:white;
-  border-radius:25px;
-  padding:25px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-
-/* ==============================
-   PAGE HEADER
-============================== */
-.page-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:30px;
-  margin-bottom:35px;
-}
-
-.page-header h1{
-  font-size:42px;
-  margin:0;
-  line-height:1.1;
-}
-
-.page-header p{
-  font-size:18px;
-  color:#666;
-}
-
-/* ADD BUTTON */
-.add-btn{
-  background:linear-gradient(135deg,#6a11cb,#8b5cf6);
-  color:white;
-  border:none;
-  padding:15px 25px;
-  border-radius:15px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  white-space:nowrap;
-  height:50px;
-}
 
 /* ==============================
    STAT CARDS
