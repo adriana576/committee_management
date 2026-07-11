@@ -4,39 +4,57 @@
   <title>Register</title>
   <link rel="stylesheet" href="admin_style.css">
 </head>
+
 <body>
 
-<div class="topbar">
-  <h3>Committee Management System</h3>
-</div>
+<div class="auth-page">
 
-<div class="content">
-  <div class="card" style="max-width: 450px; margin: 60px auto;">
-    <h2>Register</h2>
 
+  <div class="auth-topbar">
+      Committee Management System
+  </div>
+
+
+  <div class="auth-card">
+    <h1>Create Account</h1>
     <label>Name</label>
-    <input type="text" id="name">
-
+    <input 
+      type="text" 
+      id="name"
+      placeholder="Enter your name">
     <label>Email</label>
-    <input type="email" id="email">
-
+    <input 
+      type="email" 
+      id="email"
+      placeholder="Enter your email">
     <label>Password</label>
-    <input type="password" id="password">
-
+    <input 
+      type="password" 
+      id="password"
+      placeholder="Create password">
     <label>Department</label>
-    <input type="text" id="department">
-
+    <input 
+      type="text" 
+      id="department"
+      placeholder="Enter department">
     <label>Phone</label>
-    <input type="text" id="phone">
-
-    <button onclick="register()">Register</button>
+    <input 
+      type="text" 
+      id="phone"
+      placeholder="Enter phone number">
+    <button 
+      class="auth-btn" 
+      onclick="register()">
+      Register
+    </button>
 
     <p id="msg"></p>
-
-    <p>
+    <div class="auth-link">
       Already have account?
-      <a href="index.html">Login here</a>
-    </p>
+      <a href="index.html">
+        Login here
+      </a>
+    </div>
   </div>
 </div>
 
@@ -50,10 +68,21 @@ async function register() {
   const department = document.getElementById('department').value;
   const phone = document.getElementById('phone').value;
 
+
+  if(!name || !email || !password || !department || !phone){
+      document.getElementById('msg').innerText =
+      "Please fill in all fields";
+      document.getElementById('msg').style.color="red";
+      return;
+  }
+
+
   const res = await fetch(`${BASE_URL}/api/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
       name,
       email,
       password,
@@ -63,16 +92,22 @@ async function register() {
   });
 
   const data = await res.json();
+  document.getElementById('msg').innerText =
+  data.message;
 
-  document.getElementById('msg').innerText = data.message;
 
-  if (data.success) {
-    setTimeout(() => {
-      window.location.href = 'index.html';
-    }, 1000);
+  if(data.success){
+    document.getElementById('msg').style.color="green";
+
+    setTimeout(()=>{
+      window.location.href='index.html';
+    },1000);
+  }
+  else{
+    document.getElementById('msg').style.color="red";
   }
 }
-</script>
 
+</script>
 </body>
 </html>

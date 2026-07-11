@@ -4,7 +4,114 @@ html, body {
   padding: 0;
   font-family: Arial, sans-serif;
   height: 100%;
+  overflow-x: hidden;
   background: linear-gradient(135deg, #f7f2ff 0%, #f4f6fb 100%);
+}
+
+/* =================================
+   REGISTER / LOGIN PAGE DESIGN
+================================= */
+
+.auth-page {
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: linear-gradient(135deg,#f7f2ff,#eee7ff);
+}
+
+/* top header register */
+.auth-topbar {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:80px;
+  background: linear-gradient(90deg,#4b0082,#7c3aed);
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:25px;
+  font-weight:bold;
+  box-shadow: 0 5px 20px rgba(0,0,0,.15);
+}
+
+/* Register card */
+.auth-card {
+  margin-top:80px;
+  width:450px;
+  background:white;
+  padding:40px;
+  border-radius:30px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.12);
+}
+
+/* title */
+.auth-card h1 {
+  text-align:center;
+  color:#4b0082;
+  font-size:35px;
+  margin-bottom:30px;
+}
+
+/* label */
+.auth-card label {
+  font-weight:600;
+  color:#333;
+}
+
+/* input */
+.auth-card input {
+  width:100%;
+  padding:14px;
+  margin-top:8px;
+  margin-bottom:18px;
+  border:1px solid #ddd;
+  border-radius:15px;
+  font-size:15px;
+  transition:.3s;
+}
+
+.auth-card input:focus {
+  outline:none;
+  border-color:#7c3aed;
+  box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+}
+
+
+
+/* button */
+.auth-btn {
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:15px;
+  background: linear-gradient(135deg,#6a11cb,#8b5cf6);
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s;
+}
+
+
+.auth-btn:hover {
+  transform:translateY(-3px);
+  box-shadow:0 10px 20px rgba(124,58,237,.3);
+}
+
+/* link */
+
+.auth-link {
+  text-align:center;
+  margin-top:20px;
+}
+
+
+.auth-link a {
+  color:#7c3aed;
+  font-weight:bold;
 }
 
 /* Sidebar - uniform for all pages */
@@ -94,6 +201,7 @@ html, body {
 /* Main content */
 .content {
   flex: 1;
+  width: calc(100vw - 260px);
   padding: 20px 40px;
 }
 
@@ -522,6 +630,11 @@ background:#10b981;
 .modern-user-card {
   width: auto;
   max-width: 100%;
+  background:white;
+  border-radius:25px;
+  padding:30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  position:relative;
 }
 
 .staff-form-card {
