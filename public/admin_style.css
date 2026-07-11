@@ -30,8 +30,6 @@ html, body {
   background: linear-gradient(90deg,#4b0082,#7c3aed);
   color:white;
   display:flex;
-  justify-content:center;
-  align-items:center;
   font-size:25px;
   font-weight:bold;
   box-shadow: 0 5px 20px rgba(0,0,0,.15);
