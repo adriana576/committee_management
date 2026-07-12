@@ -33,8 +33,8 @@
           type="text"
           id="searchInput"
           placeholder="Search by staff name or committee..."
-          onkeyup="searchReport()">
-        <button onclick="searchReport()">Search</button>
+          oninput="searchReport()">
+        <button type="button" onclick="searchReport()">Search</button>
       </div>
 
       <div class="user-cards" id="reportBody">
@@ -85,7 +85,7 @@ function renderCards(data) {
   });
 }
 
-function searchReport() {
+function searchReport(){
 
     const input = document
         .getElementById("searchInput")
@@ -97,19 +97,16 @@ function searchReport() {
 
     cards.forEach(card => {
 
-        if (input === "") {
-            card.style.display = "";
-            return;
+        const text = card.textContent.toLowerCase();
+
+        if(text.includes(input)){
+            card.style.display = "flex";
+        }
+        else{
+            card.style.display = "none";
         }
 
-        const text = card.innerText.toLowerCase();
-
-        card.style.display = text.includes(input)
-            ? ""
-            : "none";
-
     });
-
 }
 
 function logout() {
