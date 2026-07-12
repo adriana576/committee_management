@@ -261,21 +261,48 @@ label{
     gap:20px;
 }
 
+.user-card{
+    background:white;
+    border-radius:25px;
+    padding:20px;
+    height:210px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+
+.user-logo{
+    width:55px;
+    height:55px;
+    object-fit:contain;
+    margin-bottom:15px;
+}
+
+
 .user-info{
-    text-align:center;
     width:100%;
+    display:grid;
+    grid-template-columns:1fr 1.5fr 1.3fr 1.2fr 1.2fr .8fr;
+    align-items:center;
+    text-align:center;
+    gap:10px;
 }
 
 
 .user-info h3{
-    font-size:16px;
-    margin:5px 0 10px;
+    font-size:20px;
+    margin:0;
+    font-weight:bold;
 }
 
 
 .user-info p{
-    font-size:12px;
-    margin:3px 0;
+    font-size:18px;
+    margin:0;
     line-height:1.2;
 }
 
@@ -916,6 +943,10 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
   .stats-grid{
       grid-template-columns:1fr;
   }
+  .topbar{
+  position:relative;
+  left:0;
+}
 }
 
 .chart-card canvas{
