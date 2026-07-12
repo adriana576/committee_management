@@ -405,12 +405,7 @@ font-weight:bold;
     gap:20px;
 }
 
-.content .card{
-    background:#f8d8e8;
-    border-radius:25px;
-    padding:25px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-}
+
 /* Search bar */
 .search-container{
     display:flex;
