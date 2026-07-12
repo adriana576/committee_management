@@ -399,13 +399,6 @@ font-weight:bold;
 
 
 /* ===== SEARCH RESULT CARD ===== */
-#reportBody{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-
 /* Search bar */
 .search-container{
     display:flex;
@@ -459,40 +452,7 @@ font-weight:bold;
 }
 
 
-/* ===== COMMITTEE TABLE ===== */
-.committee-container{
-    background:#fce7f3;
-    padding:25px;
-    border-radius:25px;
-}
 
-.committee-container table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    border-radius:15px;
-    overflow:hidden;
-}
-
-.committee-container th{
-    background:#4b0082;
-    color:white;
-    padding:14px;
-    text-align:left;
-}
-
-.committee-container td{
-    padding:14px;
-    border-bottom:1px solid #eee;
-}
-
-.committee-container button{
-    padding:8px 15px;
-}
-
-.committee-container .delete-btn{
-    background:#ef4444;
-}
 
 
 /* ===== FINALIZE / CONFIRM APPOINTMENT ===== */
