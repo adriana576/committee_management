@@ -744,7 +744,10 @@ font-weight:bold;
 }
 
 .recommendation-list{
-  margin-top:20px;
+  display:flex;
+    flex-direction:column;
+    gap:15px;
+    margin-top:25px;
 }
 
 .user-info{
@@ -822,14 +825,24 @@ width:calc(100% - 330px);
 
 
 .recommendation-card{
-background:white;
-border-radius:15px;
-padding:15px 20px;
-margin-bottom:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    background:white;
+    border-radius:20px;
+    padding:20px 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    transition:0.3s ease;
+}
+
+.recommendation-card:hover{
+    transform:translateY(-3px);
+}
+
+.recommendation-card .user-info{
+    display:flex;
+    align-items:center;
+    gap:20px;
 }
 
 
