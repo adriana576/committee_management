@@ -123,6 +123,12 @@ html,body{
     box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
 
 /* ===== BUTTON ===== */
 button{
