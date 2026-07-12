@@ -832,127 +832,156 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
 
-/* ===== RESPONSIVE ===== */
+/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
 
 @media(max-width:1200px){
 
-  .cards{
-    grid-template-columns:repeat(2,1fr);
-  }
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-  .layout{
-    display: flex;
-    flex-direction:column;
-  }
+    .layout{
+        display:flex;
+    }
 
-  .right-sidebar{
-    position:relative;
-    top:auto;
-    right:auto;
-    width:100%;
-    margin-top:25px;
-  }
+    .right-sidebar{
+        position:relative;
+        width:100%;
+        margin-top:25px;
+    }
 
-  .user-cards,
-  #reportBody{
-      grid-template-columns:repeat(2,1fr);
-  }
+    .user-cards,
+    #reportBody{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-  .stats-grid{
-      grid-template-columns:1fr;
-  }
-  .topbar{
-  position:relative;
-  left:0;
-}
-}
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
 
-.chart-card canvas{
-  max-width:300px;
-  margin:auto;
-  display:block;
-}
-
-
-@media(max-width:750px){
-
-  .layout{
-        margin-left:200px;
+    .chart-card canvas{
+        max-width:300px;
+        margin:auto;
         display:block;
     }
 
-  body{
+}
+
+
+
+/* ============================= */
+/* SMALL SCREEN */
+/* ============================= */
+
+@media(max-width:750px){
+
+    body{
         overflow-x:hidden;
     }
 
-  .content{
-        width:100%;
-        padding:25px;
+
+    /* SIDEBAR */
+    .sidebar{
+        width:180px;
+        position:fixed;
+        left:0;
+        top:0;
+        height:100vh;
+        z-index:100;
     }
 
-.sidebar{
-  position:relative;
-  width:100%;
-  height:auto;
-  min-height:auto;
-  padding:15px;
-  z-index:100
-}
+
+    .sidebar h2{
+        font-size:18px;
+        text-align:center;
+    }
 
 
-.topbar{
-  position:relative;
-  left:0;
-}
+    .sidebar .logo{
+        width:40px;
+    }
 
-.content{
-  margin-left:0;
-  width:100%;
-  padding:30px 20px;
-  padding-top:100px;
-}
 
-.user-cards,
-#reportBody{
-  grid-template-columns:1fr;
-}
+    .sidebar a{
+        font-size:14px;
+        padding:12px;
+    }
 
-.user-card{
+
+
+    /* TOPBAR */
+
+    .topbar{
+        margin-left:180px;
+        width:calc(100% - 180px);
+    }
+
+
+
+    /* MAIN CONTENT */
+
+    .layout{
+        display:block;
+        margin-left:180px;
+    }
+
+
+    .content{
         width:100%;
-        height:auto;
+        padding:20px;
+    }
+
+
+
+    /* SEARCH CARD */
+
+    .user-cards,
+    #reportBody{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+
+    .user-card{
+        width:100%;
         min-height:200px;
+        height:auto;
     }
 
-.page-header{
-  flex-direction:column;
-  align-items:flex-start;
-  gap:15px;
-}
 
-.finalize-card{
-  width:100%;
-}
 
-.auth-card{
-  width:90%;
-}
+    /* DASHBOARD CARDS */
 
-.cards{
-  grid-template-columns:1fr;
-}
+    .cards{
+        grid-template-columns:1fr;
+    }
 
-.recommendation-list{
-  width:100%;
-}
 
-.recommendation-card{
-  flex-direction:column;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:15px;
-  }
+    .card{
+        width:100%;
+    }
 
-   .avatar{
+
+
+    /* RECOMMENDATION */
+
+    .recommendation-list{
+        width:100%;
+    }
+
+
+    .recommendation-card{
+        width:100%;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+    }
+
+
+    .avatar{
         width:45px;
         height:45px;
         font-size:22px;
@@ -964,9 +993,39 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
         font-size:14px;
     }
 
-    /* RIGHT SIDE */
+
+
+    /* RIGHT PANEL */
+
     .right-sidebar{
         width:100%;
         margin-top:20px;
     }
+
+
+    .chart-card,
+    .info-card{
+        width:100%;
+        margin-bottom:20px;
+    }
+
+
+    .chart-card canvas{
+        max-width:250px;
+        max-height:250px;
+    }
+
+
+
+    /* FORM */
+
+    .finalize-card{
+        width:100%;
+    }
+
+
+    .auth-card{
+        width:90%;
+    }
+
 }
