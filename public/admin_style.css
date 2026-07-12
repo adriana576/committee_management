@@ -874,8 +874,21 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
 
-@media(max-width:700px){
+@media(max-width:750px){
 
+  .layout{
+        margin-left:200px;
+        display:block;
+    }
+
+  body{
+        overflow-x:hidden;
+    }
+
+  .content{
+        width:100%;
+        padding:25px;
+    }
 
 .sidebar{
   position:relative;
@@ -883,6 +896,7 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
   height:auto;
   min-height:auto;
   padding:15px;
+  z-index:100
 }
 
 
@@ -902,6 +916,12 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
 #reportBody{
   grid-template-columns:1fr;
 }
+
+.user-card{
+        width:100%;
+        height:auto;
+        min-height:200px;
+    }
 
 .page-header{
   flex-direction:column;
@@ -928,6 +948,25 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
 .recommendation-card{
   flex-direction:column;
   align-items:flex-start;
+  justify-content:space-between;
   gap:15px;
   }
+
+   .avatar{
+        width:45px;
+        height:45px;
+        font-size:22px;
+    }
+
+
+    .btn-select{
+        padding:8px 15px;
+        font-size:14px;
+    }
+
+    /* RIGHT SIDE */
+    .right-sidebar{
+        width:100%;
+        margin-top:20px;
+    }
 }
