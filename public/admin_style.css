@@ -261,16 +261,22 @@ label{
     gap:20px;
 }
 
-.user-card{
-    background:white;
-    border-radius:25px;
-    padding:15px;
-    height:150px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+.user-info{
+    text-align:center;
+    width:100%;
+}
+
+
+.user-info h3{
+    font-size:16px;
+    margin:5px 0 10px;
+}
+
+
+.user-info p{
+    font-size:12px;
+    margin:3px 0;
+    line-height:1.2;
 }
 
 /* ===== STAFF CARD ===== */
