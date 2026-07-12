@@ -98,6 +98,7 @@ html,body{
 .layout{
     display:flex;
     min-height:100vh;
+    gap:30px;
 }
 
 .content{
@@ -106,6 +107,8 @@ html,body{
     width:calc(100% - 250px);
     min-height:100vh;
     background:#f7f6ff;
+    flex:1;
+    min-width:0;
 }
 
 .content h1{
@@ -117,10 +120,14 @@ html,body{
 
 /* ===== COMMON CARD ===== */
 .card{
-    background:#fce7f3;
-    border-radius:25px;
+    background:white;
+    border-radius:20px;
     padding:25px;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    min-height:120px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
 
@@ -678,7 +685,6 @@ font-weight:bold;
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:20px;
-  margin-bottom:25px;
 }
 
 .cards .card{
@@ -695,7 +701,6 @@ font-weight:bold;
 .card-icon img{
   width:35px;
   height:35px;
-  margin-bottom:10px;
 }  
 
 .card-icon{
@@ -716,7 +721,7 @@ font-weight:bold;
 
 .card-content h1{
   font-size:35px;
-  margin:8px 0 0;
+  margin:0;
 }
 
 .recommendation-list{
@@ -759,10 +764,11 @@ font-size:14px;
 }
 
 .right-sidebar{
-  position:absolute;
-  right:30px;
-  top:100px;
-  width:300px;
+  width:330px;
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
 }
 
 .chart-card,
@@ -770,7 +776,6 @@ font-size:14px;
   background:#f8d9ea;
   border-radius:18px;
   padding:18px;
-  margin-bottom:18px;
   box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
@@ -778,10 +783,15 @@ font-size:14px;
 .info-card h3{
   font-size:18px;
   margin-bottom:15px;
+  margin-top:0;
+  font-size:22px;
 }
 
 .chart-card canvas{
-  max-height:220px;
+  width:250px!important;
+  height:250px!important;
+  margin:auto;
+  display:block;
 }
 
 .info-card{
@@ -793,6 +803,7 @@ font-size:14px;
 
 .info-card li{
   margin-bottom:8px;
+  font-size:18px;
 }
 
 .info-card ul{
