@@ -98,6 +98,7 @@ html,body{
 /* ===== LAYOUT ===== */
 .layout{
     display:flex;
+    min-height:100vh;
 }
 
 .content{
@@ -105,11 +106,13 @@ html,body{
     padding:85px 40px 30px;
     width:calc(100% - 250px);
     min-height:100vh;
+    background:#f7f6ff;
 }
 
 .content h1{
     font-size:38px;
-    margin:0 0 25px;
+    margin-bottom:25px;
+    color:#111;
 }
 
 
@@ -285,17 +288,16 @@ label{
 
 
 .avatar{
-    width:70px;
-    height:70px;
-    margin:15px auto;
-    border-radius:50%;
-    background:linear-gradient(135deg,#5b21b6,#8b5cf6);
-    color:white;
-    font-size:30px;
-    font-weight:bold;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+width:45px;
+height:45px;
+border-radius:50%;
+background:#6d3bd8;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
 }
 
 .modern-user-card h2{
@@ -691,6 +693,12 @@ label{
   box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
+.card-icon img{
+  width:35px;
+  height:35px;
+  margin-bottom:10px;
+}  
+
 .card-icon{
   width:55px;
   height:55px;
@@ -703,12 +711,13 @@ label{
 
 .card-content h3{
   font-size:18px;
-  margin:0 0 10px;
+  margin:0;
+  color:#222;
 }
 
 .card-content h1{
   font-size:35px;
-  margin:0;
+  margin:8px 0 0;
 }
 
 .recommendation-list{
@@ -732,30 +741,18 @@ label{
   gap:20px;
 }
 
-.avatar{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#6d28d9,#8b5cf6);
-  color:white;
-  font-size:25px;
-  font-weight:bold;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
 .user-info strong{
   font-size:18px;
 }
 
 .btn-select{
-  background:#6d28d9;
-  color:white;
-  border:none;
-  padding:10px 25px;
-  border-radius:10px;
-  cursor:pointer;
+  background:#6d3bd8;
+border:none;
+color:white;
+padding:8px 20px;
+border-radius:15px;
+cursor:pointer;
+font-size:14px;
 }
 
 .btn-select:hover{
@@ -763,20 +760,29 @@ label{
 }
 
 .right-sidebar{
-  width:35%;
-  padding:40px 30px 40px 0;
+  position:absolute;
+  right:30px;
+  top:100px;
+  width:300px;
 }
 
-.chart-card{
-  background:white;
-  border-radius:25px;
-  padding:25px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-  margin-bottom:20px;
+.chart-card,
+.info-card{
+  background:#f8d9ea;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.chart-card h3,
+.info-card h3{
+  font-size:18px;
+  margin-bottom:15px;
 }
 
 .chart-card canvas{
-  max-height:400px;
+  max-height:220px;
 }
 
 .info-card{
@@ -788,6 +794,31 @@ label{
 
 .info-card li{
   margin-bottom:8px;
+}
+
+.info-card ul{
+  padding-left:20px;
+}
+
+.info-card p{
+  font-size:14px;
+  line-height:1.5;
+}
+
+.recommendation-list{
+width:calc(100% - 330px);
+}
+
+
+.recommendation-card{
+background:white;
+border-radius:15px;
+padding:15px 20px;
+margin-bottom:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
 
