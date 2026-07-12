@@ -99,11 +99,8 @@ function searchReport(){
 
         const text = card.innerText.toLowerCase();
 
-        if(input === ""){
-            card.style.display = "";
-        }
-        else if(text.includes(input)){
-            card.style.display = "";
+        if(input === "" || text.includes(input)){
+            card.style.display = "flex";
         }
         else{
             card.style.display = "none";
