@@ -452,34 +452,6 @@ font-weight:bold;
     background:#5b21b6;
 }
 
-#reportBody .user-card{
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-
-#reportBody .user-logo{
-    width:60px;
-    height:60px;
-    object-fit:contain;
-}
-
-
-#reportBody .user-info h3{
-    margin:10px 0;
-}
-
-
-#reportBody .user-info p{
-    margin:5px 0;
-}
-
 
 .status.active{
     color:#16a34a;
