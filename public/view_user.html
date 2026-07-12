@@ -33,7 +33,7 @@
           type="text"
           id="searchInput"
           placeholder="Search by staff name or committee..."
-          oninput="searchReport()">
+          onkeyup="searchReport()">
         <button type="button" onclick="searchReport()">Search</button>
       </div>
 
@@ -97,10 +97,13 @@ function searchReport(){
 
     cards.forEach(card => {
 
-        const text = card.textContent.toLowerCase();
+        const text = card.innerText.toLowerCase();
 
-        if(text.includes(input)){
-            card.style.display = "flex";
+        if(input === ""){
+            card.style.display = "";
+        }
+        else if(text.includes(input)){
+            card.style.display = "";
         }
         else{
             card.style.display = "none";
