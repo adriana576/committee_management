@@ -1002,54 +1002,56 @@ width:calc(100% - 330px);
     gap:20px;
 }
 
-/* General layout for admin dashboard */
-.admin-dashboard .content {
-    padding: 25px;
-    background: #f8f8fb;
-}
 
-/* ===== PAGE BODY ===== */
+/* ===== Admin Dashboard Specific ===== */
 .admin-dashboard .content {
     padding: 25px;
     background: #f7f7fc;
 }
 
-/* ===== STATUS CARDS ===== */
+/* ===== Top Cards (Total / Low / Medium / High) ===== */
 .admin-dashboard .cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
     margin-bottom: 25px;
 }
 
-.admin-dashboard .cards .card {
-    background: #fce7f3; /* pink background */
+.admin-dashboard .cards .card.card-icon {
+    background: #fce7f3;
     border-radius: 20px;
-    padding: 20px;
-    min-height: 120px;
+    padding: 15px 15px;
+    flex: 1 1 calc(22% - 15px); /* 4 cards per row */
+    min-width: 140px;
+    max-width: 200px;
+    height: 100px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
     transition: 0.3s ease;
 }
-.user-dashboard .cards .card.card-icon {
-    flex: 1 1 calc(25% - 20px); /* smaller width per card, adjust 25% or 20% */
-    min-width: 150px;           /* optional */
-    max-width: 250px;           /* optional */
-    height: 100px;              /* reduce height */
-    padding: 15px 10px;         /* smaller padding */
-}
 
-.admin-dashboard .cards .card .card-icon img {
-    width: 40px;
-    height: 40px;
+.admin-dashboard .cards .card.card-icon .card-icon img {
+    width: 32px;
+    height: 32px;
     margin-bottom: 8px;
 }
 
-/* ===== USER RECOMMENDATION CARDS ===== */
+.admin-dashboard .cards .card.card-icon .card-content h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.admin-dashboard .cards .card.card-icon .card-content h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+/* ===== Recommendation List ===== */
 .admin-dashboard .recommendation-list {
     display: flex;
     flex-direction: column;
@@ -1063,20 +1065,20 @@ width:calc(100% - 330px);
     align-items: center;
     justify-content: space-between;
     padding: 15px 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     transition: 0.3s ease;
 }
 
 .admin-dashboard .recommendation-card .avatar {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: #7c4dff;
     color: white;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 20px;
+    align-items: center;
+    font-size: 18px;
     font-weight: bold;
     margin-right: 15px;
 }
@@ -1094,27 +1096,12 @@ width:calc(100% - 330px);
     border-radius: 12px;
     padding: 8px 15px;
     cursor: pointer;
+    font-size: 14px;
     transition: 0.3s ease;
 }
 
 .admin-dashboard .recommendation-card .btn-select:hover {
     background: #5e35b1;
-}
-
-/* ===== RIGHT SIDEBAR ===== */
-.admin-dashboard .right-sidebar {
-    background: #fce7f3;
-    padding: 20px;
-    border-radius: 20px;
-    margin-top: 20px;
-}
-
-.admin-dashboard .right-sidebar .chart-card,
-.admin-dashboard .right-sidebar .info-card {
-    background: #fce7f3;
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 20px;
 }
 
 /* ===== RESPONSIVE ===== */
