@@ -1035,6 +1035,13 @@ width:calc(100% - 330px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     transition: 0.3s ease;
 }
+.user-dashboard .cards .card.card-icon {
+    flex: 1 1 calc(25% - 20px); /* smaller width per card, adjust 25% or 20% */
+    min-width: 150px;           /* optional */
+    max-width: 250px;           /* optional */
+    height: 100px;              /* reduce height */
+    padding: 15px 10px;         /* smaller padding */
+}
 
 .admin-dashboard .cards .card .card-icon img {
     width: 40px;
