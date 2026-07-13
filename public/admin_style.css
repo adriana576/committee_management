@@ -987,7 +987,7 @@ width:calc(100% - 330px);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap; /* wrap on smaller screens */
-    gap: 15px;
+    gap: 8px;
 }
 
 .user-dashboard .cards .card.card-icon {
