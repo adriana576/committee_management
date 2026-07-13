@@ -296,65 +296,63 @@ label{
 }
 
 
-/* Top cards */
-.cards {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
+/* ===== STAFF CARD GRID ===== */
+.user-card{
+    background:white;
+    border-radius:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    height:230px;
+    padding:25px 20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    transition:0.3s ease;
 }
 
-.cards .card {
-    background: #ffe7f3;
-    border-radius: 20px;
-    flex: 1 1 calc(25% - 20px);
-    min-width: 140px;
-    max-width: 200px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+.user-card.hide{
+    display:none;
 }
 
-.card-icon img {
-    width: 40px;
-    height: 40px;
+.user-card .user-logo{
+    width:50px;
+    height:50px;
+    object-fit:contain;
+    margin-bottom:10px;
 }
 
-/* Recommendation cards */
-.recommendation-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+
+.user-card .user-info{
+    display:block;
+    width:100%;
+    text-align:center;
 }
 
-.recommendation-card {
-    background: white;
-    border-radius: 15px;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+
+.user-card .user-info h3{
+    font-size:18px ;
+    margin:5px 0 12px;
 }
 
-.recommendation-card .user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+
+.user-card .user-info p{
+    display:block;
+    font-size:15px;
+    margin:5px 0;
 }
 
-.recommendation-card .avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: #6a1b9a;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+
+.user-card .status{
+    display:block;
+    margin-top:8px;
+}
+
+
+.user-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px ;
+    padding: 10px;
 }
 
 /* ===== STAFF CARD ===== */
@@ -1004,36 +1002,159 @@ width:calc(100% - 330px);
     gap:20px;
 }
 
+/* General layout for admin dashboard */
+.admin-dashboard .content {
+    padding: 25px;
+    background: #f8f8fb;
+}
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:1200px){
+/* Cards container (Total/Low/Medium/High Workload) */
+.admin-dashboard .cards {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Individual cards */
+.admin-dashboard .cards .card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1 1 calc(25% - 20px); /* 4 cards in a row */
+    min-width: 150px;
+    max-width: 250px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+/* Card icons */
+.admin-dashboard .cards .card .card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #f2e6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.admin-dashboard .cards .card .card-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Card content text */
+.admin-dashboard .cards .card .card-content h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.admin-dashboard .cards .card .card-content h1 {
+    margin: 5px 0 0 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Recommendation list container */
+.admin-dashboard .recommendation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Individual recommendation card */
+.admin-dashboard .recommendation-card {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+/* Avatar circle for user initial */
+.admin-dashboard .recommendation-card .avatar {
+    width: 45px;
+    height: 45px;
+    background: #7b5fff;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+/* User info */
+.admin-dashboard .recommendation-card .user-info {
+    flex: 1;
+}
+
+/* Select button */
+.admin-dashboard .recommendation-card .btn-select {
+    background: #7b5fff;
+    border: none;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.admin-dashboard .recommendation-card .btn-select:hover {
+    background: #5a3fcc;
+}
+
+/* Right sidebar cards */
+.admin-dashboard .right-sidebar {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-dashboard .right-sidebar .chart-card,
+.admin-dashboard .right-sidebar .info-card {
+    background: #fce7f3;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
     .admin-dashboard .cards {
-        grid-template-columns: repeat(2,1fr);
+        flex-wrap: wrap;
+        gap: 15px;
     }
-
-    .admin-dashboard .recommendation-list {
-        flex-direction: column;
-    }
-
-    .admin-dashboard .recommendation-card {
-        flex-direction: row;
-        justify-content: space-between;
+    .admin-dashboard .cards .card {
+        flex: 1 1 calc(50% - 15px); /* 2 per row */
     }
 }
 
-@media(max-width:750px){
+@media (max-width: 750px) {
     .admin-dashboard .cards {
-        grid-template-columns: 1fr;
-    }
-
-    .admin-dashboard .recommendation-card {
         flex-direction: column;
-        align-items: flex-start;
     }
-
-    .admin-dashboard .recommendation-card .btn-select {
-        align-self: flex-end;
-        margin-top: 10px;
+    .admin-dashboard .cards .card {
+        width: 100%;
+        max-width: 100%;
+    }
+    .admin-dashboard .recommendation-list {
+        gap: 10px;
     }
 }
 
