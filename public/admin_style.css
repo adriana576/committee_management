@@ -1008,8 +1008,8 @@ width:calc(100% - 330px);
     border-radius: 15px; /* slightly smaller corners */
     padding: 15px;       /* reduce padding */
     flex: 1 1 calc(30% - 15px); /* slightly smaller width */
-    min-width: 100;   /* reduce min width */
-    max-width: 200;    /* reduce max width */
+    min-width: 60; /* reduce min width */
+    max-width: 150;/* reduce max width */
     height: 100px;        /* reduce height */
     display: flex;
     flex-direction: column;
