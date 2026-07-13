@@ -114,14 +114,34 @@ html,body{
     color:#111;
 }
 
-body.user-dashboard .cards { 
-    grid-template-columns: repeat(3, 1fr); 
+.user-dashboard .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
 }
 
-body.user-dashboard .card { 
-    background: #fff; 
-    border-radius: 20px; 
-    /* other card styles */ 
+.user-dashboard .cards .card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* keep icon centered */
+  justify-content: center; /* center content vertically */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.user-dashboard .cards .card .card-content h1 {
+  font-size: 32px; /* adjust size */
+  margin: 5px 0 0;
+}
+
+.user-dashboard .cards .card .card-content h3 {
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
 }
 
 /* ===== COMMON CARD ===== */
