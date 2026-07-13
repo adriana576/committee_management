@@ -994,7 +994,7 @@ width:calc(100% - 330px);
     background: #fff;
     border-radius: 15px;
     padding: 10px 15px;
-    flex: 1 1 calc(25% - 10px); /* 4 cards in a row */
+    flex: 1 1 calc(33.33% - 10px);
     min-width: 140px; /* ensures cards don't shrink too small */
     max-width: 250px; /* max card width */
     height: 100px; /* smaller height */
