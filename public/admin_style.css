@@ -993,7 +993,7 @@ width:calc(100% - 330px);
 .user-dashboard .cards .card.card-icon {
     background: #fff;
     border-radius: 15px;
-    padding: 15px 20px;
+    padding: 10px 15px;
     flex: 1 1 calc(25% - 15px); /* 4 cards in a row */
     min-width: 140px; /* ensures cards don't shrink too small */
     max-width: 300px; /* max card width */
