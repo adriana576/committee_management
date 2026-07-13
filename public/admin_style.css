@@ -296,60 +296,50 @@ label{
 }
 
 
-/* ===== STAFF CARD GRID ===== */
-.user-card{
-    background:white;
-    border-radius:20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    height:230px;
-    padding:25px 20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-    transition:0.3s ease;
+/* ===== USER CARDS LAYOUT ===== */
+.user-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
 }
 
-
-.user-card .user-logo{
-    width:50px;
-    height:50px;
-    object-fit:contain;
-    margin-bottom:10px;
+.user-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
 }
 
-
-.user-card .user-info{
-    display:block;
-    width:100%;
-    text-align:center;
+.user-card:hover {
+    transform: translateY(-5px);
 }
 
-
-.user-card .user-info h3{
-    font-size:18px ;
-    margin:5px 0 12px;
+.user-card .user-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 10px;
 }
 
-
-.user-card .user-info p{
-    display:block;
-    font-size:15px;
-    margin:5px 0;
+.user-card .user-info h3 {
+    font-size: 16px;
+    margin: 5px 0 10px;
 }
 
-
-.user-card .status{
-    display:block;
-    margin-top:8px;
+.user-card .user-info p {
+    font-size: 14px;
+    margin: 3px 0;
 }
 
-
-.user-cards{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px ;
-    padding: 10px;
+.user-card .status {
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 /* ===== STAFF CARD ===== */
