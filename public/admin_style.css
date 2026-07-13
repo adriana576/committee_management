@@ -1016,8 +1016,8 @@ width:calc(100% - 330px);
     border-radius: 20px;
     padding: 20px;
     flex: 1 1 calc(25% - 20px); /* 4 cards per row */
-    min-width: 150px;
-    max-width: 220px;
+    min-width: 50px;
+    max-width: 120px;
     height: 120px;
     display: flex;
     flex-direction: column;
