@@ -115,33 +115,33 @@ html,body{
 }
 
 .user-dashboard .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .user-dashboard .cards .card {
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  min-height: 150px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* keep icon centered */
-  justify-content: center; /* center content vertically */
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1 1 calc(33.33% - 20px); /* 3 cards in a row */
+    min-width: 180px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-.user-dashboard .cards .card .card-content h1 {
-  font-size: 32px; /* adjust size */
-  margin: 5px 0 0;
-}
-
-.user-dashboard .cards .card .card-content h3 {
+.user-dashboard .card h3 {
+  margin: 0 0 10px 0;
   font-size: 16px;
+}
+
+.user-dashboard .card h1 {
   margin: 0;
-  text-align: center;
+  font-size: 28px;
 }
 
 /* ===== COMMON CARD ===== */
