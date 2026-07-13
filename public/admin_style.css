@@ -980,6 +980,60 @@ width:calc(100% - 330px);
     gap:20px;
 }
 
+/* ===============================
+   USER DASHBOARD CARDS
+=============================== */
+.user-dashboard .cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* wrap on smaller screens */
+    gap: 15px;
+}
+
+.user-dashboard .cards .card.card-icon {
+    background: #fff;
+    border-radius: 15px;
+    padding: 15px 20px;
+    flex: 1 1 calc(25% - 15px); /* 4 cards in a row */
+    min-width: 140px; /* ensures cards don't shrink too small */
+    max-width: 220px; /* max card width */
+    height: 100px; /* smaller height */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.user-dashboard .cards .card.card-icon .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f3e8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+}
+
+.user-dashboard .cards .card.card-icon .card-icon img {
+    width: 22px;
+    height: 22px;
+}
+
+.user-dashboard .cards .card.card-icon .card-content h3 {
+    font-size: 13px;
+    margin: 0;
+    color: #222;
+}
+
+.user-dashboard .cards .card.card-icon .card-content h1 {
+    font-size: 20px;
+    margin: 4px 0 0 0;
+    font-weight: bold;
+}
+
 
 /* ============================= */
 /* RESPONSIVE DESIGN */
@@ -1016,6 +1070,11 @@ width:calc(100% - 330px);
         display:block;
     }
 
+    .user-dashboard .cards .card.card-icon {
+        flex: 1 1 calc(50% - 10px); /* 2 cards per row */
+        height: 90px;
+    }
+
 }
 
 
@@ -1041,33 +1100,25 @@ width:calc(100% - 330px);
         z-index:100;
     }
 
-
     .sidebar h2{
         font-size:18px;
         text-align:center;
     }
 
-
     .sidebar .logo{
         width:40px;
     }
-
 
     .sidebar a{
         font-size:14px;
         padding:12px;
     }
 
-
-
     /* TOPBAR */
-
     .topbar{
         margin-left:180px;
         width:calc(100% - 180px);
     }
-
-
 
     /* MAIN CONTENT */
 
@@ -1076,13 +1127,10 @@ width:calc(100% - 330px);
         margin-left:180px;
     }
 
-
     .content{
         width:100%;
         padding:20px;
     }
-
-
 
     /* SEARCH CARD */
 
@@ -1092,34 +1140,25 @@ width:calc(100% - 330px);
         gap:15px;
     }
 
-
     .user-card{
         width:100%;
         min-height:200px;
         height:auto;
     }
 
-
-
     /* DASHBOARD CARDS */
-
     .cards{
         grid-template-columns:1fr;
     }
-
-
     .card{
         width:100%;
     }
-
-
 
     /* RECOMMENDATION */
 
     .recommendation-list{
         width:100%;
     }
-
 
     .recommendation-card{
         width:100%;
@@ -1129,20 +1168,16 @@ width:calc(100% - 330px);
         gap:10px;
     }
 
-
     .avatar{
         width:45px;
         height:45px;
         font-size:22px;
     }
 
-
     .btn-select{
         padding:8px 15px;
         font-size:14px;
     }
-
-
 
     /* RIGHT PANEL */
 
@@ -1151,30 +1186,29 @@ width:calc(100% - 330px);
         margin-top:20px;
     }
 
-
     .chart-card,
     .info-card{
         width:100%;
         margin-bottom:20px;
     }
 
-
     .chart-card canvas{
         max-width:250px;
         max-height:250px;
     }
 
-
-
     /* FORM */
-
     .finalize-card{
         width:100%;
     }
 
-
     .auth-card{
         width:90%;
+    }
+    .user-dashboard .cards .card.card-icon {
+        flex: 1 1 100%; /* stack cards vertically */
+        max-width: 100%;
+        height: 80px;
     }
 
 }
