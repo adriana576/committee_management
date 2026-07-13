@@ -1003,21 +1003,21 @@ width:calc(100% - 330px);
 }
 
 /* Card icon style for admin dashboard */
-.admin-dashboard .cards .card.card-icon {
+.user-dashboard .cards .card.card-icon {
     background: white;
-  border-radius: 20px;
-  padding: 20px;
-  flex: 1 1 calc(25% - 20px); /* 4 cards in a row with spacing */
-  min-width: 180px;
-  max-width: 300px;
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  transition: 0.3s ease;
+    border-radius: 15px; /* slightly smaller corners */
+    padding: 15px;       /* reduce padding */
+    flex: 1 1 calc(30% - 15px); /* slightly smaller width */
+    min-width: 150px;     /* reduce min width */
+    max-width: 220px;     /* reduce max width */
+    height: 100px;        /* reduce height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.07); /* lighter shadow */
+    transition: 0.3s ease;
 }
 
 .admin-dashboard .cards .card.card-icon img {
@@ -1026,14 +1026,12 @@ width:calc(100% - 330px);
     margin-bottom: 10px;
 }
 
-.admin-dashboard .cards .card.card-icon .card-content h3 {
-    font-size: 16px;
-    margin: 5px 0 8px;
+.user-dashboard .cards .card.card-icon .card-content h1 {
+    font-size: 28px; /* smaller number size */
 }
 
-.admin-dashboard .cards .card.card-icon .card-content h1 {
-    font-size: 28px;
-    margin: 0;
+.user-dashboard .cards .card.card-icon .card-content h3 {
+    font-size: 14px; /* smaller label text */
 }
 
 /* Responsive adjustments */
