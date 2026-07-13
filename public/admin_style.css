@@ -118,35 +118,15 @@ html,body{
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    flex-wrap: wrap;
-}
-
-.user-dashboard .cards .card {
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-    flex: 1 1 calc(33.33% - 20px); /* 3 cards in a row */
-    min-width: 180px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.user-dashboard .cards {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap; /* wrap cards on smaller screens */
+    flex-wrap: wrap; /* allows wrapping on smaller screens */
 }
 
 .user-dashboard .cards .card.card-icon {
     background: white;
     border-radius: 20px;
     padding: 20px;
-    flex: 1 1 calc(33.33% - 20px); /* 3 cards per row, responsive */
-    min-width: 180px; /* ensures they don’t shrink too small */
+    flex: 1 1 calc(33.33% - 20px); /* 3 cards per row */
+    min-width: 180px;
     max-width: 300px;
     height: 120px; /* fixed height */
     display: flex;
@@ -156,6 +136,14 @@ html,body{
     text-align: center;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     transition: 0.3s ease;
+}
+
+/* Optional: adjust for very small screens */
+@media (max-width: 768px) {
+    .user-dashboard .cards .card.card-icon {
+        flex: 1 1 100%; /* stack cards vertically */
+        max-width: 100%;
+    }
 }
 
 .user-dashboard .card h3 {
