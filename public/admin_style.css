@@ -114,6 +114,15 @@ html,body{
     color:#111;
 }
 
+body.user-dashboard .cards { 
+    grid-template-columns: repeat(3, 1fr); 
+}
+
+body.user-dashboard .card { 
+    background: #fff; 
+    border-radius: 20px; 
+    /* other card styles */ 
+}
 
 /* ===== COMMON CARD ===== */
 .card{
