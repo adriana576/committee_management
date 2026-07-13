@@ -1003,49 +1003,59 @@ width:calc(100% - 330px);
 }
 
 /* Card icon style for admin dashboard */
-.user-dashboard .cards .card.card-icon {
+/* Admin Dashboard Cards */
+.admin-dashboard .cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; /* Wrap cards on smaller screens */
+}
+
+.admin-dashboard .cards .card {
     background: white;
-    border-radius: 15px; /* slightly smaller corners */
-    padding: 15px;       /* reduce padding */
-    flex: 1 1 calc(30% - 15px); /* slightly smaller width */
-    min-width: 60; /* reduce min width */
-    max-width: 150;/* reduce max width */
-    height: 100px;        /* reduce height */
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1 1 calc(25% - 20px); /* 4 cards per row */
+    min-width: 150px;
+    max-width: 220px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.07); /* lighter shadow */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     transition: 0.3s ease;
 }
 
-.admin-dashboard .cards .card.card-icon img {
-    width: 40px;
-    height: 50px;
-    margin-bottom: 10px;
+.admin-dashboard .cards .card .card-icon img {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 8px;
 }
 
-.user-dashboard .cards .card.card-icon .card-content h1 {
-    font-size: 28px; /* smaller number size */
+.admin-dashboard .cards .card .card-content h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 
-.user-dashboard .cards .card.card-icon .card-content h3 {
-    font-size: 14px; /* smaller label text */
+.admin-dashboard .cards .card .card-content h1 {
+    font-size: 20px;
+    margin: 0;
 }
 
-/* Responsive adjustments */
+/* Responsive Layouts */
 @media (max-width: 1200px) {
-    .admin-dashboard .cards .card.card-icon {
-        flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+    .admin-dashboard .cards .card {
+        flex: 1 1 calc(33.33% - 20px); /* 3 cards per row */
     }
 }
 
 @media (max-width: 750px) {
-    .admin-dashboard .cards .card.card-icon {
-        flex: 1 1 100%;
-        min-width: 100%;
-        height: 120px;
+    .admin-dashboard .cards .card {
+        flex: 1 1 100%; /* 1 card per row */
+        height: auto;
+        padding: 15px;
     }
 }
 
