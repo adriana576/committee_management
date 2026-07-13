@@ -72,6 +72,65 @@ html,body{
     cursor:pointer;
 }
 
+/* Admin Dashboard / Generate Recommendation Page */
+
+.admin-dashboard .cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; /* wrap on smaller screens */
+    margin-bottom: 25px;
+}
+
+.admin-dashboard .cards .card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    min-height: 150px;
+    flex: 1 1 calc(25% - 20px); /* 4 cards per row */
+    min-width: 180px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.admin-dashboard .cards .card .card-icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.admin-dashboard .cards .card .card-content h3 {
+    font-size: 16px;
+    margin: 5px 0 10px;
+}
+
+.admin-dashboard .cards .card .card-content h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .admin-dashboard .cards .card {
+        flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+    }
+}
+
+@media (max-width: 750px) {
+    .admin-dashboard .cards {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .admin-dashboard .cards .card {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+}
 
 /* ===== TOPBAR ===== */
 .topbar{
