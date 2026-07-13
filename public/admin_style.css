@@ -299,24 +299,24 @@ label{
 /* ===== STAFF CARD GRID ===== */
 .user-cards {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 10px;
+    flex-wrap: wrap;       /* wrap to next line on small screens */
+    gap: 20px;             /* space between cards */
     justify-content: flex-start;
+    padding: 10px 0;
 }
 
 .user-card {
     background: white;
     border-radius: 20px;
     padding: 20px;
-    flex: 1 1 calc(25% - 20px); /* 4 cards per row */
-    min-width: 180px;
-    max-width: 250px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    flex: 1 1 calc(33.33% - 20px);  /* 3 cards per row on large screens */
+    min-width: 200px;
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     transition: transform 0.3s ease;
 }
 
