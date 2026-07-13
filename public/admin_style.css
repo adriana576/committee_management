@@ -298,16 +298,18 @@ label{
 
 /* ===== STAFF CARD GRID ===== */
 .user-card{
-    background:white;
-    border-radius:20px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    height:230px;
-    padding:25px 20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-    transition:0.3s ease;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1 1 calc(33.33% - 20px); /* 3 cards per row */
+    min-width: 180px; /* don't shrink too much */
+    max-width: 300px; /* optional maximum width */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
 }
 
 .user-card.hide{
@@ -349,10 +351,11 @@ label{
 
 
 .user-cards{
-    display:grid;
+    display:flex;
     grid-template-columns:repeat(4,1fr);
     gap:20px ;
     padding: 10px;
+    justify-content: flex-start;
 }
 
 /* ===== STAFF CARD ===== */
