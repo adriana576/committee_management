@@ -1,20 +1,16 @@
 const mysql = require('mysql2');
-require('dotenv').config(); // Make sure dotenv is installed
 
 const db = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-    port: process.env.MYSQL_PORT
+  host: 'srv2133.hstgr.io',
+  user: 'u125391022_CommitteeMng',
+  password: '@syA4789463',
+  database: 'u125391022_CMS'
 });
 
 db.connect(err => {
-    if(err){
-        console.error("Error connecting to Hostinger MySQL:", err);
-    } else {
-        console.log("Connected to Hostinger MySQL");
-    }
+  if(err) {
+    console.log("Connection failed:", err.message);
+  } else {
+    console.log("Connected successfully");
+  }
 });
-
-module.exports = db;
