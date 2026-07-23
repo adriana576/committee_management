@@ -4,7 +4,8 @@ const db = mysql.createConnection({
   host: 'srv2133.hstgr.io',
   user: 'u125391022_CommitteeMng',
   password: '@syA4789463',
-  database: 'u125391022_CMS'
+  database: 'u125391022_CMS',
+  port: 3306
 });
 
 db.connect(err => {
