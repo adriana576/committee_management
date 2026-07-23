@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 
 const db = mysql.createConnection({
-  host: '127.0.0.1',
+  host: 'srv2133.hstgr.io',
   user: 'u125391022_CommitteeMng',
   password: '@lesyA9480',
   database: 'u125391022_CMS',
@@ -15,3 +15,5 @@ db.connect(err => {
     console.log("Connected successfully");
   }
 });
+
+module.exports = db;
