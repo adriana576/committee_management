@@ -74,10 +74,10 @@ const role = localStorage.getItem('role');
 // header
 const userNameElement = document.getElementById('userName');
 
-if (role === 'admin') {
-  userNameElement.innerText = 'Admin';
+if (role === 'Admin') {
+  userNameElement.innerText = 'Welcome, Admin';
 } else {
-  userNameElement.innerText = `Welcome, Adminge.getItem('userName')}`;
+  userNameElement.innerText = `Welcome, ${localStorage.getItem('userName')}`;
 }
 
 let notificationsLoaded = false;
