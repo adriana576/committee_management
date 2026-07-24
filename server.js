@@ -303,11 +303,40 @@ app.post('/api/appointments', (req, res) => {
     }
 
     // Send notification to the user
+    // Get committee name
+const committeeSql = `
+    SELECT committee_name 
+    FROM committees 
+    WHERE id = ?
+`;
+
+db.query(committeeSql, [committee_id], (committeeErr, committeeResult) => {
+
+    if (committeeErr) {
+        console.error('Failed to get committee name:', committeeErr);
+        return;
+    }
+
+    const committee_name = committeeResult[0].committee_name;
+
+
+    // Send notification to the user
     const message = `Anda telah dilantik sebagai ${role} ${committee_name} dari ${start_date} hingga ${end_date}`;
-    const notifySql = 'INSERT INTO notifications (user_id, message) VALUES (?, ?)';
+
+    const notifySql = `
+        INSERT INTO notifications (user_id, message) 
+        VALUES (?, ?)
+    `;
+
     db.query(notifySql, [user_id, message], (notifyErr) => {
-      if (notifyErr) console.error('Failed to send notification:', notifyErr);
+
+        if (notifyErr) {
+            console.error('Failed to send notification:', notifyErr);
+        }
+
     });
+
+});
 
     res.json({ success: true, message: 'Appointment assigned successfully' });
   });
