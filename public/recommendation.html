@@ -93,83 +93,204 @@
 </div>
 
 <script>
+
 const BASE_URL = "https://committeemanagement.zarinaproject.my";
 
-async function loadRecommendations() {
-  const res = await fetch(`${BASE_URL}/api/recommendations`);
-  const data = await res.json();
+let workloadChart;
 
-  // Map workload score based on total_committees
-  const mappedData = data.map(u => {
-    const committeesCount = u.total_committees || 0;
-    let workloadScore = '';
-    if (committeesCount === 0) workloadScore = 'Low';
-    else if (committeesCount >= 1 && committeesCount <= 3) workloadScore = 'Medium';
-    else workloadScore = 'High';
-    return {...u, committeesCount, workloadScore};
-  });
 
-  // Update stats cards
-  document.getElementById('totalStaff').innerText = mappedData.length;
-  document.getElementById('lowWorkload').innerText = mappedData.filter(u => u.workloadScore === 'Low').length;
-  document.getElementById('mediumWorkload').innerText = mappedData.filter(u => u.workloadScore === 'Medium').length;
-  document.getElementById('highWorkload').innerText = mappedData.filter(u => u.workloadScore === 'High').length;
+function getWorkloadLevel(count) {
 
-  // Recommendation cards
-  const container = document.getElementById('recommendationList');
-  container.innerHTML = mappedData.map((u, index) => `
-    <div class="recommendation-card">
-      <div class="user-info">
-        <div class="avatar">${u.name[0].toUpperCase()}</div>
-        <div>
-          <strong>${index + 1}. ${u.name}</strong><br>
-          Committees: ${u.committeesCount} (${u.workloadScore})
-        </div>
-      </div>
-      <button class="btn-select" onclick="selectUser(${u.id}, '${u.name}')">Select</button>
-    </div>
-  `).join('');
+    if (count <= 0) {
+        return "Low";
+    } 
+    else if (count <= 2) {
+        return "Medium";
+    } 
+    else {
+        return "High";
+    }
 
-  // Pie chart
-  const ctx = document.getElementById('workloadChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Low','Medium','High'],
-      datasets: [{
-        data: [
-          mappedData.filter(u => u.workloadScore === 'Low').length,
-          mappedData.filter(u => u.workloadScore === 'Medium').length,
-          mappedData.filter(u => u.workloadScore === 'High').length
-        ],
-        backgroundColor: ['#28a745','#ffc107','#dc3545']
-      }]
-    },
-    options: { responsive:true, plugins:{legend:{position:'top'}} }
-  });
-
-  // Top staff list
-  const topList = document.getElementById('topStaffList');
-  topList.innerHTML = mappedData
-    .sort((a,b) => b.committeesCount - a.committeesCount)
-    .slice(0,5)
-    .map(u => `<li>${u.name} - ${u.workloadScore}</li>`).join('');
 }
 
-// Select user
-function selectUser(userId, name) {
-  localStorage.setItem('selectedUserId', userId);
-  localStorage.setItem('selectedUserName', name);
-  window.location.href = 'confirm_appointment.html';
+
+
+async function loadRecommendations() {
+
+    const res = await fetch(`${BASE_URL}/api/recommendations`);
+    const data = await res.json();
+
+
+    const mappedData = data.map(u => {
+
+        const committeesCount = Number(u.total_committees) || 0;
+
+        return {
+            ...u,
+            committeesCount,
+            workloadScore: getWorkloadLevel(committeesCount)
+        };
+
+    });
+
+
+
+    // ==========================
+    // Dashboard statistics
+    // ==========================
+
+    document.getElementById('totalStaff').innerText =
+        mappedData.length;
+
+
+    document.getElementById('lowWorkload').innerText =
+        mappedData.filter(u => u.workloadScore === "Low").length;
+
+
+    document.getElementById('mediumWorkload').innerText =
+        mappedData.filter(u => u.workloadScore === "Medium").length;
+
+
+    document.getElementById('highWorkload').innerText =
+        mappedData.filter(u => u.workloadScore === "High").length;
+
+
+
+    // ==========================
+    // Recommendation card
+    // ==========================
+
+    const container =
+        document.getElementById('recommendationList');
+
+
+    container.innerHTML = mappedData.map((u,index)=>{
+
+
+        const colorClass =
+        u.workloadScore.toLowerCase();
+
+
+
+        return `
+
+        <div class="recommendation-card">
+
+            <div class="user-info">
+
+                <div class="avatar">
+                    ${u.name.charAt(0).toUpperCase()}
+                </div>
+
+                <div>
+                    <strong>
+                    ${index+1}. ${u.name}
+                    </strong>
+                    <br>
+                    Committees:
+                    ${u.committeesCount}
+
+                    <span class="workload-${colorClass}">
+                    (${u.workloadScore})
+                    </span>
+                </div>
+            </div>
+
+            <button 
+            class="btn-select"
+            onclick='selectUser(${u.id}, ${JSON.stringify(u.name)})'>
+            Select
+            </button>
+        </div>
+        `;
+    }).join('');
+
+    // ==========================
+    // Workload chart
+    // ==========================
+    const chartData = [
+        mappedData.filter(u=>u.workloadScore==="Low").length,
+        mappedData.filter(u=>u.workloadScore==="Medium").length,
+        mappedData.filter(u=>u.workloadScore==="High").length
+    ];
+
+    const ctx =
+    document.getElementById('workloadChart').getContext('2d');
+
+    if(workloadChart){
+        workloadChart.destroy();
+    }
+
+    workloadChart = new Chart(ctx,{
+        type:'doughnut',
+        data:{
+            labels:[
+                "Low",
+                "Medium",
+                "High"
+            ],
+
+            datasets:[{
+                data:chartData,
+                backgroundColor:[
+                    "#28a745",
+                    "#ffc107",
+                    "#dc3545"
+                ]
+            }]
+        },
+        options:{
+            responsive:true,
+            plugins:{
+                legend:{
+                    position:'top'
+                }
+            }
+        }
+    });
+
+    // ==========================
+    // Top workload staff
+    // ==========================
+    const topList =
+    document.getElementById('topStaffList');
+
+    topList.innerHTML =
+    [...mappedData]
+    .sort((a,b)=>b.committeesCount-a.committeesCount)
+    .slice(0,5)
+    .map(u=>`
+        <li>
+        ${u.name} -
+        ${u.workloadScore}
+        </li>
+    `).join('');
+}
+
+// ==========================
+// Select User
+// ==========================
+function selectUser(userId,name){
+    localStorage.setItem(
+        'selectedUserId',
+        userId
+    );
+
+    localStorage.setItem(
+        'selectedUserName',
+        name
+    );
+    window.location.href =
+    'confirm_appointment.html';
 }
 
 // Logout
-function logout() {
-  localStorage.clear();
-  window.location.href = 'index.html';
+function logout(){
+    localStorage.clear();
+    window.location.href='index.html';
 }
 
-// Load on page start
+// Load
 loadRecommendations();
 </script>
 

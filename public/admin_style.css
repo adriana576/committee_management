@@ -294,15 +294,27 @@ label{
 
 
 .user-card .user-info p{
-    display:block;
+    display:-webkit-box;
+    width:100%;
     font-size:15px;
     margin:5px 0;
+    line-height:1.3;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+}
+
+.user-card .user-info p:first-of-type{
+    min-height:40px;
 }
 
 
 .user-card .status{
     display:block;
-    margin-top:8px;
+    margin-top:12px;
 }
 
 
@@ -1211,4 +1223,21 @@ width:calc(100% - 330px);
         height: 80px;
     }
 
+}
+
+.workload-low{
+    color:#28a745;
+    font-weight:bold;
+}
+
+
+.workload-medium{
+    color:#ffc107;
+    font-weight:bold;
+}
+
+
+.workload-high{
+    color:#dc3545;
+    font-weight:bold;
 }
