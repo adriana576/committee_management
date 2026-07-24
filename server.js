@@ -704,58 +704,6 @@ Dean of Faculty`
   });
 });
 
-
-//CERTIFICATE//
-// Certificate PDF endpoint
-app.get('/api/user/:id/certificate/pdf', (req, res) => {
-  const userId = req.params.id;
-
-  const sql = `
-    SELECT users.name, appointments.role, committees.committee_name
-    FROM appointments
-    JOIN users ON appointments.user_id = users.id
-    JOIN committees ON appointments.committee_id = committees.id
-    WHERE users.id = ? AND appointments.status = 'Active'
-    ORDER BY appointments.start_date DESC
-    LIMIT 1
-  `;
-
-  db.query(sql, [userId], (err, result) => {
-    if (err || result.length === 0) return res.status(404).send('No appointment found');
-
-    const data = result[0];
-
-    const pdfFilePath = path.join(__dirname, 'public', `certificate_${userId}.pdf`);
-    const doc = new PDFDocument({ size: 'A4', margin: 0 });
-    const writeStream = fs.createWriteStream(pdfFilePath);
-    doc.pipe(writeStream);
-
-    // Background
-    doc.image(path.join(__dirname, 'public', 'img', 'certificate.jpg'), 0, 0, { width: doc.page.width, height: doc.page.height });
-
-    // UiTM logo
-    doc.image(path.join(__dirname, 'public', 'img', 'LogoUiTM.png'), doc.page.width/2 - 60, 50, { width: 120 });
-
-    // Text content
-    doc.font('Times-Bold').fontSize(28).text('Certificate of Appointment', 0, 180, { align: 'center' });
-    doc.font('Times-Roman').fontSize(18).text('This certificate is proudly presented to', { align: 'center', lineGap: 10 });
-    doc.font('Times-Bold').fontSize(24).text(data.name, { align: 'center', lineGap: 10 });
-    doc.font('Times-Roman').fontSize(20).text(`For serving as ${data.role} in ${data.committee_name}`, { align: 'center', lineGap: 10 });
-    doc.font('Times-Roman').fontSize(16).text('Signed, Dean of Faculty', 0, 600, { align: 'center' });
-
-    doc.end();
-
-    writeStream.on('finish', () => {
-      res.download(pdfFilePath);
-    });
-
-    writeStream.on('error', (err) => {
-      console.error(err);
-      res.status(500).send('PDF generation failed');
-    });
-  });
-});
-
 // =========================
 // START SERVER
 // =========================
