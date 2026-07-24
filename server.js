@@ -491,17 +491,29 @@ app.get('/api/user/:id/letter/pdf', (req, res) => {
 
   // Fetch all active appointments for this user
   const sql = `
-    SELECT users.name, users.department,
-           appointments.role, appointments.start_date, appointments.end_date,
-           committees.committee_name
+    SELECT 
+        users.name,
+        users.department,
+        appointments.role,
+        appointments.start_date,
+        appointments.end_date,
+        committees.committee_name
+
     FROM users
+
     LEFT JOIN appointments 
-      ON users.id = appointments.user_id AND appointments.status='Active'
+        ON users.id = appointments.user_id 
+        AND appointments.status='Active'
+
     LEFT JOIN committees 
-      ON appointments.committee_id = committees.id
+        ON appointments.committee_id = committees.id
+
     WHERE users.id = ?
-    ORDER BY appointments.start_date ASC
-  `;
+
+    ORDER BY appointments.end_date DESC
+
+    LIMIT 1
+`;
 
   db.query(sql, [userId], (err, result) => {
     if (err || result.length === 0) {
@@ -537,7 +549,6 @@ app.get('/api/user/:id/letter/pdf', (req, res) => {
     // Assign main role from first appointment
 const assignedRole = result[0].role || 'KOMITI';
 const committee_name = result[0].committee_name;
-const assignedFaculty = result[0].faculty || '-';
 const start = new Date(result[0].start_date).toLocaleDateString('en-GB');
 const end = new Date(result[0].end_date).toLocaleDateString('en-GB');
 
@@ -545,7 +556,7 @@ const end = new Date(result[0].end_date).toLocaleDateString('en-GB');
 doc.text(`Tuan/Puan`);
 doc.moveDown(1);
 doc.font('Times-Bold')
-   .text(`PELANTIKAN SEBAGAI ${assignedRole.toUpperCase()}${committee_name.toUpperCase()} PUSAT PENGAJIAN SAINS PENGKOMPUTERAN, FAKULTI SAINS KOMPUTER DAN MATEMATIK`);
+   .text(`PELANTIKAN SEBAGAI ${assignedRole.toUpperCase()} ${committee_name.toUpperCase()} PUSAT PENGAJIAN SAINS PENGKOMPUTERAN, FAKULTI SAINS KOMPUTER DAN MATEMATIK`);
 doc.moveDown(1);
 
 // Body
@@ -555,7 +566,7 @@ doc.moveDown(1);
 doc.font('Times-Roman')
    .text(`Dengan segala hormatnya perkara di atas adalah dirujuk.\n`);
 doc.moveDown(1);
-doc.text(`2. Sukacita dimaklumkan bahawa tuan/puan dilantik sebagai ${assignedRole} ${result[0].committee_name} Peringkat Pusat Pengajian Sains Pengkomputeran, Fakulti Sains Komputer dan Matematik berkuatkuasa pada ${firstApptStart} dengan syarat-syarat seperti berikut:-`);
+doc.text(`2. Sukacita dimaklumkan bahawa tuan/puan dilantik sebagai ${assignedRole} ${committee_name} Peringkat Pusat Pengajian Sains Pengkomputeran, Fakulti Sains Komputer dan Matematik berkuatkuasa pada ${firstApptStart} dengan syarat-syarat seperti berikut:-`);
 doc.moveDown(1);
 doc.text(`i. Tempoh pelantikan ialah mulai (${start} hingga ${end})`);
 doc.moveDown(1);
