@@ -14,11 +14,28 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 // Notification helpers
 // =========================
-function sendNotification(userId, message) {
-    const sql = "INSERT INTO notifications (user_id, message) VALUES (?, ?)";
-    db.query(sql, [userId, message], (err) => {
-        if (err) console.error('Notification error:', err);
-    });
+function sendNotification(userId, appointmentId, message) {
+    const notifySql = `
+        INSERT INTO notifications 
+        (user_id, appointment_id, title, message, sent_date, status)
+        VALUES (?, ?, ?, ?, NOW(), ?)
+    `;
+
+    db.query(
+        notifySql,
+        [
+            userId,
+            appointmentId,
+            "New Appointment",
+            message,
+            "Unread"
+        ],
+        (err) => {
+            if (err) {
+                console.error('Notification error:', err);
+            }
+        }
+    );
 }
 
 function sendAdminNotification(message) {
@@ -268,20 +285,35 @@ app.delete('/api/committees/:id', (req, res) => {
 // APPOINTMENTS
 // =========================
 
-// GET user appointments 
+// GET user appointments
 app.get('/api/user/:id/appointments', (req, res) => {
   const userId = req.params.id;
-
   const sql = `
-    SELECT appointments.id, committees.committee_name, appointments.role,
-    appointments.start_date, appointments.end_date, appointments.status
-    FROM appointments
-    JOIN committees ON appointments.committee_id = committees.id
-    WHERE appointments.user_id = ?
+  SELECT 
+    users.name,
+    users.email,
+    appointments.role,
+    appointments.start_date,
+    appointments.end_date,
+    committees.committee_name
+
+  FROM appointments
+
+  JOIN users 
+  ON appointments.user_id = users.id
+
+  JOIN committees
+  ON appointments.committee_id = committees.id
+
+  WHERE appointments.id = ?
   `;
 
   db.query(sql, [userId], (err, result) => {
-    if (err) return res.json([]);
+    if (err) {
+      console.error("Appointment error:", err);
+      return res.json([]);
+    }
+
     res.json(result);
   });
 });
@@ -501,6 +533,7 @@ app.get('/api/user/:id/letter/pdf', (req, res) => {
     // Subject
     // Assign main role from first appointment
 const assignedRole = result[0].role || 'KOMITI';
+const committee_name = result[0].committee_name;
 const assignedFaculty = result[0].faculty || '-';
 const start = new Date(result[0].start_date).toLocaleDateString('en-GB');
 const end = new Date(result[0].end_date).toLocaleDateString('en-GB');
@@ -509,7 +542,7 @@ const end = new Date(result[0].end_date).toLocaleDateString('en-GB');
 doc.text(`Tuan/Puan`);
 doc.moveDown(1);
 doc.font('Times-Bold')
-   .text(`PELANTIKAN SEBAGAI ${assignedRole.toUpperCase()} PUSAT PENGAJIAN SAINS PENGKOMPUTERAN, FAKULTI SAINS KOMPUTER DAN MATEMATIK`);
+   .text(`PELANTIKAN SEBAGAI ${assignedRole.toUpperCase()}${committee_name.toUpperCase()} PUSAT PENGAJIAN SAINS PENGKOMPUTERAN, FAKULTI SAINS KOMPUTER DAN MATEMATIK`);
 doc.moveDown(1);
 
 // Body
