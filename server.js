@@ -15,34 +15,59 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Notification helpers
 // =========================
 function sendNotification(userId, appointmentId, message) {
-    const notifySql = `
-        INSERT INTO notifications 
-        (user_id, appointment_id, title, message, sent_date, status)
-        VALUES (?, ?, ?, ?, NOW(), ?)
+  const notifySql = `
+    INSERT INTO notifications 
+    (user_id, appointment_id, title, message, sent_date, status)
+    VALUES (?, ?, ?, ?, NOW(), ?)
     `;
 
+  db.query(
+    notifySql,
+    [
+      user_id,
+      result.insertId,
+      "New Appointment",
+      message,
+      "Unread"
+    ],
+    (notifyErr) => {
+        if (notifyErr) {
+            console.error(
+                "Failed to send notification:",
+                notifyErr
+            );
+        }
+    }
+);
+}
+
+function sendAdminNotification(message) {
+
+    const sql = `
+        INSERT INTO notifications
+        (user_id, appointment_id, title, message, sent_date, status, is_read, created_at)
+        VALUES (NULL, NULL, ?, ?, NOW(), ?, 0, NOW())
+    `;
+
+
     db.query(
-        notifySql,
+        sql,
         [
-            userId,
-            appointmentId,
-            "New Appointment",
+            "Admin Notification",
             message,
             "Unread"
         ],
         (err) => {
+
             if (err) {
-                console.error('Notification error:', err);
+                console.error(
+                    'Admin notification error:',
+                    err
+                );
             }
+
         }
     );
-}
-
-function sendAdminNotification(message) {
-    const sql = "INSERT INTO notifications (user_id, message) VALUES (NULL, ?)";
-    db.query(sql, [message], (err) => {
-        if (err) console.error('Admin notification error:', err);
-    });
 }
 
 // TEST
@@ -614,23 +639,38 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
 function checkExpiringAppointments() {
     const sql = `
         SELECT
+            u.name,
             a.user_id,
             a.role,
-            c.committee_name,
+            c.name AS committee_name,
             a.end_date
         FROM appointments a
+        JOIN users u
+            ON a.user_id = u.id
         JOIN committees c
             ON a.committee_id = c.id
         WHERE DATEDIFF(a.end_date, CURDATE()) BETWEEN 0 AND 30
         AND a.status = 'Active'
     `;
+
     db.query(sql, (err, results) => {
-        if (err) return console.error(err);
+        if (err) {
+            console.error("Expiry check error:", err);
+            return;
+        }
+
         results.forEach(appt => {
-            // Notify user
-            sendNotification(appt.user_id, `Perhatian: Pelantikan anda sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`);
-            // Notify admin
-            sendAdminNotification(`Pelantikan ${appt.user_id} sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`);
+
+            // Notification to user
+            sendNotification(
+                appt.user_id,
+                `Perhatian: Pelantikan anda sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`
+            );
+
+            // Notification to admin
+            sendAdminNotification(
+                `Pelantikan ${appt.name} sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`
+            );
         });
     });
 }
