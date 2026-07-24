@@ -268,7 +268,7 @@ app.delete('/api/committees/:id', (req, res) => {
 // APPOINTMENTS
 // =========================
 
-// GET user appointments (Flutter)
+// GET user appointments 
 app.get('/api/user/:id/appointments', (req, res) => {
   const userId = req.params.id;
 
