@@ -56,7 +56,6 @@ const BASE_URL = "https://committeemanagement.zarinaproject.my";
 const selectedUserId = localStorage.getItem('selectedUserId');
 const selectedUserName = localStorage.getItem('selectedUserName');
 
-const msg = document.getElementById('msg');
 
 document.getElementById('confirmText').innerText =
     `Are you sure you want to appoint ${selectedUserName}?`;
@@ -76,6 +75,8 @@ async function loadCommittees() {
 
 
 async function confirmAppointment() {
+
+  const msg = document.getElementById('msg');
 
     const committee_id = document.getElementById('committee_id').value;
     const role = document.getElementById('role').value;
@@ -111,7 +112,7 @@ async function confirmAppointment() {
     if (data.success) {
 
         msg.style.color = "green";
-        msg.innerHTML = "✅ Appointment has been successfully finalized.";
+        msg.innerHTML = "Appointment has been successfully finalized.";
 
         setTimeout(() => {
             window.location.href = "recommendation.html";
@@ -121,7 +122,7 @@ async function confirmAppointment() {
     } else {
 
         msg.style.color = "red";
-        msg.innerHTML = "❌ Failed to finalize appointment.";
+        msg.innerHTML = "Failed to finalize appointment.";
 
     }
 
