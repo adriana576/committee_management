@@ -291,7 +291,6 @@ app.get('/api/user/:id/appointments', (req, res) => {
   const sql = `
   SELECT 
     users.name,
-    users.email,
     appointments.role,
     appointments.start_date,
     appointments.end_date,
@@ -299,13 +298,17 @@ app.get('/api/user/:id/appointments', (req, res) => {
 
   FROM appointments
 
-  JOIN users 
+  JOIN users
   ON appointments.user_id = users.id
 
   JOIN committees
-  ON appointments.committee_id = committees.id
+  ON appointments.committee_id = committees.committee_id
 
-  WHERE appointments.id = ?
+  WHERE appointments.user_id = ?
+
+  ORDER BY appointments.end_date DESC
+
+  LIMIT 1
   `;
 
   db.query(sql, [userId], (err, result) => {
