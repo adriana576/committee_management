@@ -287,21 +287,24 @@ app.delete('/api/committees/:id', (req, res) => {
 
 // GET user appointments
 app.get('/api/user/:id/appointments', (req, res) => {
+
   const userId = req.params.id;
+
   const sql = `
     SELECT 
-      users.name,
+      committees.name AS committee_name,
       appointments.role,
       appointments.start_date,
       appointments.end_date,
-      committees.name AS committee_name,
       appointments.status
+
     FROM appointments
-    JOIN users
-    ON appointments.user_id = users.id
+
     JOIN committees
     ON appointments.committee_id = committees.id
+
     WHERE appointments.user_id = ?
+
     ORDER BY appointments.end_date DESC
   `;
 
@@ -310,7 +313,9 @@ app.get('/api/user/:id/appointments', (req, res) => {
       console.error("Appointment error:", err);
       return res.json([]);
     }
+    console.log("Appointment result:", result);
     res.json(result);
+
   });
 });
 
