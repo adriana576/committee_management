@@ -289,26 +289,20 @@ app.delete('/api/committees/:id', (req, res) => {
 app.get('/api/user/:id/appointments', (req, res) => {
   const userId = req.params.id;
   const sql = `
-  SELECT 
-    users.name,
-    appointments.role,
-    appointments.start_date,
-    appointments.end_date,
-    committees.committee_name
-
-  FROM appointments
-
-  JOIN users
-  ON appointments.user_id = users.id
-
-  JOIN committees
-  ON appointments.committee_id = committees.committee_id
-
-  WHERE appointments.user_id = ?
-
-  ORDER BY appointments.end_date DESC
-
-  LIMIT 1
+    SELECT 
+      users.name,
+      appointments.role,
+      appointments.start_date,
+      appointments.end_date,
+      committees.name AS committee_name,
+      appointments.status
+    FROM appointments
+    JOIN users
+    ON appointments.user_id = users.id
+    JOIN committees
+    ON appointments.committee_id = committees.id
+    WHERE appointments.user_id = ?
+    ORDER BY appointments.end_date DESC
   `;
 
   db.query(sql, [userId], (err, result) => {
@@ -316,7 +310,6 @@ app.get('/api/user/:id/appointments', (req, res) => {
       console.error("Appointment error:", err);
       return res.json([]);
     }
-
     res.json(result);
   });
 });
@@ -379,10 +372,19 @@ db.query(committeeSql, [committee_id], (committeeErr, committeeResult) => {
 
 app.put('/api/notifications/:id/read', (req, res) => {
   const notificationId = req.params.id;
-  const sql = 'UPDATE notifications SET is_read = 1 WHERE id = ?';
+  const sql = `
+    UPDATE notifications 
+    SET status = 'Read'
+    WHERE notification_id = ?
+  `;
+
   db.query(sql, [notificationId], (err) => {
-    if (err) return res.status(500).json({ success: false });
-    res.json({ success: true });
+    if (err) {
+      console.error(err);
+      return res.status(500).json({success:false});
+    }
+
+    res.json({success:true});
   });
 });
 
