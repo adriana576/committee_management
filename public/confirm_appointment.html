@@ -51,65 +51,92 @@
 </div>
 
 <script>
-  const BASE_URL = "https://committeemanagement.zarinaproject.my";
+const BASE_URL = "https://committeemanagement.zarinaproject.my";
 
-  const selectedUserId = localStorage.getItem('selectedUserId');
-  const selectedUserName = localStorage.getItem('selectedUserName');
+const selectedUserId = localStorage.getItem('selectedUserId');
+const selectedUserName = localStorage.getItem('selectedUserName');
+const msg = document.getElementById('msg');
 
-  document.getElementById('confirmText').innerText =
+document.getElementById('confirmText').innerText =
     `Are you sure you want to appoint ${selectedUserName}?`;
 
-  async function loadCommittees() {
+
+async function loadCommittees() {
+
     const res = await fetch(`${BASE_URL}/api/committees`);
     const data = await res.json();
 
     document.getElementById('committee_id').innerHTML = data.map(c => `
-      <option value="${c.id}">${c.committee_name}</option>
+        <option value="${c.id}">
+            ${c.committee_name}
+        </option>
     `).join('');
-  }
+}
 
-  async function confirmAppointment() {
+
+async function confirmAppointment() {
+
     const committee_id = document.getElementById('committee_id').value;
-    const role = document.getElementById('role').value;
+    const appointment_role = document.getElementById('role').value;
     const start_date = document.getElementById('start_date').value;
     const end_date = document.getElementById('end_date').value;
 
-    const res = await fetch(`${BASE_URL}/api/appointments`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        user_id: selectedUserId,
-        committee_id,
-        role,
-        start_date,
-        end_date,
-        status: 'Active'
-      })
-    });
 
-    const data = await res.json();
-    document.getElementById('msg').innerText = data.message;
+    try {
 
-    if (data.success) {
-    msg.style.color = "green";
-    msg.innerHTML = "Appointment have been successfully finalized.";
+        const res = await fetch(`${BASE_URL}/api/appointments`, {
 
-    setTimeout(() => {
-        window.location.href = "recommendation.html";
-    }, 1500);
+            method: 'POST',
 
-  } else {
-    msg.style.color = "red";
-    msg.innerHTML = " Failed to finalize.";
-  }
-  }
+            headers: {
+                'Content-Type': 'application/json'
+            },
 
-  function logout() {
+            body: JSON.stringify({
+                user_id: selectedUserId,
+                committee_id: committee_id,
+                appointment_role: appointment_role,
+                start_date: start_date,
+                end_date: end_date,
+                appointment_status: 'Active'
+
+            })
+        });
+
+        const data = await res.json();
+
+        if(data.success){
+
+            msg.style.color = "green";
+            msg.innerHTML = "✅ Appointment has been successfully finalized.";
+
+            setTimeout(() => {
+                window.location.href = "recommendation.html";
+            },1500);
+
+        }else{
+            msg.style.color = "red";
+            msg.innerHTML = "❌ Failed to finalize appointment.";
+        }
+
+    } catch(error){
+
+        console.log(error);
+
+        msg.style.color = "red";
+        msg.innerHTML = "❌ Server connection error.";
+    }
+
+}
+
+function logout(){
+
     localStorage.clear();
     window.location.href = 'login.html';
-  }
 
-  loadCommittees();
+}
+loadCommittees();
+
 </script>
 
 </body>
