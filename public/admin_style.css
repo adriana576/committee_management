@@ -1266,34 +1266,28 @@ color:green;
 }
 
 
-.dashboard-grid{
+#currentAppointments{
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:25px;
-}
-
-.expiry-card,
-.workload-card{
-padding:20px;
-background:#fafafa;
-border-radius:15px;
-text-align:center;
-}
-
-.quick-actions{
-display:flex;
+grid-template-columns:repeat(2,1fr);
 gap:20px;
 }
 
-.quick-actions button{
-background:#6c2bd9;
-color:white;
-border:none;
-padding:15px 25px;
-border-radius:12px;
-cursor:pointer;
+.appointment-card{
+background:#f7e8f4;
+padding:25px;
+border-radius:15px;
 }
 
-.quick-actions button:hover{
-background:#4B0082;
+.appointment-card h3{
+color:#4B0082;
+margin-bottom:15px;
+}
+
+.appointment-card p{
+margin:8px 0;
+}
+
+.status{
+color:green;
+font-weight:bold;
 }
