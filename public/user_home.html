@@ -303,12 +303,12 @@ const endDate = new Date(latest.end_date);
 if(endDate >= today){
 
 document.getElementById("currentStatus").innerHTML =
-"🟢 Active";
+"Active";
 
 }else{
 
 document.getElementById("currentStatus").innerHTML =
-"⚪ Completed";
+"Completed";
 
 }
 
@@ -332,7 +332,7 @@ if(daysLeft <= 30 && daysLeft >=0){
 
 expiryBox.innerHTML =
 `
-⚠ Your appointment will expire in
+Your appointment will expire in
 <b>${daysLeft} days</b>
 `;
 
