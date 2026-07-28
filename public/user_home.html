@@ -46,40 +46,12 @@
 
 </div>
 
-
-
 <!-- CURRENT APPOINTMENT -->
-
 <div class="dashboard-section">
-
-<h2>Current Appointment</h2>
-
-<div class="appointment-card">
-
-<h3 id="currentCommittee">
-No Active Appointment
-</h3>
-
-<p>
-<strong>Role:</strong>
-<span id="currentRole">-</span>
-</p>
-
-<p>
-<strong>Start Date:</strong>
-<span id="currentStart">-</span>
-</p>
-
-
-<p>
-<strong>End Date:</strong>
-<span id="currentEnd">-</span>
-</p>
-
-
-<p class="status" id="currentStatus">
-</p>
-</div>
+  <h2>Current Appointment</h2>
+  <div id="currentAppointments">
+    <p>No Active Appointment</p>
+  </div>
 </div>
 
 <!-- EXPIRY + WORKLOAD -->
@@ -267,140 +239,145 @@ const res = await fetch(
 const appointments = await res.json();
 
 
-
-if(appointments.length === 0){
-return;
-}
-
-
-// latest appointment
-const latest = appointments[0];
-
-
-
-document.getElementById("currentCommittee").innerText =
-latest.committee_name;
-
-
-document.getElementById("currentRole").innerText =
-latest.role;
-
-
-document.getElementById("currentStart").innerText =
-formatDate(latest.start_date);
-
-
-document.getElementById("currentEnd").innerText =
-formatDate(latest.end_date);
-
-
-
 const today = new Date();
-const endDate = new Date(latest.end_date);
+
+
+// ==========================
+// ACTIVE APPOINTMENTS
+// ==========================
+
+const activeAppointments = appointments.filter(a => {
+
+const start = new Date(a.start_date);
+const end = new Date(a.end_date);
+
+return start <= today && end >= today;
+
+});
 
 
 
-if(endDate >= today){
-
-document.getElementById("currentStatus").innerHTML =
-"Active";
-
-}else{
-
-document.getElementById("currentStatus").innerHTML =
-"Completed";
-
-}
+const container = document.getElementById("currentAppointments");
 
 
 
-// expiry reminder
+if(activeAppointments.length === 0){
 
-const daysLeft =
-Math.ceil(
-(endDate - today)/(1000*60*60*24)
-);
-
-
-
-const expiryBox =
-document.getElementById("expiryReminder");
-
-
-
-if(daysLeft <= 30 && daysLeft >=0){
-
-expiryBox.innerHTML =
-`
-Your appointment will expire in
-<b>${daysLeft} days</b>
+container.innerHTML = `
+<p>No Active Appointment</p>
 `;
-
-expiryBox.style.color="red";
-
 
 }
 
 else{
 
-expiryBox.innerHTML =
-`
-🟢 Appointment is valid for
-<b>${daysLeft} days</b>
-`;
+
+container.innerHTML = activeAppointments.map(a => `
+
+<div class="appointment-card">
+
+<h3>
+${a.committee_name}
+</h3>
+
+
+<p>
+<strong>Role:</strong>
+${a.role}
+</p>
+
+
+<p>
+<strong>Start Date:</strong>
+${formatDate(a.start_date)}
+</p>
+
+
+<p>
+<strong>End Date:</strong>
+${formatDate(a.end_date)}
+</p>
+
+
+<p class="status">
+🟢 Active
+</p>
+
+
+</div>
+
+`).join('');
 
 }
+// ==========================
+// EXPIRY REMINDER
+// ==========================
+if(activeAppointments.length > 0){
+
+let nearestExpiry = activeAppointments.reduce((prev,current)=>{
+
+return new Date(prev.end_date) < new Date(current.end_date)
+? prev
+: current;
+
+});
 
 
+const endDate = new Date(nearestExpiry.end_date);
 
-// workload
+const daysLeft = Math.ceil(
+(endDate - today)/(1000*60*60*24)
+);
 
+const expiryBox =
+document.getElementById("expiryReminder");
+
+if(daysLeft <= 30){
+
+
+expiryBox.innerHTML =
+`
+ Your appointment at 
+<b>${nearestExpiry.committee_name}</b>
+will expire in
+<b>${daysLeft} days</b>
+`;
+expiryBox.style.color="red";
+}
+
+else{
+expiryBox.innerHTML =
+`
+ Your nearest appointment expiry is in
+<b>${daysLeft} days</b>
+`;
+}
+}
+
+// ==========================
+// WORKLOAD
+// ==========================
 const count = appointments.length;
 
 
 document.getElementById("workloadCount")
 .innerText=count;
 
-
-
 let level;
-
-
-if(count <=0){
-
+if(count === 0){
 level="Low";
-
 }
-else if(count<=2){
 
-level="Medium";
-
+else if(count <=2){
+  level="Medium";
 }
+
 else{
-
-level="High";
-
+  level="High";
 }
-
-
 document.getElementById("workloadLevel")
 .innerText=level;
-
-
 }
-
-
-
-function formatDate(date){
-
-return new Date(date)
-.toLocaleDateString('en-GB');
-
-}
-
-
-
-loadUserDashboard();
 
 // logout
 function logout() {
