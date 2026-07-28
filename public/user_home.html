@@ -1,100 +1,216 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>User Dashboard</title>
-  <link rel="stylesheet" href="admin_style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>User Dashboard</title>
+<link rel="stylesheet" href="admin_style.css">
 </head>
 
 <body class="user-dashboard">
+<div class="layout">
 
 <!-- SIDEBAR -->
-<div class="layout">
-  <div class="sidebar">
-    <h2>Committee Management System</h2>
-    <a class="active" href="user_home.html">Home</a>
-    <a href="appointment_letter.html">Appointment Letter</a>
-    <a href="appointment_history.html">History</a>
-    <a href="user_profile.html">Profile</a>
-    <button class="logout-btn" onclick="logout()">LOG OUT</button>
-  </div>
+<div class="sidebar">
+<h2>
+Committee Management System
+</h2>
+
+<a class="active" href="user_home.html">
+Home
+</a>
+
+<a href="appointment_letter.html">
+Appointment Letter
+</a>
+
+<a href="appointment_history.html">
+History
+</a>
+
+<a href="user_profile.html">
+Profile
+</a>
+
+
+<button class="logout-btn" onclick="logout()">
+LOG OUT
+</button>
+
+
+</div>
+
+
+
+
+
+<!-- CONTENT -->
 
 <div class="content">
 
-<h1>User Dashboard</h1>
+
+<h1>
+User Dashboard
+</h1>
+
+
 
 
 <!-- SUMMARY CARDS -->
+
 <div class="cards">
 
-<div class="card">
-<h3>Total Appointments</h3>
-<h1 id="totalAppointments">0</h1>
-</div>
-
 
 <div class="card">
-<h3>Active Appointments</h3>
-<h1 id="activeAppointments">0</h1>
+
+<h3>
+Total Appointments
+</h3>
+
+<h1 id="totalAppointments">
+0
+</h1>
+
 </div>
+
 
 
 <div class="card">
-<h3>Completed / Inactive</h3>
-<h1 id="inactiveAppointments">0</h1>
-</div>
+
+<h3>
+Active Appointments
+</h3>
+
+<h1 id="activeAppointments">
+0
+</h1>
 
 </div>
+
+
+
+
+<div class="card">
+
+<h3>
+Completed / Inactive
+</h3>
+
+<h1 id="inactiveAppointments">
+0
+</h1>
+
+</div>
+
+
+</div>
+
+
+
+
 
 <!-- CURRENT APPOINTMENT -->
+
 <div class="dashboard-section">
-  <h2>Current Appointment</h2>
-  <div id="currentAppointments">
-    <p>No Active Appointment</p>
-  </div>
+
+
+<h2>
+Current Appointment
+</h2>
+
+
+<div id="currentAppointments">
+
+<p>
+No Active Appointment
+</p>
+
+
 </div>
+
+
+</div>
+
+
+
+
+
+
 
 <!-- EXPIRY + WORKLOAD -->
 
 <div class="dashboard-grid">
 
 
+
 <div class="dashboard-section">
 
-<h2>Appointment Expiry Reminder</h2>
+
+<h2>
+Appointment Expiry Reminder
+</h2>
 
 
 <div class="expiry-card" id="expiryReminder">
+
 Checking appointment status...
-</div>
+
 </div>
 
+
+</div>
+
+
+
+
+
+
 <div class="dashboard-section">
-<h2>Your Workload</h2>
+
+
+<h2>
+Your Workload
+</h2>
+
+
+
 <div class="workload-card">
+
+
 <h1 id="workloadCount">
 0
 </h1>
+
 
 <p>
 Current Committee Assignment
 </p>
 
+
 <h3 id="workloadLevel">
 Low
 </h3>
-</div>
-</div>
+
+
+
 </div>
 
+
+</div>
+</div>
 
 <!-- QUICK ACTION -->
 <div class="dashboard-section">
-<h2>Quick Actions</h2>
+
+
+<h2>
+Quick Actions
+</h2>
+
+
 <div class="quick-actions">
 
+
 <button onclick="location.href='appointment_letter.html'">
- Download Appointment Letter
+Download Appointment Letter
 </button>
 
 <button onclick="location.href='appointment_history.html'">
@@ -111,282 +227,357 @@ Update Profile
 <!-- TOPBAR -->
 <div class="topbar">
 
-  <h3 id="userName"></h3>
 
-  <!-- NOTIFICATION BELL -->
-  <div class="bell" onclick="toggleNotif()">
-    <img src="img/bell.png" alt="Notifications" style="width:25px; height:25px;">
-    <span id="notifCount" class="notif-badge"></span>
-  </div>
+<h3 id="userName"></h3>
 
+<div class="bell" onclick="toggleNotif()">
+<img src="img/bell.png"
+style="width:25px;height:25px;">
+
+
+<span id="notifCount"
+class="notif-badge">
+</span>
+</div>
 </div>
 
 <!-- NOTIFICATION PANEL -->
-<div class="notifications-panel" id="notifications"></div>
-
-<!-- JS -->
+<div class="notifications-panel"
+id="notifications">
+</div>
 <script>
-const BASE_URL = "https://committeemanagement.zarinaproject.my";
-const role = localStorage.getItem('role');
 
-// header
-const userNameElement = document.getElementById('userName');
 
-if (role === 'admin') {
-  userNameElement.innerText = 'User';
-} else {
-  userNameElement.innerText = `Welcome, ${localStorage.getItem('userName')}`;
+const BASE_URL =
+"https://committeemanagement.zarinaproject.my";
+
+// =========================
+// USER HEADER
+// =========================
+document.getElementById("userName").innerText =
+`Welcome, ${localStorage.getItem('userName')}`;
+
+// =========================
+// LOAD NOTIFICATIONS
+// =========================
+
+
+async function loadNotifications(){
+
+
+const userId =
+localStorage.getItem('userId');
+
+
+const res =
+await fetch(`${BASE_URL}/api/notifications/${userId}`);
+
+
+
+const notifications =
+await res.json();
+
+
+
+const container =
+document.getElementById("notifications");
+
+
+const badge =
+document.getElementById("notifCount");
+
+
+
+const unread =
+notifications.filter(n=>n.is_read==0).length;
+
+
+
+badge.innerText =
+unread;
+
+
+
+container.innerHTML =
+notifications.map(n=>`
+
+
+<div class="notif-item ${n.is_read?'read':'unread'}"
+onclick="markAsRead(${n.id})">
+
+
+
+<div>
+🔔
+</div>
+
+
+<div>
+
+
+<p>
+${n.message}
+</p>
+
+
+<small>
+${new Date(n.created_at).toLocaleString()}
+</small>
+</div>
+</div>
+
+`).join("");
+
 }
 
+function markAsRead(id){
 
 
-
-// load notifications
-async function loadNotifications() {
-  const userId = localStorage.getItem('userId');
-
-  const res = await fetch(`${BASE_URL}/api/notifications/${userId}`);
-  const notifications = await res.json();
-
-  const container = document.getElementById('notifications');
-  const badge = document.getElementById('notifCount');
-
-  const unread = notifications.filter(n => n.is_read == 0).length;
-  badge.innerText = unread;
-
-  container.innerHTML = notifications.map(n => `
-    <div class="notif-item ${n.is_read ? 'read' : 'unread'}"
-         id="notif-${n.id}"
-         onclick="markAsRead(${n.id})">
-
-      <div class="notif-icon">🔔</div>
-
-      <div>
-        <div class="notif-message">${n.message}</div>
-        <div class="notif-time">
-          ${new Date(n.created_at).toLocaleString()}
-        </div>
-      </div>
-
-    </div>
-  `).join('');
+fetch(`${BASE_URL}/api/notifications/${id}/read`,
+{
+method:"PUT"
+})
+.then(()=>{
+loadNotifications();
+});
 }
 
-// mark as read
-function markAsRead(id) {
-  fetch(`${BASE_URL}/api/notifications/${id}/read`, {
-    method: 'PUT'
-  }).then(() => {
-    document.getElementById(`notif-${id}`)?.remove();
-    loadNotifications(); // refresh badge
-  });
+let notificationsLoaded=false;
+async function toggleNotif(){
+
+const panel =
+document.getElementById("notifications");
+
+if(panel.style.display==="block"){
+panel.style.display="none";
+return;
 }
 
-// auto refresh
-let notificationsLoaded = false;
-
-async function toggleNotif() {
-  const panel = document.getElementById('notifications');
-
-  if (panel.style.display === 'block') {
-    panel.style.display = 'none';
-    return;
-  }
-
-  panel.style.display = 'block';
-
-  if (!notificationsLoaded) {
-    await loadNotifications();
-    notificationsLoaded = true;
-  }
+panel.style.display="block";
+if(!notificationsLoaded){
+await loadNotifications();
+notificationsLoaded=true;
+}
 }
 
-async function loadDashboardCounts() {
-  const userId = localStorage.getItem('userId');
+// =========================
+// SUMMARY COUNT
+// =========================
+async function loadDashboardCounts(){
 
-  const res = await fetch(`${BASE_URL}/api/user/${userId}/appointments`);
-  const appointments = await res.json();
-
-  const today = new Date();
-
-  const total = appointments.length;
-
-  const active = appointments.filter(a => {
-    const start = new Date(a.start_date);
-    const end = new Date(a.end_date);
-    return start <= today && end >= today;
-  }).length;
-
-  const inactive = total - active;
-
-  document.getElementById('totalAppointments').innerText = total;
-  document.getElementById('activeAppointments').innerText = active;
-  document.getElementById('inactiveAppointments').innerText = inactive;
-}
-
-loadDashboardCounts();
-
-async function loadUserDashboard(){
-
-const userId = localStorage.getItem('userId');
+const userId =
+localStorage.getItem('userId');
 
 
-const res = await fetch(
+const res =
+await fetch(
 `${BASE_URL}/api/user/${userId}/appointments`
 );
 
+const appointments =
+await res.json();
 
-const appointments = await res.json();
+const today =
+new Date();
+
+const active =
+appointments.filter(a=>{
 
 
-const today = new Date();
+return new Date(a.start_date)<=today
+&&
+new Date(a.end_date)>=today;
 
 
-// ==========================
+}).length;
+
+document.getElementById("totalAppointments")
+.innerText =
+appointments.length;
+
+document.getElementById("activeAppointments")
+.innerText =
+active;
+
+document.getElementById("inactiveAppointments")
+.innerText =
+appointments.length-active;
+}
+
+// =========================
+// USER DASHBOARD
+// =========================
+async function loadUserDashboard(){
+const userId =
+localStorage.getItem('userId');
+
+const res =
+await fetch(
+`${BASE_URL}/api/user/${userId}/appointments`
+);
+
+const appointments =
+await res.json();
+
+const today =
+new Date();
+
+
 // ACTIVE APPOINTMENTS
-// ==========================
+const activeAppointments =
+appointments.filter(a=>{
 
-const activeAppointments = appointments.filter(a => {
 
-const start = new Date(a.start_date);
-const end = new Date(a.end_date);
+const start =
+new Date(a.start_date);
 
-return start <= today && end >= today;
 
+const end =
+new Date(a.end_date);
+
+return start<=today && end>=today;
 });
 
+const container =
+document.getElementById("currentAppointments");
 
 
-const container = document.getElementById("currentAppointments");
-
-
-
-if(activeAppointments.length === 0){
-
-container.innerHTML = `
-<p>No Active Appointment</p>
+if(activeAppointments.length===0){
+container.innerHTML =
+`
+<p>
+No Active Appointment
+</p>
 `;
-
 }
+
 
 else{
 
 
-container.innerHTML = activeAppointments.map(a => `
+container.innerHTML =
+
+activeAppointments.map(a=>`
+
 
 <div class="appointment-card">
+
 
 <h3>
 ${a.committee_name}
 </h3>
-
 
 <p>
 <strong>Role:</strong>
 ${a.role}
 </p>
 
-
 <p>
 <strong>Start Date:</strong>
 ${formatDate(a.start_date)}
 </p>
-
 
 <p>
 <strong>End Date:</strong>
 ${formatDate(a.end_date)}
 </p>
 
-
 <p class="status">
 🟢 Active
 </p>
 
 
+
 </div>
 
-`).join('');
 
+`).join("");
 }
-// ==========================
+
 // EXPIRY REMINDER
-// ==========================
-if(activeAppointments.length > 0){
+if(activeAppointments.length>0){
 
-let nearestExpiry = activeAppointments.reduce((prev,current)=>{
+const nearest =
+activeAppointments.reduce((a,b)=>{
 
-return new Date(prev.end_date) < new Date(current.end_date)
-? prev
-: current;
 
+return new Date(a.end_date)
+<
+new Date(b.end_date)
+?a:b;
 });
 
+const daysLeft =
+Math.ceil(
 
-const endDate = new Date(nearestExpiry.end_date);
+(new Date(nearest.end_date)-today)
+/(1000*60*60*24)
 
-const daysLeft = Math.ceil(
-(endDate - today)/(1000*60*60*24)
 );
 
-const expiryBox =
+const expiry =
 document.getElementById("expiryReminder");
 
-if(daysLeft <= 30){
+if(daysLeft<=30){
 
 
-expiryBox.innerHTML =
+expiry.innerHTML=
 `
- Your appointment at 
-<b>${nearestExpiry.committee_name}</b>
-will expire in
+ ${nearest.committee_name}
+expires in
 <b>${daysLeft} days</b>
 `;
-expiryBox.style.color="red";
+expiry.style.color="red";
 }
-
 else{
-expiryBox.innerHTML =
+
+expiry.innerHTML=
 `
- Your nearest appointment expiry is in
+🟢 Nearest appointment expiry:
 <b>${daysLeft} days</b>
 `;
 }
 }
 
-// ==========================
 // WORKLOAD
-// ==========================
-const count = appointments.length;
-
-
+const count =
+appointments.length;
 document.getElementById("workloadCount")
 .innerText=count;
 
 let level;
-if(count === 0){
+
+if(count===0){
 level="Low";
 }
 
-else if(count <=2){
-  level="Medium";
+else if(count<=2){
+level="Medium";
 }
 
 else{
-  level="High";
+level="High";
 }
+
 document.getElementById("workloadLevel")
 .innerText=level;
 }
 
+function formatDate(date){
+return new Date(date)
+.toLocaleDateString("en-GB");
+}
+
+// LOGOUT
+function logout(){
+localStorage.clear();
+window.location.href="index.html";
+}
+
+// START SYSTEM
+loadDashboardCounts();
 loadUserDashboard();
 
-// logout
-function logout() {
-  localStorage.clear();
-  window.location.href = 'index.html';
-}
 </script>
-
 </body>
 </html>
