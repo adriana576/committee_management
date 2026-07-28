@@ -1241,3 +1241,59 @@ width:calc(100% - 330px);
     color:#dc3545;
     font-weight:bold;
 }
+
+.dashboard-section{
+background:white;
+border-radius:20px;
+padding:25px;
+margin-top:25px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.appointment-card{
+background:#f7e8f4;
+padding:20px;
+border-radius:15px;
+}
+
+.appointment-card h3{
+color:#4B0082;
+}
+
+.status{
+font-weight:bold;
+color:green;
+}
+
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+}
+
+.expiry-card,
+.workload-card{
+padding:20px;
+background:#fafafa;
+border-radius:15px;
+text-align:center;
+}
+
+.quick-actions{
+display:flex;
+gap:20px;
+}
+
+.quick-actions button{
+background:#6c2bd9;
+color:white;
+border:none;
+padding:15px 25px;
+border-radius:12px;
+cursor:pointer;
+}
+
+.quick-actions button:hover{
+background:#4B0082;
+}
