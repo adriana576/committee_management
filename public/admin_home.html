@@ -89,33 +89,9 @@
    </h3>
 
 
-  box.innerHTML = data.map(a => `
-
-<div class="expiry-card">
-
-<h3>
-${a.name}
-</h3>
-
-<p class="committee-name">
-${a.committee_name}
-</p>
-
-<p>
-<strong>Role:</strong>
-${a.role}
-</p>
-
-<p>
-<strong>Expire:</strong>
-${new Date(a.end_date).toLocaleDateString('en-GB')}
-</p>
-
-<p class="expiry-warning">
- ${a.days_left} days remaining
-</p>
-</div>
-`).join('');
+  <div id="expiryList">
+  Checking...
+  </div>
   </div>
 </div>
 
@@ -170,65 +146,67 @@ userNameElement.innerText =
 // LOAD EXPIRING APPOINTMENTS
 // ===============================
 async function loadExpiryReminder(){
-try{
-const res = await fetch(
-`${BASE_URL}/api/admin/expiring-appointments`
-);
 
-const data = await res.json();
+    try{
 
-const box =
-document.getElementById("expiryList");
-
-if(data.length === 0){
+        const res = await fetch(
+            `${BASE_URL}/api/admin/expiring-appointments`
+        );
 
 
-box.innerHTML =
-`
-<p>
-No appointment expiring within 30 days.
-</p>
-`;
-return;
-}
+        const data = await res.json();
+        const box = document.getElementById("expiryList");
 
-box.innerHTML = data.map(a=>{
-return `
+        if(data.length === 0){
 
-<div class="expiry-item">
+            box.innerHTML = `
+                <p>
+                    No appointment expiring within 30 days.
+                </p>
+            `;
 
-<b>
-${a.name}
-</b>
+            return;
+        }
 
-<br>
-${a.committee_name}
+        box.innerHTML = data.map(a => `
+            <div class="expiry-card">
 
-<br>
-Role:
-${a.role}
+                <h3>
+                    ${a.name}
+                </h3>
 
-<br>
-Expire:
-${new Date(a.end_date)
-.toLocaleDateString('en-GB')}
-<br>
-<span class="expiry-warning">
-${a.days_left} days remaining
-</span>
 
-</div>
-`;
-}).join("");
-}
+                <p class="committee-name">
+                    ${a.committee_name}
+                </p>
 
-catch(error){
+                <p>
+                    <strong>Role:</strong>
+                    ${a.role}
+                </p>
 
-console.log(error);
+                <p>
+                    <strong>Expire:</strong>
+                    ${new Date(a.end_date)
+                    .toLocaleDateString('en-GB')}
+                </p>
 
-document.getElementById("expiryList").innerHTML =
-"Unable to load expiry data";
-}
+                <p class="expiry-warning">
+                   ${a.days_left} days remaining
+                </p>
+            </div>
+        `).join("");
+    }
+
+    catch(error){
+        console.error("Expiry error:", error);
+        document.getElementById("expiryList").innerHTML =
+        `
+        <p>
+        Unable to load expiry data
+        </p>
+        `;
+    }
 }
 loadExpiryReminder();
 
