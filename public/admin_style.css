@@ -1326,6 +1326,7 @@ font-weight:bold;
 /* Card */
 .expiry-card{
   background:white;
+  grid-template-columns:repeat(3,1fr);
   border-radius:25px;
   height:260px;
   padding:25px;

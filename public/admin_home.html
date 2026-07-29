@@ -153,7 +153,6 @@ async function loadExpiryReminder(){
             `${BASE_URL}/api/admin/expiring-appointments`
         );
 
-
         const data = await res.json();
         const box = document.getElementById("expiryList");
 
