@@ -41,35 +41,43 @@ function sendNotification(userId, appointmentId, message) {
 );
 }
 
-function sendAdminNotification(message) {
+function sendAdminNotification(message){
+    const adminId = 1; 
+    // change this if your admin id is different
 
-  const notifySql = `
+    const sql = `
     INSERT INTO notifications
-    (user_id, title, message, status, is_read, created_at)
-    VALUES (?, ?, ?, ?, ?, NOW())
+    (
+    user_id,
+    title,
+    message,
+    status,
+    is_read,
+    created_at
+    )
+    VALUES
+    (?, ?, ?, ?, ?, NOW())
     `;
 
-
     db.query(
-    notifySql,
-    [
-    user_id,
-    "New Appointment Assigned",
-    message,
-    "Unread",
-    0
-    ],
-    (err)=>{
-    if(err)
-    console.log(err);
-    }
-  );
-}
+        sql,
+        [
+        adminId,
+        "Appointment Expiry Reminder",
+        message,
+        "Unread",
+        0
+        ],
 
-// TEST
-app.get('/', (req, res) => {
-  res.send('Backend running');
-});
+        (err)=>{
+            if(err)
+            console.error(
+            "Admin notification error:",
+            err
+            );
+        }
+    );
+}
 
 
 // =========================
@@ -632,13 +640,14 @@ doc.end();
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
+// Check appointment expiry
 function checkExpiringAppointments() {
     const sql = `
         SELECT
             u.name,
             a.user_id,
             a.role,
-            c.name AS committee_name,
+            c.committee_name,
             a.end_date
         FROM appointments a
         JOIN users u
@@ -650,50 +659,65 @@ function checkExpiringAppointments() {
     `;
 
     db.query(sql, (err, results) => {
-        if (err) {
-            console.error("Expiry check error:", err);
+        if(err){
+            console.error(
+                "Expiry check error:",
+                err
+            );
             return;
         }
 
         results.forEach(appt => {
 
-            // Notification to user
+            // =========================
+            // Notify Staff
+            // =========================
             sendNotification(
                 appt.user_id,
                 `Perhatian: Pelantikan anda sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`
             );
 
-            // Notification to admin
+            // =========================
+            // Notify Admin
+            // =========================
             sendAdminNotification(
                 `Pelantikan ${appt.name} sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`
             );
         });
     });
 }
+// Run immediately for testing
+checkExpiringAppointments();
 
-// Check once a day
-setInterval(checkExpiringAppointments, ONE_DAY);
+// Run every day
+setInterval(
+    checkExpiringAppointments,
+    ONE_DAY
+);
 
-// Get notifications for user or admin
-app.get('/api/notifications/:userId', (req, res) => {
-    const { userId } = req.params;
+// ================================
+// Get Notifications
+// ================================
+app.get('/api/notifications/:userId', (req,res)=>{
+    const userId = req.params.userId;
+    const sql = `
+        SELECT *
+        FROM notifications
+        WHERE user_id = ?
+        ORDER BY created_at DESC
+    `;
 
-    let sql = "SELECT * FROM notifications WHERE ";
-    const params = [];
-
-    if (userId === 'admin') {
-        sql += "user_id IS NULL";
-    } else {
-        sql += "user_id = ?";
-        params.push(userId);
-    }
-
-    sql += " ORDER BY created_at DESC";
-
-    db.query(sql, params, (err, results) => {
-        if (err) return res.json([]);
-        res.json(results);
-    });
+    db.query(
+        sql,
+        [userId],
+        (err,result)=>{
+            if(err){
+                console.error(err);
+                return res.json([]);
+            }
+            res.json(result);
+        }
+    );
 });
 
 // APPOINTMENT LETTER TEXT
