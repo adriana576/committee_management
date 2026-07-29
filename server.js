@@ -41,43 +41,39 @@ function sendNotification(userId, appointmentId, message) {
 );
 }
 
-function sendAdminNotification(message){
-    const adminId = 1; 
-    // change this if your admin id is different
+function sendAdminNotification(message) {
 
     const sql = `
-    INSERT INTO notifications
-    (
-    user_id,
-    title,
-    message,
-    status,
-    is_read,
-    created_at
-    )
-    VALUES
-    (?, ?, ?, ?, ?, NOW())
+        INSERT INTO notifications
+        (user_id, appointment_id, title, message, sent_date, status, is_read, created_at)
+        VALUES (NULL, NULL, ?, ?, NOW(), ?, 0, NOW())
     `;
+
 
     db.query(
         sql,
         [
-        adminId,
-        "Appointment Expiry Reminder",
-        message,
-        "Unread",
-        0
+            "Admin Notification",
+            message,
+            "Unread"
         ],
+        (err) => {
 
-        (err)=>{
-            if(err)
-            console.error(
-            "Admin notification error:",
-            err
-            );
+            if (err) {
+                console.error(
+                    'Admin notification error:',
+                    err
+                );
+            }
+
         }
     );
 }
+
+// TEST
+app.get('/', (req, res) => {
+  res.send('Backend running');
+});
 
 
 // =========================
@@ -640,14 +636,13 @@ doc.end();
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
-// Check appointment expiry
 function checkExpiringAppointments() {
     const sql = `
         SELECT
             u.name,
             a.user_id,
             a.role,
-            c.committee_name,
+            c.name AS committee_name,
             a.end_date
         FROM appointments a
         JOIN users u
@@ -659,65 +654,50 @@ function checkExpiringAppointments() {
     `;
 
     db.query(sql, (err, results) => {
-        if(err){
-            console.error(
-                "Expiry check error:",
-                err
-            );
+        if (err) {
+            console.error("Expiry check error:", err);
             return;
         }
 
         results.forEach(appt => {
 
-            // =========================
-            // Notify Staff
-            // =========================
+            // Notification to user
             sendNotification(
                 appt.user_id,
                 `Perhatian: Pelantikan anda sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`
             );
 
-            // =========================
-            // Notify Admin
-            // =========================
+            // Notification to admin
             sendAdminNotification(
                 `Pelantikan ${appt.name} sebagai ${appt.role} di ${appt.committee_name} akan tamat pada ${appt.end_date}`
             );
         });
     });
 }
-// Run immediately for testing
-checkExpiringAppointments();
 
-// Run every day
-setInterval(
-    checkExpiringAppointments,
-    ONE_DAY
-);
+// Check once a day
+setInterval(checkExpiringAppointments, ONE_DAY);
 
-// ================================
-// Get Notifications
-// ================================
-app.get('/api/notifications/:userId', (req,res)=>{
-    const userId = req.params.userId;
-    const sql = `
-        SELECT *
-        FROM notifications
-        WHERE user_id = ?
-        ORDER BY created_at DESC
-    `;
+// Get notifications for user or admin
+app.get('/api/notifications/:userId', (req, res) => {
+    const { userId } = req.params;
 
-    db.query(
-        sql,
-        [userId],
-        (err,result)=>{
-            if(err){
-                console.error(err);
-                return res.json([]);
-            }
-            res.json(result);
-        }
-    );
+    let sql = "SELECT * FROM notifications WHERE ";
+    const params = [];
+
+    if (userId === 'admin') {
+        sql += "user_id IS NULL";
+    } else {
+        sql += "user_id = ?";
+        params.push(userId);
+    }
+
+    sql += " ORDER BY created_at DESC";
+
+    db.query(sql, params, (err, results) => {
+        if (err) return res.json([]);
+        res.json(results);
+    });
 });
 
 // APPOINTMENT LETTER TEXT
