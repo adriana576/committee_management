@@ -43,31 +43,27 @@ function sendNotification(userId, appointmentId, message) {
 
 function sendAdminNotification(message) {
 
-    const sql = `
-        INSERT INTO notifications
-        (user_id, appointment_id, title, message, sent_date, status, is_read, created_at)
-        VALUES (NULL, NULL, ?, ?, NOW(), ?, 0, NOW())
+  const notifySql = `
+    INSERT INTO notifications
+    (user_id, title, message, status, is_read, created_at)
+    VALUES (?, ?, ?, ?, ?, NOW())
     `;
 
 
     db.query(
-        sql,
-        [
-            "Admin Notification",
-            message,
-            "Unread"
-        ],
-        (err) => {
-
-            if (err) {
-                console.error(
-                    'Admin notification error:',
-                    err
-                );
-            }
-
-        }
-    );
+    notifySql,
+    [
+    user_id,
+    "New Appointment Assigned",
+    message,
+    "Unread",
+    0
+    ],
+    (err)=>{
+    if(err)
+    console.log(err);
+    }
+  );
 }
 
 // TEST
