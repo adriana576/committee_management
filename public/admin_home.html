@@ -1,113 +1,127 @@
 <!DOCTYPE html>
-<html> 
+<html>
 <head>
   <title>Admin Home</title>
   <link rel="stylesheet" href="admin_style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-  <div class="layout">
+<div class="layout">
 
 <!-- SIDEBAR -->
-  <div class="sidebar">
+<div class="sidebar">
+<h2>
+<img src="img/LogoUiTM.png" class="logo">
+Committee Management System
+</h2>
 
-  <h2>
-    <img src="img/LogoUiTM.png" class="logo">
-    Committee Management System
-  </h2>
+<a class="active" href="admin_home.html">
+Home
+</a>
 
-  <a class="active" href="admin_home.html">
-  Home
-  </a>
+<a href="committees.html">
+Manage Committee
+</a>
 
-  <a href="committees.html">
-  Manage Committee
-  </a>
+<a href="users.html">
+View Staff
+</a>
 
-  <a href="users.html">
-  View Staff
-  </a>
+<a href="view_user.html">
+Search
+</a>
 
-  <a href="view_user.html">
-  Search
-  </a>
+<a href="recommendation.html">
+Generate Recommendation
+</a>
 
-  <a href="recommendation.html">
-  Generate Recommendation
-  </a>
-
-  <button class="logout-btn" onclick="logout()">
-  LOG OUT
-  </button>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content">
-
-    <h1>
-    Admin Dashboard
-    </h1>
-
-  <div class="grid">
-
-  <div class="card" onclick="location.href='committees.html'">
-
-  <h3>
-  Manage Committee
-  </h3>
-
-  <p>
-  View and manage committee information.
-  </p>
-  </div>
-
-  <div class="card" onclick="location.href='add_committee.html'">
-
-  <h3>
-  Add Committee
-  </h3>
-
-  <p>
-  Create a new committee record.
-  </p>
-  </div>
-
-  <div class="card" onclick="location.href='users.html'">
-    <h3>
-    View Staff
-    </h3>
-
-    <p>
-    View all active staff.
-    </p>
-  </div>
-
-  <!-- EXPIRING APPOINTMENT CARD -->
-  <div class="card expiry-card">
-    <h3>
-    Appointment Expiring Soon
-   </h3>
-
-
-  <div id="expiryList">
-  Checking...
-  </div>
-  </div>
+<button class="logout-btn" onclick="logout()">
+LOG OUT
+</button>
 </div>
 
+<!-- CONTENT -->
+<div class="content">
+
+<h1>
+Admin Dashboard
+</h1>
+
+<div class="grid">
+<div class="card" onclick="location.href='committees.html'">
+
+<h3>
+Manage Committee
+</h3>
+
+<p>
+View and manage committee information.
+</p>
+
+</div>
+
+
+
+
+<div class="card" onclick="location.href='add_committee.html'">
+
+<h3>
+Add Committee
+</h3>
+
+<p>
+Create a new committee record.
+</p>
+
+</div>
+
+
+
+
+
+<div class="card" onclick="location.href='users.html'">
+
+<h3>
+View Staff
+</h3>
+
+<p>
+View all active staff.
+</p>
+
+</div>
+
+
+
+
+</div>
+
+<!-- EXPIRING APPOINTMENT -->
+<div class="card expiry-section">
+
+<h3>
+Appointment Expiry Monitoring
+</h3>
+
+<div id="expiryList" class="expiry-container">
+
+Checking...
+</div>
+</div>
 </div>
 
 <!-- TOPBAR -->
 <div class="topbar">
-<h3 id="userName">
-</h3>
+
+<h3 id="userName"></h3>
 
 <div class="bell" onclick="toggleNotif()">
+
 
 <img src="img/bell.png"
 alt="Notifications"
 style="width:25px;height:25px;">
-
 <span id="notifCount" class="notif-badge">
 0
 </span>
@@ -117,105 +131,106 @@ style="width:25px;height:25px;">
 <!-- NOTIFICATION PANEL -->
 <div class="notifications-panel" id="notifications">
 </div>
-</div> <!-- END LAYOUT -->
+</div>
+
 <script>
-
-
 const BASE_URL =
 "https://committeemanagement.zarinaproject.my";
 
 const role =
-localStorage.getItem('role');
+localStorage.getItem("role");
 
-// Header
+// USER HEADER
 const userNameElement =
-document.getElementById('userName');
+document.getElementById("userName");
 
-if(role === "Admin" || role === "admin"){
-
+if(role==="Admin" || role==="admin"){
 userNameElement.innerText =
 "Welcome, Admin";
 }
-
 else{
 userNameElement.innerText =
-`Welcome, ${localStorage.getItem('userName')}`;
+`Welcome, ${localStorage.getItem("userName")}`;
 }
 
-// ===============================
-// LOAD EXPIRING APPOINTMENTS
-// ===============================
+// =================================
+// EXPIRY MONITORING
+// =================================
 async function loadExpiryReminder(){
 
-    try{
+try{
 
-        const res = await fetch(
-            `${BASE_URL}/api/admin/expiring-appointments`
-        );
+const response =
+await fetch(
+`${BASE_URL}/api/admin/expiring-appointments`
+);
 
-        const data = await res.json();
-        const box = document.getElementById("expiryList");
+const data =
+await response.json();
 
-        if(data.length === 0){
+const box =
+document.getElementById("expiryList");
 
-            box.innerHTML = `
-                <p>
-                    No appointment expiring within 30 days.
-                </p>
-            `;
+if(data.length===0){
+box.innerHTML=
+`
+<p>
+No appointment expiring within 30 days.
+</p>
+`;
+return;
+}
 
-            return;
-        }
+box.innerHTML = data.map(a=>`
+<div class="expiry-card">
+<img src="img/LogoUiTM.png"
+class="expiry-logo">
 
-        box.innerHTML = data.map(a => `
-            <div class="expiry-card">
+<h3>
+${a.name}
+</h3>
 
-                <h3>
-                    ${a.name}
-                </h3>
+<p class="committee-name">
+${a.committee_name}
+</p>
 
+<p>
+<strong>Role:</strong>
+${a.role}
+</p>
 
-                <p class="committee-name">
-                    ${a.committee_name}
-                </p>
+<p>
+<strong>Expire:</strong>
+${new Date(a.end_date)
+.toLocaleDateString('en-GB')}
+</p>
 
-                <p>
-                    <strong>Role:</strong>
-                    ${a.role}
-                </p>
+<p class="expiry-warning">
+⚠ ${a.days_left} days remaining
+</p>
 
-                <p>
-                    <strong>Expire:</strong>
-                    ${new Date(a.end_date)
-                    .toLocaleDateString('en-GB')}
-                </p>
+</div>
+`).join("");
+}
 
-                <p class="expiry-warning">
-                   ${a.days_left} days remaining
-                </p>
-            </div>
-        `).join("");
-    }
-
-    catch(error){
-        console.error("Expiry error:", error);
-        document.getElementById("expiryList").innerHTML =
-        `
-        <p>
-        Unable to load expiry data
-        </p>
-        `;
-    }
+catch(error){
+console.error(error);
+document.getElementById("expiryList").innerHTML=
+`
+<p>
+Unable to load expiry data.
+</p>
+`;
+}
 }
 loadExpiryReminder();
 
-// ===============================
+// =================================
 // NOTIFICATION
-// ===============================
+// =================================
 let notificationsLoaded=false;
 
 async function toggleNotif(){
-
 
 const panel =
 document.getElementById("notifications");
@@ -234,7 +249,6 @@ notificationsLoaded=true;
 }
 
 async function loadNotifications(){
-
 
 const userId =
 (role==="Admin" || role==="admin")
@@ -262,7 +276,8 @@ document.getElementById("notifCount");
 const unread =
 notifications.filter(n=>n.is_read==0).length;
 
-badge.innerText=unread;
+badge.innerText =
+unread;
 
 container.innerHTML =
 notifications.map(n=>`
@@ -270,11 +285,13 @@ notifications.map(n=>`
 <div class="notif-item"
 id="notif-${n.id}"
 onclick="markAsRead(${n.id})">
+
+
 <div class="notif-icon">
 🔔
 </div>
-<div>
 
+<div>
 <div class="notif-message">
 ${n.message}
 </div>
@@ -286,6 +303,7 @@ ${new Date(n.created_at)
 </div>
 </div>
 </div>
+
 `).join("");
 }
 
@@ -307,11 +325,9 @@ loadNotifications();
 }
 
 function logout(){
-  localStorage.clear();
-  window.location.href="index.html";
+localStorage.clear();
+window.location.href="index.html";
 }
-
 </script>
-
 </body>
 </html>
