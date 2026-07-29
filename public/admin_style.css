@@ -1314,3 +1314,51 @@ font-weight:bold;
     color: #4B0082;
     margin-bottom: 10px;
 }
+
+/* Expiring Appointment Layout */
+.expiry-container{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+  margin-top:20px;
+}
+
+/* Card */
+.expiry-card{
+  background:white;
+  border-radius:25px;
+  height:260px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  transition:0.3s ease;
+  border-top:5px solid #ff9800;
+}
+
+.expiry-card:hover{
+  transform:translateY(-5px);
+}
+
+.expiry-card h3{
+  color:#4b0082;
+  font-size:20px;
+  margin:8px 0;
+}
+
+.committee-name{
+  font-size:16px;
+  color:#333;      
+  height:45px;
+  overflow:hidden;
+}
+
+.expiry-card p{
+  margin:8px 0;
+  font-size:15px;
+}
+
+.expiry-warning{
+  color:#e53935;
+  font-weight:bold;
+  font-size:16px!important;
+}
