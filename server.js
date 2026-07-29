@@ -745,6 +745,34 @@ Dean of Faculty`
   });
 });
 
+app.get('/api/admin/expiring-appointments', (req,res)=>{
+
+const sql = `
+SELECT
+users.name,
+committees.committee_name,
+appointments.role,
+appointments.end_date,
+DATEDIFF(appointments.end_date,CURDATE()) AS days_left
+FROM appointments
+JOIN users
+ON appointments.user_id = users.id
+JOIN committees
+ON appointments.committee_id = committees.id
+WHERE appointments.status='Active'
+AND DATEDIFF(appointments.end_date,CURDATE()) <= 30
+ORDER BY appointments.end_date ASC
+`;
+
+db.query(sql,(err,result)=>{
+if(err){
+console.log(err);
+return res.json([]);
+}
+res.json(result);
+});
+});
+
 // =========================
 // START SERVER
 // =========================

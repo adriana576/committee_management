@@ -26,6 +26,17 @@
     <button class="logout-btn" onclick="logout()">LOG OUT</button>
   </div>
 
+  <div class="card">
+
+  <h3>
+  Appointment Expiring Soon
+  </h3>
+
+  <div id="expiryList">
+  Checking...
+  </div>
+
+</div>
   <!-- CONTENT -->
   <div class="content">
     <h1>Admin Dashboard</h1>
@@ -122,6 +133,46 @@ async function loadNotifications() {
     </div>
   `).join('');
 }
+
+async function loadExpiryReminder(){
+const res = await fetch(
+`${BASE_URL}/api/admin/expiring-appointments`
+);
+
+const data = await res.json();
+
+const box =
+document.getElementById("expiryList");
+
+if(data.length===0){
+box.innerHTML =
+"No appointment expiring soon";
+return;
+}
+
+box.innerHTML =
+data.map(a=>`
+
+<p>
+!! <b>${a.name}</b><br>
+${a.committee_name}<br>
+
+Role: ${a.role}<br>
+
+Expire:
+${new Date(a.end_date)
+.toLocaleDateString('en-GB')}
+
+<br>
+<b>
+${a.days_left} days remaining
+</b>
+</p>
+
+<hr>
+`).join('');
+}
+loadExpiryReminder();
 
 // mark as read
 function markAsRead(id) {
